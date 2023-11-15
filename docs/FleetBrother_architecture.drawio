@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-11-15T20:28:33.047Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="5hP3dYDyHBb3yQhtcqmT" version="22.1.2" type="device">
+<mxfile host="app.diagrams.net" modified="2023-11-15T21:34:33.126Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="Q2fPi8q9Xfa8ENvsK4-q" version="22.1.2" type="device">
   <diagram name="1 oldal" id="_3uZMOOOpD7t4sgwszIb">
     <mxGraphModel dx="1434" dy="782" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -14,7 +14,7 @@
           <mxGeometry x="695" y="860" width="80" height="110" as="geometry" />
         </mxCell>
         <mxCell id="dzdAESwAE7rJV9V7MGlo-4" value="Simulator" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="950" y="160" width="270" height="100" as="geometry" />
+          <mxGeometry x="1100" y="100" width="270" height="100" as="geometry" />
         </mxCell>
         <mxCell id="dzdAESwAE7rJV9V7MGlo-5" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="dzdAESwAE7rJV9V7MGlo-3" target="dzdAESwAE7rJV9V7MGlo-1">
           <mxGeometry width="100" height="100" relative="1" as="geometry">
@@ -28,9 +28,9 @@
             <mxPoint x="570" y="270" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dzdAESwAE7rJV9V7MGlo-7" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="dzdAESwAE7rJV9V7MGlo-1" target="dzdAESwAE7rJV9V7MGlo-4">
+        <mxCell id="dzdAESwAE7rJV9V7MGlo-7" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="dzdAESwAE7rJV9V7MGlo-14" target="dzdAESwAE7rJV9V7MGlo-4">
           <mxGeometry width="100" height="100" relative="1" as="geometry">
-            <mxPoint x="920" y="360" as="sourcePoint" />
+            <mxPoint x="1150" y="280" as="sourcePoint" />
             <mxPoint x="1020" y="260" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -53,6 +53,15 @@
           <mxGeometry width="100" height="100" relative="1" as="geometry">
             <mxPoint x="540" y="720" as="sourcePoint" />
             <mxPoint x="640" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dzdAESwAE7rJV9V7MGlo-14" value="MQTT Broker" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="270" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dzdAESwAE7rJV9V7MGlo-15" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="dzdAESwAE7rJV9V7MGlo-10" target="dzdAESwAE7rJV9V7MGlo-14">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="1280" y="450" as="sourcePoint" />
+            <mxPoint x="1380" y="350" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
