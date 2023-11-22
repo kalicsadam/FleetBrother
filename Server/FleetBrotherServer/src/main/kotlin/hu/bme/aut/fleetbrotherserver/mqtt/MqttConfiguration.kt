@@ -11,6 +11,8 @@ import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter
+import org.springframework.integration.mqtt.support.MqttHeaders
+import org.springframework.integration.router.HeaderValueRouter
 import org.springframework.messaging.MessageChannel
 import org.springframework.messaging.MessageHandler
 
@@ -51,9 +53,36 @@ class MqttConfiguration(val conf: MqttParameters) {
 
     @Bean
     @ServiceActivator(inputChannel = "mqttInputChannel")
-    fun handler(): MessageHandler {
+    fun router(): HeaderValueRouter {
+        val router = HeaderValueRouter(MqttHeaders.RECEIVED_TOPIC)
+        router.setChannelMapping(conf.livez, "livez")
+        router.setChannelMapping(conf.measurementz, "measurementz")
+        return router
+    }
+
+    @Bean
+    fun livez(): MessageChannel {
+        return DirectChannel()
+    }
+
+    @Bean
+    @ServiceActivator(inputChannel = "livez")
+    fun handleLivez(): MessageHandler {
         return MessageHandler {
-            message -> logger.info(message.payload.toString())
+            message -> logger.info("Livez: ${message.payload}")
+        }
+    }
+
+    @Bean
+    fun measurementz(): MessageChannel {
+        return DirectChannel()
+    }
+
+    @Bean
+    @ServiceActivator(inputChannel = "measurementz")
+    fun handleMeasurementz(): MessageHandler {
+        return MessageHandler {
+            message -> logger.info("Measurementz: ${message.payload}")
         }
     }
 }
