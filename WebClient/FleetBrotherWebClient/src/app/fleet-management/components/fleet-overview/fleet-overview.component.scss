@@ -1,0 +1,12 @@
+.fleet-overview {
+    margin: 16px;
+    .fleet-overview-content {
+        display: flex;
+        justify-content: space-between;
+        .fleet-overview-details {
+            flex-grow: 1;
+            flex-shrink: 1;
+            margin-right: 24px;
+        }
+    }
+}

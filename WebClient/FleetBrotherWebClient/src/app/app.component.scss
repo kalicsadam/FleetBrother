@@ -1,0 +1,25 @@
+.app-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #eee;
+    .main-content{
+      height: 100vh;
+      display:flex;
+      flex-direction: column;
+
+      .app-content{
+        flex-grow: 1;
+        flex-shrink: 1;
+        overflow: scroll;
+      }
+    }
+}
+
+
+.spacer {
+    flex: 1 1 auto;
+}
+

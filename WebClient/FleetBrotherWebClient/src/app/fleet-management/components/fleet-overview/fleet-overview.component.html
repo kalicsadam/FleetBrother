@@ -1,0 +1,30 @@
+<mat-card *ngIf="fleet != null" class="fleet-overview">
+    <mat-card-header>
+        <mat-card-title>
+            {{fleet.name}}
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{fleet.id}}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="fleet-overview-content">
+        <div class="fleet-overview-details">
+            <p>{{fleet.description}}</p>
+        <mat-divider></mat-divider>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    List of cars:
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>This is the primary content of the panel.</p>
+        </mat-expansion-panel>
+        </div>
+        <div class="fleet-overview-tools">
+            <button mat-fab color="warn" aria-label="Example icon button with a delete icon">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+        
+    </mat-card-content>
+</mat-card>
