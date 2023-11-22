@@ -1,5 +1,6 @@
 package hu.bme.aut.fleetbrotherserver.mqtt
 
+import org.eclipse.paho.client.mqttv3.MqttAsyncClient
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
@@ -10,6 +11,7 @@ import org.springframework.integration.core.MessageProducer
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter
+import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter
 import org.springframework.integration.mqtt.support.MqttHeaders
 import org.springframework.integration.router.HeaderValueRouter
@@ -33,14 +35,9 @@ class MqttConfiguration(val conf: MqttParameters) {
     }
 
     @Bean
-    fun mqttInputChannel(): MessageChannel {
-        return DirectChannel()
-    }
-
-    @Bean
     fun inbound(): MessageProducer {
         val adapter = MqttPahoMessageDrivenChannelAdapter(
-                conf.serverId,
+                conf.serverId + MqttAsyncClient.generateClientId(),
                 mqttClientFactory(),
                 conf.livez,
                 conf.measurementz
@@ -49,6 +46,11 @@ class MqttConfiguration(val conf: MqttParameters) {
         adapter.setQos(1)
         adapter.outputChannel = mqttInputChannel()
         return adapter
+    }
+
+    @Bean
+    fun mqttInputChannel(): MessageChannel {
+        return DirectChannel()
     }
 
     @Bean
@@ -84,5 +86,33 @@ class MqttConfiguration(val conf: MqttParameters) {
         return MessageHandler {
             message -> logger.info("Measurementz: ${message.payload}")
         }
+    }
+
+    @Bean
+    fun mqttMeasurementzOutboundChannel(): MessageChannel {
+        return DirectChannel()
+    }
+
+    @Bean
+    @ServiceActivator(inputChannel = "mqttMeasurementzOutboundChannel")
+    fun mqttOutbound(mqttClientFactory: MqttPahoClientFactory): MessageHandler {
+        val messageHandler = MqttPahoMessageHandler(conf.serverId + MqttAsyncClient.generateClientId(), mqttClientFactory)
+        messageHandler.setAsync(true)
+        messageHandler.setDefaultTopic(conf.measurementz)
+        return messageHandler
+    }
+
+    @Bean
+    fun mqttLivezOutboundChannel(): MessageChannel {
+        return DirectChannel()
+    }
+
+    @Bean
+    @ServiceActivator(inputChannel = "mqttLivezOutboundChannel")
+    fun mqttLivezOutbound(mqttClientFactory: MqttPahoClientFactory): MessageHandler {
+        val messageHandler = MqttPahoMessageHandler(conf.serverId + MqttAsyncClient.generateClientId(), mqttClientFactory)
+        messageHandler.setAsync(true)
+        messageHandler.setDefaultTopic(conf.livez)
+        return messageHandler
     }
 }
