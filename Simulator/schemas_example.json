@@ -38,7 +38,7 @@
     "schema": "current_speed",
     "id":"",
     "data":{
-        "value":"numeric valami",
+        "value":"",
         "unit":"kph v mph"
     }
 },
@@ -62,7 +62,7 @@
     "id":"",
     "data":{
         "state":"running,turned_off",
-        "temp": "numeric valami",
+        "temp": "",
         "temp_unit": "c v f"
 
     }
