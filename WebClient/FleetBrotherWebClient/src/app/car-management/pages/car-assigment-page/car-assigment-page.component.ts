@@ -4,6 +4,7 @@ import { Car } from 'src/app/data/dto/cat.dto';
 import { CarFleetAssigmentComponent } from '../../components/car-fleet-assigment/car-fleet-assigment.component';
 import { FleetManagementService } from 'src/app/shared/services/fleet-management.service';
 import { Fleet } from 'src/app/data/dto/fleet.dto';
+import { MessageDialogService } from 'src/app/shared/services/message-dialog.service';
 
 @Component({
   selector: 'app-car-assigment-page',
@@ -14,7 +15,7 @@ export class CarAssigmentPageComponent implements OnInit {
   cars : Car[] = []
   fleets: Fleet[] = []
 
-  constructor(private _bottomSheet : MatBottomSheet, private fleetManagementService : FleetManagementService){
+  constructor(private _bottomSheet : MatBottomSheet, private fleetManagementService : FleetManagementService, private dialogService : MessageDialogService){
       
   }
   ngOnInit(): void {
@@ -34,7 +35,7 @@ export class CarAssigmentPageComponent implements OnInit {
   }
 
   onDecline(car : Car){
-
+    this.dialogService.openErrorDialog("This is a test message.", "This is a test message.")
   }
 
   canAssign(){

@@ -83,6 +83,7 @@ export class FleetManagementService {
   }
 
   removeCarFromFleet(carId : number, fleetId : number) : Observable<boolean> {
+    console.log("carId: " + carId + " removed from fleet: " + fleetId)
     return new BehaviorSubject(true);
   }
 
@@ -92,7 +93,7 @@ export class FleetManagementService {
   }
 
   acceptCarJoinRequest(carId : number, fleetId : number) : Observable<boolean> {
-    console.log("carId: " + carId + ",fleetId: " + fleetId + " assigned")
+    console.log("carId: " + carId + ", fleetId: " + fleetId + " assigned")
     return new BehaviorSubject(true);
   }
 }

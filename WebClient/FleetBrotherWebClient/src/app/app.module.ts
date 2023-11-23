@@ -15,6 +15,7 @@ import { CarAssigmentPageComponent } from './car-management/pages/car-assigment-
 import { CarFleetAssigmentComponent } from './car-management/components/car-fleet-assigment/car-fleet-assigment.component';
 import { CarOverviewComponent } from './car-management/components/car-overview/car-overview.component';
 import { FormsModule } from '@angular/forms';
+import { MessageDialogComponent } from './shared/components/sidebar/message-dialog/message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FormsModule } from '@angular/forms';
     FleetViewPageComponent,
     CarAssigmentPageComponent,
     CarFleetAssigmentComponent,
-    CarOverviewComponent
+    CarOverviewComponent,
+    MessageDialogComponent
   ],
   imports: [
     BrowserModule,
