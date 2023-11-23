@@ -1,7 +1,7 @@
 package hu.bme.aut.fleetbrotherserver.mqtt
 
-import org.springframework.integration.annotation.Gateway
-import org.springframework.integration.annotation.MessagingGateway
+import org.springframework.integration.annotation.*
+import org.springframework.integration.mqtt.support.MqttHeaders
 
 /**
  * This is the interface that shall be used for outbound communication.
@@ -13,9 +13,21 @@ import org.springframework.integration.annotation.MessagingGateway
  */
 @MessagingGateway(name="mqttOutboundGateway")
 interface MqttGateway {
-    @Gateway(requestChannel = "mqttMeasurementzOutboundChannel")
-    fun sendMeasurement(data: String?)
+    @Gateway(
+            requestChannel = "mqttOutboundChannel",
+            headers = [GatewayHeader(
+                    name = MqttHeaders.TOPIC,
+                    expression = "@'mqtt.channels-hu.bme.aut.fleetbrotherserver.mqtt.MqttChannels'.remoteProc"
+            )]
+    )
+    fun sendRemoteProcedureCall(data: String?)
 
-    @Gateway(requestChannel = "mqttLivezOutboundChannel")
-    fun sendLive(data: String?)
+    @Gateway(
+            requestChannel = "mqttOutboundChannel",
+            headers = [GatewayHeader(
+                    name = MqttHeaders.TOPIC,
+                    expression = "@'mqtt.channels-hu.bme.aut.fleetbrotherserver.mqtt.MqttChannels'.obuConfig"
+            )]
+    )
+    fun sendConfig(data: String?)
 }

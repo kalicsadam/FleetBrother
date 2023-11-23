@@ -29,7 +29,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.data:spring-data-rest-hal-explorer")
-    //implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
+    implementation("org.eclipse.paho:org.eclipse.paho.mqttv5.client:1.2.5")
     implementation("org.springframework.integration:spring-integration-mqtt:6.2.0")
     implementation("org.springframework.integration:spring-integration-core")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
