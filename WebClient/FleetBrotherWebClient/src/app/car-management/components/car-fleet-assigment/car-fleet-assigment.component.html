@@ -1,0 +1,18 @@
+<div class="fleet-assigment">
+    <div style="display: flex; align-items: center;">
+        <h4 style="margin: 0px 16px 0px 0px;">Car:</h4>
+    <mat-chip *ngIf="car != undefined">
+        #{{car.id}}: {{car.name}},
+        License plate: {{car.licenasePlate}},
+        VIN: {{car.vin}}
+    </mat-chip>
+    </div>
+    
+    <h1 style="margin: 16px 0px;">Please select a fleet</h1>
+    <mat-radio-group [(ngModel)]="selectedFleet" class="fleet-choice-container">
+        <mat-radio-button *ngFor="let fleet of fleets" [value]="fleet">#{{fleet.id}}: {{fleet.name}}</mat-radio-button>
+    </mat-radio-group>
+
+    <button mat-raised-button color="primary" style="margin-top: 16px;" (click)="onAssign()">Assign</button>
+</div>
+

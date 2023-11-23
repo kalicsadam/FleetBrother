@@ -1,0 +1,10 @@
+.car-overview{
+    margin: 2rem;
+    .car-overview-content{
+        .car-overview-tools {
+            & > * {
+                margin-right: 12px;
+            }
+        }
+    }
+}

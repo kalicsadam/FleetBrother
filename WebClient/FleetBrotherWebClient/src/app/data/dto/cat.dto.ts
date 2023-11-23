@@ -1,3 +1,6 @@
-export class Car {
-
+export interface Car {
+    id: number,
+    name : string,
+    licenasePlate : string,
+    vin : string
 }

@@ -8,4 +8,7 @@ import { Fleet } from 'src/app/data/dto/fleet.dto';
 })
 export class FleetOverviewComponent {
   @Input() fleet : Fleet | undefined;
+
+  @Input() showDeleteButton : boolean = true;
+  @Input() showDetailsButton : boolean = true; 
 }
