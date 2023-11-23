@@ -10,21 +10,34 @@ export class MessageDialogService {
   constructor(private dialog: MatDialog) { }
 
   openSuccessDialog(title: string = "Success", body: string ="Message"){
-    this.dialog.open(MessageDialogComponent, {
+    return this.dialog.open(MessageDialogComponent, {
       data: {
         title: title,
         body: body,
-        error: false
+        error: false,
+        decision: false
       }
     })
   }
 
   openErrorDialog(title: string = "Error", body: string ="Message"){
-    this.dialog.open(MessageDialogComponent, {
+    return this.dialog.open(MessageDialogComponent, {
       data: {
         title: title,
         body: body,
-        error: true
+        error: false,
+        decision: false,
+      }
+    })
+  }
+
+  openChooseDialog(title: string = "Choose", body: string ="Message"){
+    return this.dialog.open(MessageDialogComponent, {
+      data: {
+        title: title,
+        body: body,
+        error: true,
+        decision: true
       }
     })
   }

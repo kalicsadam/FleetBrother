@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Fleet } from 'src/app/data/dto/fleet.dto';
 
 @Component({
@@ -11,4 +11,7 @@ export class FleetOverviewComponent {
 
   @Input() showDeleteButton : boolean = true;
   @Input() showDetailsButton : boolean = true; 
+
+  @Output() onDelete : EventEmitter<Fleet> = new EventEmitter();
+  @Output() onDetails : EventEmitter<Fleet> = new EventEmitter();
 }

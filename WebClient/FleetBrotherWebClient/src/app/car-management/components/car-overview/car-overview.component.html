@@ -10,12 +10,19 @@
     </mat-card-header>
     <mat-card-content class="car-overview-content">
         <div class="car-overview-tools">
-            <button mat-fab color="accent" (click)="onAccept.emit(car)" [disabled]="disabled">
-                <mat-icon>done</mat-icon>
-              </button>
-              <button mat-fab color="warn" (click)="onDecline.emit(car)" [disabled]="disabled">
-                <mat-icon>close</mat-icon>
-              </button>
+            <div *ngIf="mode == modetype.ACCEPT_DECLINE" class="tools-accept-decline">
+                <button mat-fab color="accent" (click)="onAccept.emit(car)" [disabled]="disabled">
+                    <mat-icon>done</mat-icon>
+                  </button>
+                <button mat-fab color="warn" (click)="onDecline.emit(car)" [disabled]="disabled">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div *ngIf="mode == modetype.DELETE" class="tools-delete">
+                <button mat-fab color="warn" (click)="onDelete.emit(car)" [disabled]="disabled">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
         </div>
     </mat-card-content>
 </mat-card>

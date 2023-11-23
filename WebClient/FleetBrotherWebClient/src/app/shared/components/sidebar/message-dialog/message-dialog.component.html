@@ -1,7 +1,15 @@
 <h1 mat-dialog-title>{{data.title}}</h1>
 <div mat-dialog-content>
-    <mat-icon *ngIf="!data.error" color="accent">check_circle</mat-icon>
-    <mat-icon *ngIf="data.error" color="warn">error</mat-icon>
+    <mat-icon *ngIf="!data.error && !data.decision" color="accent">check_circle</mat-icon>
+    <mat-icon *ngIf="data.error && !data.decision" color="warn">error</mat-icon>
+    <mat-icon *ngIf="data.decision">help_outline</mat-icon>
     <h2>{{data.body}}</h2>
-    <button mat-button (click)="dialogRef.close()">Ok</button>
+    <div *ngIf="!data.decision">
+        <button mat-button (click)="dialogRef.close(true)">Ok</button>
+    </div>
+    <div *ngIf="data.decision">
+        <button mat-button (click)="dialogRef.close(true)">Yes</button>
+        <button mat-button (click)="dialogRef.close(false)">No</button>
+    </div>
+    
 </div>

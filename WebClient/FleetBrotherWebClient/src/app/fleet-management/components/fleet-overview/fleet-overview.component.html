@@ -21,10 +21,10 @@
         </mat-expansion-panel> -->
         </div>
         <div class="fleet-overview-tools">
-            <button *ngIf="showDetailsButton" mat-fab color="primary" [routerLink]="[fleet.id.toString(), 'details']">
+            <button *ngIf="showDetailsButton" mat-fab color="primary" (click)="onDetails.emit(fleet)">
                 <mat-icon>directions_car</mat-icon>
             </button>
-            <button *ngIf="showDeleteButton" mat-fab color="warn" aria-label="Example icon button with a delete icon">
+            <button *ngIf="showDeleteButton" mat-fab color="warn" (click)="onDelete.emit(fleet)">
                 <mat-icon>delete</mat-icon>
             </button>
         </div>  

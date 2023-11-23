@@ -10,31 +10,6 @@ export class FleetManagementService {
 
   constructor() { }
 
-  placeholderFleets : Fleet[] = [{
-    id: 1,
-    cars : [],
-    description: "This is a description for my fleet",
-    name: "Fleet #1"
-  },
-  {
-    id: 2,
-    cars : [],
-    description: "This is a description for my fleet",
-    name: "Fleet #2"
-  },
-  {
-    id: 3,
-    cars : [],
-    description: "This is a description for my fleet",
-    name: "Fleet #3"
-  },
-  {
-    id: 4,
-    cars : [],
-    description: "This is a description for my fleet",
-    name: "Fleet #4"
-  }]
-
   placeholderCars : Car[] = [
     {
       id: 1,
@@ -62,6 +37,33 @@ export class FleetManagementService {
     }
   ]
 
+  placeholderFleets : Fleet[] = [{
+    id: 1,
+    cars : this.placeholderCars,
+    description: "This is a description for my fleet",
+    name: "Fleet #1"
+  },
+  {
+    id: 2,
+    cars : this.placeholderCars,
+    description: "This is a description for my fleet",
+    name: "Fleet #2"
+  },
+  {
+    id: 3,
+    cars : this.placeholderCars,
+    description: "This is a description for my fleet",
+    name: "Fleet #3"
+  },
+  {
+    id: 4,
+    cars : this.placeholderCars,
+    description: "This is a description for my fleet",
+    name: "Fleet #4"
+  }]
+
+  
+
   getAllFleets() : Observable<Fleet[]>{
     return new BehaviorSubject(this.placeholderFleets);
   }
@@ -80,6 +82,11 @@ export class FleetManagementService {
 
   getCarById(carId : number) : Observable<Car | undefined>{
     return new BehaviorSubject(this.placeholderCars.find(car => car.id == carId));
+  }
+
+  deleteFleet(fleetId : number) : Observable<boolean> {
+    console.log("fleet deleted: " + fleetId)
+    return new BehaviorSubject(true);
   }
 
   removeCarFromFleet(carId : number, fleetId : number) : Observable<boolean> {

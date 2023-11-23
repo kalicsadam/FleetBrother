@@ -3,6 +3,6 @@
 </button>
 
 <div>
-    <app-fleet-overview  *ngFor="let fleet of fleets" [fleet]="fleet"></app-fleet-overview>
+    <app-fleet-overview  *ngFor="let fleet of fleets" [fleet]="fleet" (onDelete)="onDeletePressed($event)" (onDetails)="onDetailsPressed($event)"></app-fleet-overview>
 </div>
    

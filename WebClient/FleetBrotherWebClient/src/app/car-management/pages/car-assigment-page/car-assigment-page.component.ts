@@ -35,7 +35,18 @@ export class CarAssigmentPageComponent implements OnInit {
   }
 
   onDecline(car : Car){
-    this.dialogService.openErrorDialog("This is a test message.", "This is a test message.")
+    const ref = this.dialogService.openChooseDialog("Decline car join request", `Are you sure you want to decline the request for: #${car.id}: ${car.name}, License plate: ${car.licenasePlate}, VIN: ${car.vin}`)
+    ref.afterClosed().subscribe((decision) => {
+      if(decision){
+        this.fleetManagementService.declineCarJoinRequest(car.id).subscribe(result => {
+          if(result){
+            this.dialogService.openSuccessDialog("Operation successful.", "Car has not been added to any fleet.")
+          } else {
+            this.dialogService.openErrorDialog("Operation not successful.", "Please try again.")
+          }
+        })
+      }
+    })
   }
 
   canAssign(){
@@ -49,8 +60,10 @@ export class CarAssigmentPageComponent implements OnInit {
 
     this.fleetManagementService.acceptCarJoinRequest(car.id, selectedFleet.id).subscribe(
       result => {
-        if(!result){
-          //TODO raise error
+        if(result){
+          this.dialogService.openSuccessDialog("Operation successful.", "Car has been added to fleet.")
+        } else {
+          this.dialogService.openErrorDialog("Operation not successful.", "Please try again.")
         }
         this.fetchData();
       }
