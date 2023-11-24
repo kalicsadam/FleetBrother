@@ -17,5 +17,5 @@ data class Field(
 
     @ManyToOne
     @JoinColumn(name = "schema_id")
-    var schema: Schema,
+    var schema: Schema?,
 )

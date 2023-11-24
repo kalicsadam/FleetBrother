@@ -19,10 +19,6 @@ class DemoController(
 
         fleetRepository.addCar(fleet, car)
 
-        val fleet2 = fleet
-
-        //val str = Gson().toJson(fleet2)
-
         return "str"
     }
 
@@ -31,5 +27,11 @@ class DemoController(
         val fleet = fleetRepository.getReferenceById(1)
         val str = ObjectMapper().writeValueAsString(fleet)
         return str
+    }
+
+    @GetMapping("/demo3")
+    fun demo3() : String {
+        carRepository.removeSchema(2, 1)
+        return "demo3"
     }
 }

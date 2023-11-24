@@ -13,9 +13,4 @@ data class Fleet(
 
     @OneToMany(mappedBy = "fleet")
     var cars: MutableList<Car> = mutableListOf(),
-) {
-    fun addCar(car: Car) {
-        cars.add(car)
-        car.fleet = this
-    }
-}
+)
