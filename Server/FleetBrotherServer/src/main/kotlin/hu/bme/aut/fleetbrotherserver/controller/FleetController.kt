@@ -14,18 +14,18 @@ class FleetController(
         return fleetService.getAllFleets()
     }
 
-    @GetMapping("/{id}")
-    fun getFleetById(@PathVariable id: Int) : FleetDto {
-        return fleetService.getFleetById(id)
+    @GetMapping("/{fleetId}")
+    fun getFleetById(@PathVariable fleetId: Int) : FleetDto {
+        return fleetService.getFleetById(fleetId)
     }
 
-    @PutMapping
+    @PutMapping("/create")
     fun createFleet(@RequestBody fleetDto: FleetDto) {
         fleetService.createFleet(fleetDto)
     }
 
-    @DeleteMapping
-    fun deleteFleet(@RequestParam id: Int) {
-        fleetService.deleteFleet(id)
+    @DeleteMapping("/{fleetId}")
+    fun deleteFleet(@PathVariable fleetId: Int) {
+        fleetService.deleteFleet(fleetId)
     }
 }

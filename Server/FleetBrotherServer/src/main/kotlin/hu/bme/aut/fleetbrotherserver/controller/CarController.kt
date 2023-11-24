@@ -10,9 +10,9 @@ class CarController(
     private val carService: CarService
 ) {
 
-    @GetMapping("/{id}")
-    fun getCarById(@PathVariable id: Int) : CarDto {
-        val carDto = carService.getCarById(id)
+    @GetMapping("/{carId}")
+    fun getCarById(@PathVariable carId: Int) : CarDto {
+        val carDto = carService.getCarById(carId)
         return carDto
     }
 
@@ -28,18 +28,18 @@ class CarController(
         return carDtos
     }
 
-    @PutMapping("/acceptCar")
-    fun acceptCarJoinRequest(@RequestParam carId: Int, @RequestParam fleetId: Int) {
+    @PutMapping("/{carId}/acceptRequest")
+    fun acceptCarJoinRequest(@PathVariable carId: Int, @RequestParam fleetId: Int) {
         carService.acceptCarJoinRequest(carId, fleetId)
     }
 
-    @DeleteMapping("/declineCar")
-    fun declineCarJoinRequest(@RequestParam carId: Int) {
+    @DeleteMapping("/{carId}/declineRequest")
+    fun declineCarJoinRequest(@PathVariable carId: Int) {
         carService.declineCarJoinRequest(carId)
     }
 
-    @DeleteMapping
-    fun removeCarFromFleet(@RequestParam carId: Int, @RequestParam fleetId: Int) {
+    @DeleteMapping("/{carId}/removeFromFiled")
+    fun removeCarFromFleet(@PathVariable carId: Int, @RequestParam fleetId: Int) {
         carService.removeCarFromFleet(carId, fleetId)
     }
 }
