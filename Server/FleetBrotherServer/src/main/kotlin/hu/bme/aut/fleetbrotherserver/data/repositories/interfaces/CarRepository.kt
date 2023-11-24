@@ -7,8 +7,12 @@ import hu.bme.aut.fleetbrotherserver.data.entities.Schema
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 
-interface CarRepository : JpaRepository<Car, Int>, CustomCarRepository
+interface CarRepository : JpaRepository<Car, Int>, CustomCarRepository {
+    @Query("SELECT c FROM Car c WHERE c.fleet = null")
+    fun getNewcomerCars() : List<Car>
+}
 
 interface CustomCarRepository {
     fun addSchema(carId: Int, schemaId: Int)

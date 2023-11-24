@@ -21,11 +21,24 @@ class CarServiceImpl(
 
     override fun getCarById(carId: Int): CarDto {
         val carDto = carRepository.getReferenceById(carId).convertToDto()
-
         return carDto
+    }
+
+    override fun getNewcomerCars(): List<CarDto> {
+        val carDtos = carRepository.getNewcomerCars().map { it.convertToDto() }
+        return carDtos
     }
 
     override fun removeCarFromFleet(carId: Int, fleetId: Int) {
         fleetRepository.removeCar(fleetId, carId)
+    }
+
+    override fun acceptCarJoinRequest(carId: Int, fleetId: Int) {
+        fleetRepository.addCar(fleetId, carId)
+    }
+
+    override fun declineCarJoinRequest(carId: Int) {
+        val car = carRepository.getReferenceById(carId)
+        carRepository.delete(car)
     }
 }
