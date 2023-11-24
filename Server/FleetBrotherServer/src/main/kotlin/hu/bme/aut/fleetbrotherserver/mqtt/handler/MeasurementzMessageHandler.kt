@@ -10,7 +10,7 @@ import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
-class MeasurementzMessageHandler(private val measurementRepo: MeasurementRepository, private val carRepo: CarRepository, private val schemaRepo: SchemaRepository) : MessageHandler {
+class MeasurementzMessageHandler(private val measurementRepo: MeasurementRepository, private val carRepo: CarRepository) : MessageHandler {
     private val logger = LoggerFactory.getLogger(MeasurementzMessageHandler::class.java)!!
 
     override fun handleMessage(message: Message<*>) {

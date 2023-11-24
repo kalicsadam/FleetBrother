@@ -1,9 +1,13 @@
 package hu.bme.aut.fleetbrotherserver.mqtt
 
+import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.CarRepository
+import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.MeasurementRepository
+import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.SchemaRepository
+import hu.bme.aut.fleetbrotherserver.mqtt.handler.LivezMessageHandler
+import hu.bme.aut.fleetbrotherserver.mqtt.handler.MeasurementzMessageHandler
 import org.eclipse.paho.mqttv5.client.*
 import org.eclipse.paho.mqttv5.client.persist.MqttDefaultFilePersistence
 import org.eclipse.paho.mqttv5.common.MqttMessage
-import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.integration.annotation.ServiceActivator
@@ -11,7 +15,6 @@ import org.springframework.integration.channel.DirectChannel
 import org.springframework.integration.core.MessageProducer
 import org.springframework.integration.mqtt.core.*
 import org.springframework.integration.mqtt.inbound.Mqttv5PahoMessageDrivenChannelAdapter
-import org.springframework.integration.mqtt.outbound.Mqttv5PahoMessageHandler
 import org.springframework.integration.mqtt.support.MqttHeaders
 import org.springframework.integration.router.HeaderValueRouter
 import org.springframework.messaging.MessageChannel
@@ -19,8 +22,6 @@ import org.springframework.messaging.MessageHandler
 
 @Configuration
 class MqttConfiguration(val conf: MqttParameters) {
-    val logger = LoggerFactory.getLogger(MqttConfiguration::class.java)!!
-
     @Bean
     fun clientManager(): ClientManager<IMqttAsyncClient, MqttConnectionOptions> {
         val mqttConnectionOptions = MqttConnectionOptions()
@@ -70,9 +71,7 @@ class MqttConfiguration(val conf: MqttParameters) {
     @Bean
     @ServiceActivator(inputChannel = "livez")
     fun handleLivez(): MessageHandler {
-        return MessageHandler {
-            message -> logger.info("Livez: ${message.payload}")
-        }
+        return LivezMessageHandler()
     }
 
     @Bean
@@ -82,36 +81,34 @@ class MqttConfiguration(val conf: MqttParameters) {
 
     @Bean
     @ServiceActivator(inputChannel = "measurementz")
-    fun handleMeasurementz(): MessageHandler {
-        return MessageHandler {
-            message -> logger.info("Measurementz: ${message.payload}")
-        }
+    fun handleMeasurementz(measurementRepository: MeasurementRepository, carRepository: CarRepository, schemaRepository: SchemaRepository): MessageHandler {
+        return MeasurementzMessageHandler(measurementRepository, carRepository, schemaRepository)
     }
 
-    @Bean
-    fun remoteProcResult(): MessageChannel {
-        return DirectChannel()
-    }
+//    @Bean
+//    fun remoteProcResult(): MessageChannel {
+//        return DirectChannel()
+//    }
+//
+//    @Bean
+//    @ServiceActivator(inputChannel = "remoteProcResult")
+//    fun handleRemoteProcResult(): MessageHandler {
+//        return MessageHandler {
+//            message -> logger.info("Remote Proc Result: ${message.payload}")
+//        }
+//    }
 
-    @Bean
-    @ServiceActivator(inputChannel = "remoteProcResult")
-    fun handleRemoteProcResult(): MessageHandler {
-        return MessageHandler {
-            message -> logger.info("Remote Proc Result: ${message.payload}")
-        }
-    }
-
-    @Bean
-    fun mqttOutboundChannel(): MessageChannel {
-        return DirectChannel()
-    }
-
-    @Bean
-    @ServiceActivator(inputChannel = "mqttOutboundChannel")
-    fun mqttOutbound(clientManager: ClientManager<IMqttAsyncClient, MqttConnectionOptions>): MessageHandler {
-        val messageHandler = Mqttv5PahoMessageHandler(clientManager)
-        messageHandler.setAsync(true)
-        messageHandler.setDefaultQos(1)
-        return messageHandler
-    }
+//    @Bean
+//    fun mqttOutboundChannel(): MessageChannel {
+//        return DirectChannel()
+//    }
+//
+//    @Bean
+//    @ServiceActivator(inputChannel = "mqttOutboundChannel")
+//    fun mqttOutbound(clientManager: ClientManager<IMqttAsyncClient, MqttConnectionOptions>): MessageHandler {
+//        val messageHandler = Mqttv5PahoMessageHandler(clientManager)
+//        messageHandler.setAsync(true)
+//        messageHandler.setDefaultQos(1)
+//        return messageHandler
+//    }
 }
