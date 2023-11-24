@@ -14,6 +14,7 @@ export class SchemaOverviewComponent {
   @Output() onAddNewField : EventEmitter<FieldCreationRequestBody> = new EventEmitter();
   @Output() onDeleteField : EventEmitter<Field> = new EventEmitter();
   @Output() onDeleteSchema : EventEmitter<Schema> = new EventEmitter();
+  @Output() onAssignCar : EventEmitter<Schema> = new EventEmitter();
 
   onAddNewFieldFired(rb : FieldCreationRequestBody){
     this.onAddNewField.emit(rb)
@@ -25,5 +26,9 @@ export class SchemaOverviewComponent {
 
   onDeleteSchemaFired(schema : Schema){
     this.onDeleteSchema.emit(schema);
+  }
+
+  onAssignCarFired(schema : Schema){
+    this.onAssignCar.emit(schema);
   }
 }

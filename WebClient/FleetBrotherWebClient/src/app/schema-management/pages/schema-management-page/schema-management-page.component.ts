@@ -7,6 +7,8 @@ import { SchemaCreationRequestBody } from 'src/app/data/requestbody/schema-creat
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service';
 import { FieldCreationRequestBody } from 'src/app/data/requestbody/field-creation.dto';
 import { Field } from 'src/app/data/dto/field.dto';
+import { SchemaCarAssigmentComponent, SchemaCarAssigmentOutput } from '../../components/schema-car-assigment/schema-car-assigment.component';
+import { Car } from 'src/app/data/dto/car.dto';
 
 @Component({
   selector: 'app-schema-management-page',
@@ -39,6 +41,22 @@ export class SchemaManagementPageComponent {
         this.schemaService.createSchema(schema).subscribe(result => {
           if(result){
             this.dialogService.openSuccessDialog("Operation successful.", "Schema has been created.")
+          } else {
+            this.dialogService.openErrorDialog("Operation not successful.", "Please try again.")
+          }
+          this.fetchData();
+        })
+      }
+    })
+  }
+
+  openAssignPanel(schema : Schema){
+    const ref = this._bottomSheet.open(SchemaCarAssigmentComponent, {data: {schema: schema}})
+    ref.afterDismissed().subscribe((data : SchemaCarAssigmentOutput) => {
+      if(data != null && data.add != null && data.remove != null && data.schema != null){
+        this.schemaService.assignSchemaToCar(data.schema.id, data.add.map(cars => cars.id), data.remove.map(cars => cars.id)).subscribe(result => {
+          if(result){
+            this.dialogService.openSuccessDialog("Operation successful.", "Cars have been assigned to schema.")
           } else {
             this.dialogService.openErrorDialog("Operation not successful.", "Please try again.")
           }

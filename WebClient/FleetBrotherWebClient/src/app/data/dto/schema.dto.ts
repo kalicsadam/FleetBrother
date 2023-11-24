@@ -6,6 +6,5 @@ export interface Schema {
     name : string,
     fields : Field[]
 
-    cars : Car[]
-    measurements : any[]
+    carIds : number[]
 }

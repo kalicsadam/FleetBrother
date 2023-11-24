@@ -16,11 +16,13 @@ import { CarFleetAssigmentComponent } from './car-management/components/car-flee
 import { CarOverviewComponent } from './car-management/components/car-overview/car-overview.component';
 import { FormsModule } from '@angular/forms';
 import { MessageDialogComponent } from './shared/components/message-dialog/message-dialog.component';
-import { SchemaManagementPageComponent } from './schema-creation/pages/schema-management-page/schema-management-page.component';
-import { SchemaCreateComponent } from './schema-creation/components/schema-create/schema-create.component';
-import { SchemaOverviewComponent } from './schema-creation/components/schema-overview/schema-overview.component';
-import { FieldOverviewComponent } from './schema-creation/components/field-overview/field-overview.component';
-import { FieldCreationComponent } from './schema-creation/components/field-creation/field-creation.component';
+import { SchemaManagementPageComponent } from './schema-management/pages/schema-management-page/schema-management-page.component';
+import { SchemaCreateComponent } from './schema-management/components/schema-create/schema-create.component';
+import { SchemaOverviewComponent } from './schema-management/components/schema-overview/schema-overview.component';
+import { FieldOverviewComponent } from './schema-management/components/field-overview/field-overview.component';
+import { FieldCreationComponent } from './schema-management/components/field-creation/field-creation.component';
+import { CarReportingPageComponent } from './car-reporting/pages/car-reporting-page/car-reporting-page.component';
+import { SchemaCarAssigmentComponent } from './schema-management/components/schema-car-assigment/schema-car-assigment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +40,8 @@ import { FieldCreationComponent } from './schema-creation/components/field-creat
     SchemaOverviewComponent,
     FieldOverviewComponent,
     FieldCreationComponent,
+    CarReportingPageComponent,
+    SchemaCarAssigmentComponent,
   ],
   imports: [
     BrowserModule,

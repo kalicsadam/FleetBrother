@@ -43,22 +43,19 @@ export class SchemaManagementService {
       id: 1,
       fields: this.placeholderFields,
       name: "Schema #1",
-      cars: [],
-      measurements: []
+      carIds: [],
     },
     {
       id: 2,
       fields: this.placeholderFields,
       name: "Schema #2",
-      cars: [],
-      measurements: []
+      carIds: [],
     },
     {
       id: 3,
       fields: this.placeholderFields,
       name: "Schema #3",
-      cars: [],
-      measurements: []
+      carIds: []
     }
   ]
 
@@ -69,8 +66,7 @@ export class SchemaManagementService {
   createSchema(schema: SchemaCreationRequestBody) {
     this.placeholderSchema.push({
       id : this.placeholderSchema[this.placeholderSchema.length - 1].id + 1,
-      cars: [],
-      measurements: [],
+      carIds: [],
       fields: [],
       name: schema.name
     })
@@ -102,6 +98,17 @@ export class SchemaManagementService {
 
   deleteSchema(schemaId : number) {
     this.placeholderSchema = this.placeholderSchema.filter(schema => schemaId != schema.id);
+    return new BehaviorSubject(true);
+  }
+
+  assignSchemaToCar(schemaId : number, carIdsToAdd : number[], carIdsToRemove : number[]){
+    const schema = this.placeholderSchema.find(schema => schemaId == schema.id);
+    if(schema == null){
+      return new BehaviorSubject(false);
+    }
+    schema.carIds.push(...carIdsToAdd);
+
+    schema.carIds = schema.carIds.filter(carId => !carIdsToRemove.some(deleted=> carId == deleted))
     return new BehaviorSubject(true);
   }
 }

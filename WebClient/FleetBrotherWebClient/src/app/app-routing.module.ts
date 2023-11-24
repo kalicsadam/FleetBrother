@@ -3,7 +3,8 @@ import { RouterModule, Routes, provideRouter, withComponentInputBinding } from '
 import { FleetManagementPageComponent } from './fleet-management/pages/fleet-management-page/fleet-management-page.component';
 import { FleetViewPageComponent } from './fleet-management/pages/fleet-view-page/fleet-view-page.component';
 import { CarAssigmentPageComponent } from './car-management/pages/car-assigment-page/car-assigment-page.component';
-import { SchemaManagementPageComponent } from './schema-creation/pages/schema-management-page/schema-management-page.component';
+import { SchemaManagementPageComponent } from './schema-management/pages/schema-management-page/schema-management-page.component';
+import { CarReportingPageComponent } from './car-reporting/pages/car-reporting-page/car-reporting-page.component';
 
 const routes: Routes = 
 [
@@ -22,6 +23,10 @@ const routes: Routes =
   { 
     path: 'schema', 
     component: SchemaManagementPageComponent
+  },
+  { 
+    path: 'report/:id', 
+    component: CarReportingPageComponent
   },
 ];
 

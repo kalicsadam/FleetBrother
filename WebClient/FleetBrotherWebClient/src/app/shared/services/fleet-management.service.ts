@@ -73,6 +73,10 @@ export class FleetManagementService {
     return new BehaviorSubject(this.placeholderFleets.find(fleet => fleet.id == fleetId));
   }
 
+  getAllCars(){
+    return new BehaviorSubject(this.placeholderCars);
+  }
+
   getCarsForFleet(fleetId : number) : Observable<Car[]>{
     return new BehaviorSubject(this.placeholderCars);
   }
