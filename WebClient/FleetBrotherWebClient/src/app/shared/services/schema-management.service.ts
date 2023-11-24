@@ -83,7 +83,7 @@ export class SchemaManagementService {
       return new BehaviorSubject(false);
     }
     schema.fields.push({
-      id: schema.fields[schema.fields.length - 1].id + 1,
+      id: schema.fields[schema.fields.length - 1]?.id ?? 0 + 1,
       key: field.key,
       type: field.type,
       elementType: field.elementType
@@ -97,6 +97,11 @@ export class SchemaManagementService {
       return new BehaviorSubject(false);
     }
     schema.fields = schema.fields.filter(field => field.id != fieldId);
+    return new BehaviorSubject(true);
+  }
+
+  deleteSchema(schemaId : number) {
+    this.placeholderSchema = this.placeholderSchema.filter(schema => schemaId != schema.id);
     return new BehaviorSubject(true);
   }
 }

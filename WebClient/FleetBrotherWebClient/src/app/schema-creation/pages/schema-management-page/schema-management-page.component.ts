@@ -5,6 +5,8 @@ import { SchemaManagementService } from 'src/app/shared/services/schema-manageme
 import { SchemaCreateComponent } from '../../components/schema-create/schema-create.component';
 import { SchemaCreationRequestBody } from 'src/app/data/requestbody/schema-creation.dto';
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service';
+import { FieldCreationRequestBody } from 'src/app/data/requestbody/field-creation.dto';
+import { Field } from 'src/app/data/dto/field.dto';
 
 @Component({
   selector: 'app-schema-management-page',
@@ -37,6 +39,49 @@ export class SchemaManagementPageComponent {
         this.schemaService.createSchema(schema).subscribe(result => {
           if(result){
             this.dialogService.openSuccessDialog("Operation successful.", "Schema has been created.")
+          } else {
+            this.dialogService.openErrorDialog("Operation not successful.", "Please try again.")
+          }
+          this.fetchData();
+        })
+      }
+    })
+  }
+
+  onAddNewField(schema: Schema, field : FieldCreationRequestBody){
+    this.schemaService.addFieldToSchema(schema.id, field).subscribe(result => {
+      if(result){
+        this.dialogService.openSuccessDialog("Operation successful.", "Field has been added to schema.")
+      } else {
+        this.dialogService.openErrorDialog("Operation not successful.", "Please try again.")
+      }
+      this.fetchData();
+    })
+  }
+
+  onDeleteField(schema: Schema, field : Field){
+    const ref = this.dialogService.openChooseDialog("Delete field", `Are you sure you want to delete field: ${schema.name}: ${field.key}?`);
+    ref.afterClosed().subscribe(decision => {
+      if(decision){
+        this.schemaService.removeFieldFromSchema(schema.id, field.id).subscribe(result => {
+          if(result){
+            this.dialogService.openSuccessDialog("Operation successful.", "Field has been removed from schema.")
+          } else {
+            this.dialogService.openErrorDialog("Operation not successful.", "Please try again.")
+          }
+          this.fetchData();
+        })
+      }
+    })
+  }
+
+  onDeleteSchema(schema: Schema){
+    const ref = this.dialogService.openChooseDialog("Delete schema", `Are you sure you want to delete schema: ${schema.id}: ${schema.name}?`);
+    ref.afterClosed().subscribe(decision => {
+      if(decision){
+        this.schemaService.deleteSchema(schema.id).subscribe(result => {
+          if(result){
+            this.dialogService.openSuccessDialog("Operation successful.", "Schema has been deleted.")
           } else {
             this.dialogService.openErrorDialog("Operation not successful.", "Please try again.")
           }

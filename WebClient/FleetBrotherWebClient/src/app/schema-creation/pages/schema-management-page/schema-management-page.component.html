@@ -4,6 +4,6 @@
 
 <div>
     <div *ngFor="let schema of schemas">
-        <app-schema-overview [schema]="schema"></app-schema-overview>
+        <app-schema-overview [schema]="schema" (onAddNewField)="onAddNewField(schema, $event)" (onDeleteField)="onDeleteField(schema, $event)" (onDeleteSchema)="onDeleteSchema($event)"></app-schema-overview>
     </div>
 </div>

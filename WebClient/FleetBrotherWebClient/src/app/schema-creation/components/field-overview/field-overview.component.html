@@ -6,10 +6,13 @@
             </mat-card-title>
             <mat-card-subtitle>
                 Type: {{field.type}}
+                <div *ngIf="field.elementType != null">
+                Element Type: {{field.elementType}}
+                </div>
             </mat-card-subtitle>
         </div>
         <div>
-            <button mat-icon-button>
+            <button mat-icon-button (click)="onDelete.emit(field)">
                 <mat-icon>remove</mat-icon>
             </button>
         </div>

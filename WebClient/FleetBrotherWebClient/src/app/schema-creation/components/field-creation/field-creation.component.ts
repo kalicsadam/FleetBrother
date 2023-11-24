@@ -10,7 +10,7 @@ import { FieldCreationRequestBody } from 'src/app/data/requestbody/field-creatio
 export class FieldCreationComponent {
   key : string = "";
   type : string = "";
-  elementType : string = "";
+  elementType : string | null = null;
 
   @Output() onAddNewField : EventEmitter<FieldCreationRequestBody> = new EventEmitter();
 
@@ -26,6 +26,6 @@ export class FieldCreationComponent {
 
     this.key= "";
     this.type = "";
-    this.elementType = "";
+    this.elementType = null;
   }
 }

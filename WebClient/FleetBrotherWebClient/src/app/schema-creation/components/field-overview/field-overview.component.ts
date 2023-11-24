@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Field } from 'src/app/data/dto/field.dto';
 
 @Component({
@@ -8,4 +8,6 @@ import { Field } from 'src/app/data/dto/field.dto';
 })
 export class FieldOverviewComponent {
   @Input() field : Field | undefined
+
+  @Output() onDelete : EventEmitter<Field> = new EventEmitter();
 }

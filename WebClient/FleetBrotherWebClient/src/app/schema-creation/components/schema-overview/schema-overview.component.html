@@ -12,7 +12,7 @@
         
             <mat-card-content>
                 <div *ngFor="let field of schema.fields">
-                    <app-field-overview [field]="field"></app-field-overview>
+                    <app-field-overview [field]="field" (onDelete)="onDeleteFieldFired($event)"></app-field-overview>
                 </div>
                 <div>
                     <app-field-creation (onAddNewField)="onAddNewFieldFired($event)"></app-field-creation>
@@ -20,7 +20,7 @@
             </mat-card-content>
         </div>
         <div class="schema-overview-tools">
-            <button mat-icon-button>
+            <button mat-icon-button (click)="onDeleteSchemaFired(schema)">
                 <mat-icon>delete</mat-icon>
               </button>
         </div>
