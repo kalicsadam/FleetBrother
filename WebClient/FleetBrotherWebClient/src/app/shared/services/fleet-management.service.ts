@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Car } from 'src/app/data/dto/cat.dto';
+import { Car } from 'src/app/data/dto/car.dto';
 import { Fleet } from 'src/app/data/dto/fleet.dto';
+import { FleetCreationRequestBody } from 'src/app/data/requestbody/fleet-creation.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -84,9 +85,14 @@ export class FleetManagementService {
     return new BehaviorSubject(this.placeholderCars.find(car => car.id == carId));
   }
 
-  createFleet(fleet: Fleet) : Observable<boolean> {
-    console.log("fleet create: " + fleet.name + ", desc: " + fleet.description)
-    fleet.id = this.placeholderFleets[this.placeholderFleets.length -1].id + 1
+  createFleet(requestbody: FleetCreationRequestBody) : Observable<boolean> {
+    console.log("fleet create: " + requestbody.name + ", desc: " + requestbody.description)
+    const fleet = {
+      id: this.placeholderFleets[this.placeholderFleets.length -1].id + 1,
+      name: requestbody.name,
+      description: requestbody.description,
+      cars: this.placeholderCars
+    }
     this.placeholderFleets.push(fleet);
     return new BehaviorSubject(true);
   }

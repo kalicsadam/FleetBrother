@@ -1,0 +1,15 @@
+.schema-overview {
+    margin: 16px;
+    .schema-overview-content {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        .schema-overview-data {
+            flex: 1 1 auto;
+        }
+        .schema-overview-tools {
+            flex: 0 0 auto;
+            margin: 16px;
+        }
+    }
+}

@@ -5,6 +5,7 @@ import { Fleet } from 'src/app/data/dto/fleet.dto';
 import { FleetManagementService } from 'src/app/shared/services/fleet-management.service';
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service';
 import { Router } from '@angular/router';
+import { FleetCreationRequestBody } from 'src/app/data/requestbody/fleet-creation.dto';
 
 @Component({
   selector: 'app-fleet-management-page',
@@ -33,7 +34,7 @@ export class FleetManagementPageComponent implements OnInit {
 
   openCreatePanel(){
     const ref = this._bottomSheet.open(FleetManagementCreateComponent)
-    ref.afterDismissed().subscribe(fleet => {
+    ref.afterDismissed().subscribe((fleet : FleetCreationRequestBody) => {
       if(fleet != null && fleet.name != null){
         this.fleetManagementService.createFleet(fleet).subscribe(result => {
           if(result){

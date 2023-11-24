@@ -15,8 +15,12 @@ import { CarAssigmentPageComponent } from './car-management/pages/car-assigment-
 import { CarFleetAssigmentComponent } from './car-management/components/car-fleet-assigment/car-fleet-assigment.component';
 import { CarOverviewComponent } from './car-management/components/car-overview/car-overview.component';
 import { FormsModule } from '@angular/forms';
-import { MessageDialogComponent } from './shared/components/sidebar/message-dialog/message-dialog.component';
-
+import { MessageDialogComponent } from './shared/components/message-dialog/message-dialog.component';
+import { SchemaManagementPageComponent } from './schema-creation/pages/schema-management-page/schema-management-page.component';
+import { SchemaCreateComponent } from './schema-creation/components/schema-create/schema-create.component';
+import { SchemaOverviewComponent } from './schema-creation/components/schema-overview/schema-overview.component';
+import { FieldOverviewComponent } from './schema-creation/components/field-overview/field-overview.component';
+import { FieldCreationComponent } from './schema-creation/components/field-creation/field-creation.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +32,12 @@ import { MessageDialogComponent } from './shared/components/sidebar/message-dial
     CarAssigmentPageComponent,
     CarFleetAssigmentComponent,
     CarOverviewComponent,
-    MessageDialogComponent
+    MessageDialogComponent,
+    SchemaManagementPageComponent,
+    SchemaCreateComponent,
+    SchemaOverviewComponent,
+    FieldOverviewComponent,
+    FieldCreationComponent,
   ],
   imports: [
     BrowserModule,

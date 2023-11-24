@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-sheet';
-import { Car } from 'src/app/data/dto/cat.dto';
+import { Car } from 'src/app/data/dto/car.dto';
 import { Fleet } from 'src/app/data/dto/fleet.dto';
 import { FleetManagementService } from 'src/app/shared/services/fleet-management.service';
 

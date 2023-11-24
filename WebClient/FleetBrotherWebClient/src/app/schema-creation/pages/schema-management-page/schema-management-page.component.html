@@ -1,0 +1,9 @@
+<button mat-fab color="primary" class="fab" (click)="openCreatePanel()">
+    <mat-icon>create</mat-icon>
+</button>
+
+<div>
+    <div *ngFor="let schema of schemas">
+        <app-schema-overview [schema]="schema"></app-schema-overview>
+    </div>
+</div>

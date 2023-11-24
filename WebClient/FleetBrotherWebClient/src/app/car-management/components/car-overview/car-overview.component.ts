@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Car } from 'src/app/data/dto/cat.dto';
+import { Car } from 'src/app/data/dto/car.dto';
 
 export enum CarOverviewMode {
   ACCEPT_DECLINE,

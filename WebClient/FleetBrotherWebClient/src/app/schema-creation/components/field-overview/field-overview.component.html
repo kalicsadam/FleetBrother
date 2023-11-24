@@ -1,0 +1,18 @@
+<mat-card *ngIf="field != null">
+    <div class="field-overview-content">
+        <div>
+            <mat-card-title>
+                {{field.id}}: {{field.key}}
+            </mat-card-title>
+            <mat-card-subtitle>
+                Type: {{field.type}}
+            </mat-card-subtitle>
+        </div>
+        <div>
+            <button mat-icon-button>
+                <mat-icon>remove</mat-icon>
+            </button>
+        </div>
+    </div>
+    
+</mat-card>

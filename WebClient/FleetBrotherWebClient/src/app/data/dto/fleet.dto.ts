@@ -1,4 +1,4 @@
-import { Car } from "./cat.dto"
+import { Car } from "./car.dto"
 
 export interface Fleet {
     id : number,

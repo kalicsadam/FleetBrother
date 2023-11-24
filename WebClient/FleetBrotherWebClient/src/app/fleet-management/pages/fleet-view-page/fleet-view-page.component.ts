@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { CarOverviewMode } from 'src/app/car-management/components/car-overview/car-overview.component';
-import { Car } from 'src/app/data/dto/cat.dto';
+import { Car } from 'src/app/data/dto/car.dto';
 import { Fleet } from 'src/app/data/dto/fleet.dto';
 import { FleetManagementService } from 'src/app/shared/services/fleet-management.service';
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service';
