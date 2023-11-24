@@ -1,10 +1,6 @@
 package hu.bme.aut.fleetbrotherserver.data.entities
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
+import jakarta.persistence.*
 
 @Entity
 data class Fleet(
@@ -14,6 +10,12 @@ data class Fleet(
     var name: String,
     var description: String,
 
-    @OneToMany(mappedBy = "fleet", orphanRemoval = true)
+
+    @OneToMany(mappedBy = "fleet")
     var cars: MutableList<Car> = mutableListOf(),
-)
+) {
+    fun addCar(car: Car) {
+        cars.add(car)
+        car.fleet = this
+    }
+}

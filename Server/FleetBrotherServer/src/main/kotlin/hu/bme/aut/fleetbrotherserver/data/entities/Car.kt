@@ -1,5 +1,6 @@
 package hu.bme.aut.fleetbrotherserver.data.entities
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
 
 @Entity
@@ -14,8 +15,9 @@ data class Car(
     @OneToMany(mappedBy = "car", orphanRemoval = true)
     var schemaCars: MutableList<SchemaCar> = mutableListOf(),
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Fleet::class, fetch = FetchType.LAZY)
     @JoinColumn(name = "fleet_id")
+    @JsonBackReference
     var fleet: Fleet? = null,
 
 
