@@ -22,13 +22,29 @@ export class FleetManagementPageComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.fetchData();
+  }
+  
+  fetchData(){
     this.fleetManagementService.getAllFleets().subscribe(
       fleets => {this.fleets = fleets}
     )
   }
 
   openCreatePanel(){
-    this._bottomSheet.open(FleetManagementCreateComponent)
+    const ref = this._bottomSheet.open(FleetManagementCreateComponent)
+    ref.afterDismissed().subscribe(fleet => {
+      if(fleet != null && fleet.name != null){
+        this.fleetManagementService.createFleet(fleet).subscribe(result => {
+          if(result){
+            this.dialogService.openSuccessDialog("Operation successful.", "Fleet has been created.")
+          } else {
+            this.dialogService.openErrorDialog("Operation not successful.", "Please try again.")
+          }
+          this.fetchData();
+        })
+      }
+    })
   }
 
   onDeletePressed(fleet : Fleet){
@@ -41,6 +57,7 @@ export class FleetManagementPageComponent implements OnInit {
           } else {
             this.dialogService.openErrorDialog("Operation not successful.", "Please try again.")
           }
+          this.fetchData();
         })
       }
     })

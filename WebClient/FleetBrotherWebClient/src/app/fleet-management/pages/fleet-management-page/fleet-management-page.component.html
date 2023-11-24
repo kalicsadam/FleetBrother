@@ -2,7 +2,9 @@
     <mat-icon>create</mat-icon>
 </button>
 
-<div>
-    <app-fleet-overview  *ngFor="let fleet of fleets" [fleet]="fleet" (onDelete)="onDeletePressed($event)" (onDetails)="onDetailsPressed($event)"></app-fleet-overview>
+<div class="fleet-overview">
+    <div *ngFor="let fleet of fleets">
+        <app-fleet-overview [fleet]="fleet" (onDelete)="onDeletePressed($event)" (onDetails)="onDetailsPressed($event)"></app-fleet-overview>
+    </div>
 </div>
    

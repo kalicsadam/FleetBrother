@@ -1,5 +1,10 @@
-<app-fleet-overview [fleet]="fleet" [showDetailsButton]="false" [showDeleteButton]="false"></app-fleet-overview>
-<div *ngIf="fleet != null">
-    <app-car-overview [car]="car" *ngFor="let car of fleet.cars" [mode]="carOverviewModes.DELETE"></app-car-overview>
+<div class="fleet-overview">
+    <app-fleet-overview [fleet]="fleet" [showDetailsButton]="false" [showDeleteButton]="false"></app-fleet-overview>
+</div>
+
+<div class="fleet-car-overview" *ngIf="fleet != null">
+    <div class="car-overview" *ngFor="let car of fleet.cars">
+        <app-car-overview [car]="car" [mode]="carOverviewModes.DELETE" (onDelete)="onDeletePressed($event)"></app-car-overview>
+    </div>
 </div>
 

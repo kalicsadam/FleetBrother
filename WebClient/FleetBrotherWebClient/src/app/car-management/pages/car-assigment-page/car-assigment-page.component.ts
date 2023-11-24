@@ -44,6 +44,7 @@ export class CarAssigmentPageComponent implements OnInit {
           } else {
             this.dialogService.openErrorDialog("Operation not successful.", "Please try again.")
           }
+          this.fetchData();
         })
       }
     })

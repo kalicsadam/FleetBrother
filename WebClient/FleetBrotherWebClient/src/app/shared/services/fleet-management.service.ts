@@ -84,23 +84,38 @@ export class FleetManagementService {
     return new BehaviorSubject(this.placeholderCars.find(car => car.id == carId));
   }
 
+  createFleet(fleet: Fleet) : Observable<boolean> {
+    console.log("fleet create: " + fleet.name + ", desc: " + fleet.description)
+    fleet.id = this.placeholderFleets[this.placeholderFleets.length -1].id + 1
+    this.placeholderFleets.push(fleet);
+    return new BehaviorSubject(true);
+  }
+
   deleteFleet(fleetId : number) : Observable<boolean> {
     console.log("fleet deleted: " + fleetId)
+    this.placeholderFleets = this.placeholderFleets.filter(fleet => fleet.id != fleetId)
     return new BehaviorSubject(true);
   }
 
   removeCarFromFleet(carId : number, fleetId : number) : Observable<boolean> {
     console.log("carId: " + carId + " removed from fleet: " + fleetId)
+    const fleet = this.placeholderFleets.find(fleet => fleet.id == fleetId);
+    if(fleet == null){
+      return new BehaviorSubject(false);
+    }
+    fleet.cars = fleet?.cars.filter(car => car.id != carId) ?? []
     return new BehaviorSubject(true);
   }
 
   declineCarJoinRequest(carId : number) : Observable<boolean> {
     console.log("carId: " + carId + " rejected")
+    this.placeholderCars = this.placeholderCars.filter(car => car.id != carId)
     return new BehaviorSubject(true);
   }
 
   acceptCarJoinRequest(carId : number, fleetId : number) : Observable<boolean> {
     console.log("carId: " + carId + ", fleetId: " + fleetId + " assigned")
+    this.placeholderCars = this.placeholderCars.filter(car => car.id != carId)
     return new BehaviorSubject(true);
   }
 }

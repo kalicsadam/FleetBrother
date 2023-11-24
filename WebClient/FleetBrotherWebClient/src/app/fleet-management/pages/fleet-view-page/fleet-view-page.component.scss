@@ -1,17 +1,9 @@
 .fleet-overview {
-    margin: 1rem 5rem;
-    .fleet-overview-content {
-        display: flex;
-        justify-content: space-between;
-        .fleet-overview-details {
-            flex-grow: 1;
-            flex-shrink: 1;
-            margin-right: 24px;
-        }
-        .fleet-overview-tools {
-            & > * {
-                margin-left: 5px;
-            }
-        }
+    margin: 24px 36px;
+}
+
+.fleet-car-overview {
+    .car-overview {
+        margin: 24px 36px;
     }
 }
