@@ -3,7 +3,7 @@ package hu.bme.aut.fleetbrotherserver.service
 import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.CarRepository
 import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.FleetRepository
 import hu.bme.aut.fleetbrotherserver.dtos.CarDto
-import hu.bme.aut.fleetbrotherserver.dtos.mapper.Converter.Companion.convertToDto
+import hu.bme.aut.fleetbrotherserver.dtos.mapper.convertToDto
 import hu.bme.aut.fleetbrotherserver.service.interfaces.CarService
 import org.springframework.stereotype.Component
 

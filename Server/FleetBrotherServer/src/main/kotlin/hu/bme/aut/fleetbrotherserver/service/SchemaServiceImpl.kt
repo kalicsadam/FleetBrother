@@ -4,8 +4,8 @@ import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.FieldRepositor
 import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.SchemaRepository
 import hu.bme.aut.fleetbrotherserver.dtos.FieldDto
 import hu.bme.aut.fleetbrotherserver.dtos.SchemaDto
-import hu.bme.aut.fleetbrotherserver.dtos.mapper.Converter.Companion.convertBackFromDto
-import hu.bme.aut.fleetbrotherserver.dtos.mapper.Converter.Companion.convertToDto
+import hu.bme.aut.fleetbrotherserver.dtos.mapper.convertBackFromDto
+import hu.bme.aut.fleetbrotherserver.dtos.mapper.convertToDto
 import hu.bme.aut.fleetbrotherserver.service.interfaces.SchemaService
 import org.springframework.stereotype.Component
 

@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.*
 class SchemaController(
     private val schemaService: SchemaService
 ) {
-
     @GetMapping
-    fun getAllSchemas() : List<SchemaDto> {
-        val schemaDtos = schemaService.getAllSchemas()
-        return schemaDtos
+    fun getAllSchemas(): List<SchemaDto> {
+        return schemaService.getAllSchemas()
     }
 
     @PutMapping("/create")

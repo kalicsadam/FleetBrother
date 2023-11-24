@@ -9,23 +9,19 @@ import org.springframework.web.bind.annotation.*
 class CarController(
     private val carService: CarService
 ) {
-
     @GetMapping("/{carId}")
     fun getCarById(@PathVariable carId: Int) : CarDto {
-        val carDto = carService.getCarById(carId)
-        return carDto
+        return carService.getCarById(carId)
     }
 
     @GetMapping
     fun getCarsForFleet(@RequestParam fleetId: Int) : List<CarDto> {
-        val carDtos = carService.getCarsForFleet(fleetId)
-        return carDtos
+        return carService.getCarsForFleet(fleetId)
     }
 
     @GetMapping("/newcomers")
     fun getNewcomerCars() : List<CarDto> {
-        val carDtos = carService.getNewcomerCars()
-        return carDtos
+        return carService.getNewcomerCars()
     }
 
     @PutMapping("/{carId}/acceptRequest")
