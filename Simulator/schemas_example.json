@@ -1,17 +1,21 @@
 [
 {
-    "schema":"action",
+    "schema":"operator_action",
     "id":"",
-    "action":"open/close_doors,immobilize"
+    "data":{
+        "action":"open/close_doors,immobilize"
+    }
 },
 {
     "schema":"operator_alert",
     "id":"",
-    "alert_type":"info,return_to_garage,immediate_servicing_req",
-    "description":""
+    "data":{
+        "alert_type":"info,return_to_garage,immediate_servicing_req",
+        "description":""
+    }
 },
 {
-    "schema":"livez",
+    "schema":"livezconf",
     "id":"",
     "newPeriod":""
 },
@@ -43,14 +47,6 @@
     }
 },
 {
-    "schema": "location",
-    "id":"",
-    "data":{
-        "longitude": "x",
-        "latitude": "y"
-    }
-},
-{
     "schema": "fuel_level",
     "id":"",
     "data":{
@@ -79,9 +75,8 @@
     "schema": "battery_status",
     "id":"",
     "data":{
-        "charge":"",
-        "charge_unit":"",
-        "charge_cycles":""
+        "percentage":"",
+        "health":""
     }
 },
 {
@@ -108,5 +103,6 @@
     "data":{
         "level": "sufficient,refill_needed"
     }
-}
+},
+{"schema":"operator_alert","id":"5c377004-7e57-446f-9fa4-da3e44afc76e","data":{"alert_type":"Warning","description":"Return to garage ASAP!"}}
 ]
