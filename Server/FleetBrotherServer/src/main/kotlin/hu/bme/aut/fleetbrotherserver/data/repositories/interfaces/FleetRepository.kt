@@ -5,22 +5,19 @@ import hu.bme.aut.fleetbrotherserver.data.entities.Fleet
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository
-import org.springframework.data.repository.NoRepositoryBean
-import org.springframework.stereotype.Repository
 
-@NoRepositoryBean
-interface FleetRepository : JpaRepository<Fleet, Int> {
+interface FleetRepository : JpaRepository<Fleet, Int>, CustomFleetRepository
+
+interface CustomFleetRepository {
     fun addCar(fleetId: Int, carId: Int)
     fun addCar(fleet: Fleet, car: Car)
     fun removeCar(fleetId: Int, carId: Int)
     fun removeCar(fleet: Fleet, car: Car)
 }
 
-@Repository
-class FleetRepositoryImpl(
+open class CustomFleetRepositoryImpl(
     private val entityManager: EntityManager
-) : FleetRepository, SimpleJpaRepository<Fleet, Int>(Fleet::class.java, entityManager) {
+) : CustomFleetRepository {
 
     @Transactional
     override fun addCar(fleetId: Int, carId: Int) {
