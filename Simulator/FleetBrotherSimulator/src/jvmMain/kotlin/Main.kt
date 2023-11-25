@@ -4,34 +4,24 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.awt.ComposeDialog
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.LayoutCoordinates
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.*
@@ -39,14 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.swing.Swing
-import kotlinx.coroutines.withContext
 import model.Client
-import java.util.UUID
-import org.eclipse.paho.client.*
-import org.eclipse.paho.client.mqttv3.MqttClient
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions
-import org.eclipse.paho.client.mqttv3.MqttMessage
-import org.eclipse.paho.client.mqttv3.internal.wire.MqttConnect
 import view.detailsView
 import viewmodel.ClientDetailsViewModel
 import viewmodel.LoadingViewModel
@@ -54,30 +37,19 @@ import viewmodel.NewClientViewModel
 
 
 var clientlist by mutableStateOf(SnapshotStateList<Client>())
-var serverURI by mutableStateOf("")
-var serverPort by mutableStateOf("")
+var serverURI by mutableStateOf("192.168.1.200")
+var serverPort by mutableStateOf("1883")
 var ipaddr_regex = "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}\$".toRegex()
 var domain_regex = "^(?!:\\/\\/)([a-zA-Z0-9-]{1,63}\\.?){1,}([a-zA-Z]{2,63})\$\n".toRegex()
-var port_regex = " ^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))\$".toRegex()
-
-var newClientViewModel = NewClientViewModel()
-var loadingViewModel = LoadingViewModel()
-var clientDetailsViewModel = ClientDetailsViewModel()
+var port_regex = "^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))\$".toRegex()
 
 @Composable
-fun clientWidget(item: Client) {
-
+fun clientWidget(item: Client, clientDetailsViewModel: ClientDetailsViewModel) {
     Card(
         modifier = Modifier.padding(20.dp)
             .clickable {
+                clientDetailsViewModel.client = item
                 clientDetailsViewModel.visible = true
-                /*if (item.mqttclient.isConnected) {
-                    var msg = MqttMessage()
-                    msg.payload = "Hello from ${item.name} client".toByteArray()
-                    msg.qos = 0
-                    msg.isRetained = true
-                    item.mqttclient.publish("test", msg)
-                }*/
             },
         shape = RoundedCornerShape(10.dp),
         elevation = 10.dp,
@@ -94,8 +66,7 @@ fun clientWidget(item: Client) {
                 IconButton(
                     onClick = {
                         clientlist.remove(item)
-                        item.mqttclient.disconnect()
-                        //menuexpanded = true
+                        item.mqttDisconnect()
                     }
                 ) {
                     Icon(Icons.Default.Delete, contentDescription = null)
@@ -109,6 +80,10 @@ fun clientWidget(item: Client) {
 @Composable
 @Preview
 fun App() {
+    var newClientViewModel = NewClientViewModel()
+    var loadingViewModel = LoadingViewModel()
+    var clientDetailsViewModel = ClientDetailsViewModel()
+
     MaterialTheme {
         Column {
             Row(
@@ -146,14 +121,14 @@ fun App() {
                     enabled = (serverURI.isNotEmpty() && (serverURI.matches(ipaddr_regex) || serverURI.matches(domain_regex))) /*&& (serverPort.isNotEmpty() && serverPort.matches(port_regex))*/,
                     shape = CircleShape
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = "add")
+                    Icon(Icons.Default.Add, contentDescription = "Add")
                 }
             }
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = 180.dp)
             ) {
                 items(clientlist.size) { idx ->
-                    clientWidget(clientlist[idx])
+                    clientWidget(clientlist[idx],clientDetailsViewModel)
                 }
             }
             if (newClientViewModel.isdialogvisible) {

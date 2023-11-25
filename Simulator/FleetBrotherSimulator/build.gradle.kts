@@ -3,6 +3,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
+    kotlin("plugin.serialization") version "1.4.21"
 }
 
 group = "hu.bme.aut.fleetbrothersimulator"
@@ -31,6 +32,7 @@ kotlin {
                 implementation("org.eclipse.paho:org.eclipse.paho.android.service:1.0.2")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.1")
+                implementation("org.json:json:20200518")
             }
         }
         val jvmTest by getting

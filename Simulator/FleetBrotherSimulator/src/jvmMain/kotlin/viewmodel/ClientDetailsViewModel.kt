@@ -7,5 +7,5 @@ import model.Client
 
 class ClientDetailsViewModel {
     var visible by mutableStateOf(false)
-    //var client by mutableStateOf(Client("",""))
+    var client by mutableStateOf<Client?>(null)
 }
