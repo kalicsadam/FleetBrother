@@ -26,7 +26,7 @@ class SchemaController(
         schemaService.addFiledToSchema(schemaId, fieldDto)
     }
 
-    @PutMapping("/{schemaId}")
+    @PutMapping("/{schemaId}/assignSchemaToCar")
     fun assignSchemaToCar(@PathVariable schemaId: Int, @RequestBody schemaCarAssignDto: SchemaCarAssignDto) {
         schemaService.assignSchemaToCar(schemaId, schemaCarAssignDto)
     }
