@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Measurement } from 'src/app/data/dto/measurement.dto';
 import { Schema } from 'src/app/data/dto/schema.dto';
 import { CarReportingService } from 'src/app/shared/services/car-reporting.service';
 import { exportExcel } from 'src/app/shared/util/excel.util';
@@ -14,8 +15,9 @@ export class ReportComponent implements OnChanges, AfterViewInit {
   @Input() carId : number = 0;
   @Input() schema : Schema | undefined;
 
-  measurements : any[] = []
-  displayedColumns: string[] = [];
+  measurements : Measurement[] = []
+  rawData : any[] = []
+  displayedColumns: string[] = ["timestamp"];
   dataSource : MatTableDataSource<any> = new MatTableDataSource();
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -29,18 +31,22 @@ export class ReportComponent implements OnChanges, AfterViewInit {
   ngOnChanges(changes: SimpleChanges): void {
     if(this.carId != null && this.schema != null){
       this.fetchData()
-      this.displayedColumns = this.schema.fields.map(schema => schema.key)
+      this.displayedColumns.push(...(this.schema.fields.map(schema => schema.key)))
     }
   }
 
   fetchData(){
     this.carReportingService.getMeasurements(this.carId, this.schema!.id).subscribe(measurements =>{
       this.measurements = measurements
-      this.dataSource.data = measurements
+      this.rawData = measurements.map(m => {
+        let obj = {...({timestamp: m.timestamp}), ...(m.data)}
+        return obj
+      })
+      this.dataSource.data = this.rawData
     })
   }
 
   export(){
-    exportExcel(this.measurements, this.schema!.name);
+    exportExcel(this.rawData, this.schema!.name);
   }
 }
