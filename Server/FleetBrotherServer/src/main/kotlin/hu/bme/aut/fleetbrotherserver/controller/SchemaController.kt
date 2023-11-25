@@ -25,7 +25,7 @@ class SchemaController(
         schemaService.addFiledToSchema(schemaId, fieldDto)
     }
 
-    @DeleteMapping("/{schemaId}/removeFiled")
+    @DeleteMapping("/{schemaId}/removeField")
     fun removeFieldFromSchema(@PathVariable schemaId: Int, @RequestParam fieldId: Int) {
         schemaService.removeFieldFromSchema(schemaId, fieldId)
     }
@@ -34,5 +34,4 @@ class SchemaController(
     fun deleteSchema(@PathVariable schemaId: Int) {
         schemaService.deleteSchema(schemaId)
     }
-
 }
