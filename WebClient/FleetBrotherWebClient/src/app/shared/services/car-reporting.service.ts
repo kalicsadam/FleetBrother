@@ -35,6 +35,18 @@ export class CarReportingService {
         key: "numberField",
         type: FieldType.NUMBER
       }]
+    },
+    {
+      id: 3,
+      name: "Schema test 3",
+      carIds: [],
+      fields: [
+      {
+        id: 2,
+        elementType: FieldType.NUMBER,
+        key: "list",
+        type: FieldType.LIST
+      }]
     }
   ]
 
@@ -80,6 +92,27 @@ export class CarReportingService {
     },
   ]
 
+  placeholderMeasurements3 : Measurement[] = [
+    {
+      timestamp: new Date(2023, 1, 1, 9, 0, 0, 0),
+      data: {
+        list: [123, 0, 1.2]
+      }
+    },
+    {
+      timestamp: new Date(2023, 1, 1, 10, 0, 0, 0),
+      data: {
+        list: [123, 0, 1.2, 655]
+      }
+    },
+    {
+      timestamp: new Date(2023, 1, 1, 11, 0, 0, 0),
+      data: {
+        list: [2]
+      }
+    },
+  ]
+
   getSchemasForCar(carId : number){
     return new BehaviorSubject(this.placeholderSchemas)
   }
@@ -87,9 +120,11 @@ export class CarReportingService {
   getMeasurements(carId : number, schemaId : number){
     if(schemaId == 1){
       return new BehaviorSubject(this.placeholderMeasurements1)
-    } else {
+    } else if(schemaId == 2) {
       return new BehaviorSubject(this.placeholderMeasurements2)
+    } else if(schemaId == 3){
+      return new BehaviorSubject(this.placeholderMeasurements3)
     }
-    
+    return new BehaviorSubject([])
   }
 }

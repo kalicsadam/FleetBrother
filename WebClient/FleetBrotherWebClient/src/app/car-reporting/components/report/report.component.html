@@ -1,6 +1,9 @@
-<button mat-raised-button color="primary" (click)="export()">Export</button>
+<button mat-raised-button color="primary" (click)="export()">
+    <mat-icon>save</mat-icon>
+    Export
+</button>
 
-<table *ngIf="schema != null" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+<table *ngIf="schema != null" mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="timestamp">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>timestamp </th>
         <td mat-cell *matCellDef="let element"> {{element.timestamp}} </td>

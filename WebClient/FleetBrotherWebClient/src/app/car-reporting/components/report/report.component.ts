@@ -1,10 +1,9 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Measurement } from 'src/app/data/dto/measurement.dto';
 import { Schema } from 'src/app/data/dto/schema.dto';
 import { CarReportingService } from 'src/app/shared/services/car-reporting.service';
-import { exportExcel } from 'src/app/shared/util/excel.util';
 
 @Component({
   selector: 'app-report',
@@ -14,6 +13,7 @@ import { exportExcel } from 'src/app/shared/util/excel.util';
 export class ReportComponent implements OnChanges, AfterViewInit {
   @Input() carId : number = 0;
   @Input() schema : Schema | undefined;
+  @Output() exportedData : EventEmitter<any[]> = new EventEmitter();
 
   measurements : Measurement[] = []
   rawData : any[] = []
@@ -47,6 +47,6 @@ export class ReportComponent implements OnChanges, AfterViewInit {
   }
 
   export(){
-    exportExcel(this.rawData, this.schema!.name);
+    this.exportedData.emit(this.rawData)
   }
 }
