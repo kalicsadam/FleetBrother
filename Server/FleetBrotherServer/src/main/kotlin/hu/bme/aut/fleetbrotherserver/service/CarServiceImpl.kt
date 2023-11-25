@@ -12,6 +12,12 @@ class CarServiceImpl(
     private val carRepository: CarRepository,
     private val fleetRepository: FleetRepository,
 ) : CarService {
+    override fun getAllCars(): List<CarDto> {
+        val cars = carRepository.findAll()
+        val carDtos = cars.map { it.convertToDto() }
+        return carDtos
+    }
+
     override fun getCarsForFleet(fleetId: Int): List<CarDto> {
         val cars = fleetRepository.getReferenceById(fleetId).cars
         val carDtos = cars.map { it.convertToDto() }

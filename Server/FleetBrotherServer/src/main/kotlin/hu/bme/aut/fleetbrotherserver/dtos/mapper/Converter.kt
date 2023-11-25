@@ -23,7 +23,7 @@ fun Fleet.convertToDto() : FleetDto {
 
 fun FleetDto.convertBackFromDto() : Fleet {
     return Fleet(
-        id = this.id,
+        id = this.id ?: 0,
         name = this.name,
         description = this.description,
     )

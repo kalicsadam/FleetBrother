@@ -4,6 +4,7 @@ import hu.bme.aut.fleetbrotherserver.dtos.CarDto
 
 
 interface CarService {
+    fun getAllCars() : List<CarDto>
     fun getCarsForFleet(fleetId: Int) : List<CarDto>
     fun getCarById(carId: Int) : CarDto
     fun getNewcomerCars() : List<CarDto>
