@@ -1,6 +1,7 @@
 package hu.bme.aut.fleetbrotherserver.controller
 
 import hu.bme.aut.fleetbrotherserver.dtos.FieldDto
+import hu.bme.aut.fleetbrotherserver.dtos.SchemaCarAssignDto
 import hu.bme.aut.fleetbrotherserver.dtos.SchemaDto
 import hu.bme.aut.fleetbrotherserver.service.interfaces.SchemaService
 import org.springframework.web.bind.annotation.*
@@ -23,6 +24,11 @@ class SchemaController(
     @PutMapping("/{schemaId}/addField")
     fun addFieldToSchema(@PathVariable schemaId: Int, @RequestBody fieldDto: FieldDto) {
         schemaService.addFiledToSchema(schemaId, fieldDto)
+    }
+
+    @PutMapping("/{schemaId}")
+    fun assignSchemaToCar(@PathVariable schemaId: Int, @RequestBody schemaCarAssignDto: SchemaCarAssignDto) {
+        schemaService.assignSchemaToCar(schemaId, schemaCarAssignDto)
     }
 
     @DeleteMapping("/{schemaId}/removeField")

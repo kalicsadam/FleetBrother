@@ -1,6 +1,7 @@
 package hu.bme.aut.fleetbrotherserver.service.interfaces
 
 import hu.bme.aut.fleetbrotherserver.dtos.FieldDto
+import hu.bme.aut.fleetbrotherserver.dtos.SchemaCarAssignDto
 import hu.bme.aut.fleetbrotherserver.dtos.SchemaDto
 
 interface SchemaService {
@@ -9,4 +10,5 @@ interface SchemaService {
     fun addFiledToSchema(schemaId: Int, filedDto: FieldDto)
     fun removeFieldFromSchema(schemaId: Int, fieldId: Int)
     fun deleteSchema(schemaId: Int)
+    fun assignSchemaToCar(schemaId: Int, schemaCarAssignDto: SchemaCarAssignDto)
 }

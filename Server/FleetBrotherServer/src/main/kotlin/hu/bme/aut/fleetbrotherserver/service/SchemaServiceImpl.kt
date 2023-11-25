@@ -3,6 +3,7 @@ package hu.bme.aut.fleetbrotherserver.service
 import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.FieldRepository
 import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.SchemaRepository
 import hu.bme.aut.fleetbrotherserver.dtos.FieldDto
+import hu.bme.aut.fleetbrotherserver.dtos.SchemaCarAssignDto
 import hu.bme.aut.fleetbrotherserver.dtos.SchemaDto
 import hu.bme.aut.fleetbrotherserver.dtos.mapper.convertBackFromDto
 import hu.bme.aut.fleetbrotherserver.dtos.mapper.convertToDto
@@ -37,5 +38,15 @@ class SchemaServiceImpl(
 
     override fun deleteSchema(schemaId: Int) {
         schemaRepository.deleteById(schemaId)
+    }
+
+    override fun assignSchemaToCar(schemaId: Int, schemaCarAssignDto: SchemaCarAssignDto) {
+        schemaCarAssignDto.carIdsToAdd.forEach { carId ->
+            schemaRepository.addCar(schemaId, carId)
+        }
+
+        schemaCarAssignDto.carIdsToRemove.forEach { carId ->
+            schemaRepository.removeCar(schemaId, carId)
+        }
     }
 }
