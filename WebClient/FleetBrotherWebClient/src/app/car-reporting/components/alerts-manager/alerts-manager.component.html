@@ -1,3 +1,4 @@
+<h1 mat-dialog-title>Alerts</h1>
 <div mat-dialog-content *ngIf="schema != null">
     <div class="alerts" *ngFor="let alert of alerts">
         <app-alert-overview [alert]="alert" (onDelete)="onDelete($event)"></app-alert-overview>
