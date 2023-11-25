@@ -12,7 +12,7 @@ data class Car(
     var licensePlate: String,
     var vin: String,
 
-    @OneToMany(mappedBy = "car", orphanRemoval = true)
+    @OneToMany(mappedBy = "car")
     var schemaCars: MutableList<SchemaCar> = mutableListOf(),
 
     @ManyToOne(targetEntity = Fleet::class, fetch = FetchType.LAZY)
@@ -24,6 +24,6 @@ data class Car(
     @OneToMany(mappedBy = "car")
     var alerts: MutableList<Alert>,
 
-    @OneToMany(mappedBy = "car", orphanRemoval = true)
+    @OneToMany(mappedBy = "car")
     var measurements: MutableList<Measurement> = mutableListOf(),
 )

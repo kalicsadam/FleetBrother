@@ -1,11 +1,6 @@
 package hu.bme.aut.fleetbrotherserver.data.entities
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
+import jakarta.persistence.*
 import java.sql.Timestamp
 
 @Entity
@@ -18,9 +13,12 @@ data class Measurement(
 
     @ManyToOne
     @JoinColumn(name = "schema_id")
-    var schema: Schema,
+    var schema: Schema?,
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "car_id")
-     var car: Car
+     var car: Car?,
+
+    @OneToMany(mappedBy = "measurement")
+    var alertHistories: MutableList<AlertHistory> = mutableListOf(),
 )
