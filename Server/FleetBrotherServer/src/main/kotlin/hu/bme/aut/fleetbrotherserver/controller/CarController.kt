@@ -34,7 +34,7 @@ class CarController(
         carService.declineCarJoinRequest(carId)
     }
 
-    @DeleteMapping("/{carId}/removeFromFiled")
+    @DeleteMapping("/{carId}/removeFromFleet")
     fun removeCarFromFleet(@PathVariable carId: Int, @RequestParam fleetId: Int) {
         carService.removeCarFromFleet(carId, fleetId)
     }
