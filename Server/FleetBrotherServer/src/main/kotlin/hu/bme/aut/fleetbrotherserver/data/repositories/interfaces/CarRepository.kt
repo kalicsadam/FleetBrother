@@ -62,45 +62,53 @@ open class CustomCarRepositoryImpl(
         schemaCarRepository.removeSchemaCar(car, schema)
     }
 
+    @Transactional
     override fun addAlert(carId: Int, alertId: Int) {
         val car = entityManager.find(Car::class.java, carId)
         val alert = entityManager.find(Alert::class.java, alertId)
         addAlert(car, alert)
     }
 
+    @Transactional
     override fun addAlert(car: Car, alert: Alert) {
         car.alerts.add(alert)
         alert.car = car
     }
 
+    @Transactional
     override fun removeAlert(carId: Int, alertId: Int) {
         val car = entityManager.find(Car::class.java, carId)
         val alert = entityManager.find(Alert::class.java, alertId)
         removeAlert(car, alert)
     }
 
+    @Transactional
     override fun removeAlert(car: Car, alert: Alert) {
         car.alerts.remove(alert)
         alert.car = null
     }
 
+    @Transactional
     override fun addMeasurement(carId: Int, measurementId: Int) {
         val car = entityManager.find(Car::class.java, carId)
         val measurement = entityManager.find(Measurement::class.java, measurementId)
         addMeasurement(car, measurement)
     }
 
+    @Transactional
     override fun addMeasurement(car: Car, measurement: Measurement) {
         car.measurements.add(measurement)
         measurement.car = car
     }
 
+    @Transactional
     override fun removeMeasurement(carId: Int, measurementId: Int) {
         val car = entityManager.find(Car::class.java, carId)
         val measurement = entityManager.find(Measurement::class.java, measurementId)
         removeMeasurement(car, measurement)
     }
 
+    @Transactional
     override fun removeMeasurement(car: Car, measurement: Measurement) {
         car.measurements.remove(measurement)
         measurement.car = null

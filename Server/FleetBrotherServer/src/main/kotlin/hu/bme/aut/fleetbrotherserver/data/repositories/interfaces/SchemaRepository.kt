@@ -56,45 +56,53 @@ open class CustomSchemaRepositoryImpl(
         schemaCarRepository.removeSchemaCar(car, schema)
     }
 
+    @Transactional
     override fun addField(schemaId: Int, fieldId: Int) {
         val field = entityManager.find(Field::class.java, fieldId)
         val schema = entityManager.find(Schema::class.java, schemaId)
         addField(schema, field)
     }
 
+    @Transactional
     override fun addField(schema: Schema, field: Field) {
         field.schema = schema
         schema.fields.add(field)
     }
 
+    @Transactional
     override fun removeField(schemaId: Int, fieldId: Int) {
         val field = entityManager.find(Field::class.java, fieldId)
         val schema = entityManager.find(Schema::class.java, schemaId)
         removeField(schema, field)
     }
 
+    @Transactional
     override fun removeField(schema: Schema, field: Field) {
         field.schema = null
         schema.fields.remove(field)
     }
 
+    @Transactional
     override fun addMeasurement(schemaId: Int, measurementId: Int) {
         val measurement = entityManager.find(Measurement::class.java, measurementId)
         val schema = entityManager.find(Schema::class.java, schemaId)
         addMeasurement(schema, measurement)
     }
 
+    @Transactional
     override fun addMeasurement(schema: Schema, measurement: Measurement) {
         measurement.schema = schema
         schema.measurements.add(measurement)
     }
 
+    @Transactional
     override fun removeMeasurement(schemaId: Int, measurementId: Int) {
         val measurement = entityManager.find(Measurement::class.java, measurementId)
         val schema = entityManager.find(Schema::class.java, schemaId)
         removeMeasurement(schema, measurement)
     }
 
+    @Transactional
     override fun removeMeasurement(schema: Schema, measurement: Measurement) {
         measurement.schema = null
         schema.measurements.remove(measurement)

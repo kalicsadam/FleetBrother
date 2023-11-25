@@ -35,6 +35,7 @@ open class CustomSchemaCarRepositoryImpl(
         return schemaCar
     }
 
+    @Transactional
     override fun removeSchemaCar(car: Car, schema: Schema) {
         val schemaCar = entityManager.createQuery("SELECT sc FROM SchemaCar sc WHERE sc.car.id = :carId AND sc.schema.id = :schemaId")
             .setParameter("carId", car.id)

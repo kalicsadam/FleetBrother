@@ -30,6 +30,7 @@ open class CustomAlertHistoryRepositoryImpl(
         return alertHistory
     }
 
+    @Transactional
     override fun removeAlertHistory(alert: Alert, measurement: Measurement) {
         val alertHistory = entityManager.createQuery("SELECT ah FROM AlertHistory ah WHERE ah.alert.id = :alertId AND ah.measurement.id = :measurementId")
             .setParameter("alertId", alert.id)
