@@ -1,0 +1,112 @@
+[
+{
+    "schema":"action",
+    "id":"",
+    "action":"open/close_doors,immobilize"
+},
+{
+    "schema":"operator_alert",
+    "id":"",
+    "alert_type":"info,return_to_garage,immediate_servicing_req",
+    "description":""
+},
+{
+    "schema":"livez",
+    "id":"",
+    "newPeriod":""
+},
+{
+    "schema":"temperature",
+    "id":"",
+    "data": {
+        "internal": "x",
+        "external": "y",
+        "unit": "c v f"
+    }
+},
+
+{
+    "schema": "location",
+    "id":"",
+    "data":{
+        "longitude": "x",
+        "latitude": "y"
+    }
+},
+
+{
+    "schema": "current_speed",
+    "id":"",
+    "data":{
+        "value":"",
+        "unit":"kph v mph"
+    }
+},
+{
+    "schema": "location",
+    "id":"",
+    "data":{
+        "longitude": "x",
+        "latitude": "y"
+    }
+},
+{
+    "schema": "fuel_level",
+    "id":"",
+    "data":{
+        "percentage":"0-100"
+    }
+},
+{
+    "schema": "engine_status",
+    "id":"",
+    "data":{
+        "state":"running,turned_off",
+        "temp": "",
+        "temp_unit": "c v f"
+
+    }
+},
+{
+    "schema": "odometer",
+    "id":"",
+    "data":{
+        "value":"numeric valami",
+        "rollbacks":"0-..."
+    }
+},
+{
+    "schema": "battery_status",
+    "id":"",
+    "data":{
+        "charge":"",
+        "charge_unit":"",
+        "charge_cycles":""
+    }
+},
+{
+    "schema": "tire_pressure",
+    "id":"",
+    "data":{
+        "unit":"kpa,psi",
+        "front_right":"",
+        "front_left":"",
+        "back_right":"",
+        "back_left":""
+    }
+},
+{
+    "schema": "oil",
+    "id":"",
+    "data":{
+        "level": "sufficient,refill_needed"
+    }
+},
+{
+    "schema": "windshield_cleaner",
+    "id":"",
+    "data":{
+        "level": "sufficient,refill_needed"
+    }
+}
+]
