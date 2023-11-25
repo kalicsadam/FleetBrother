@@ -40,7 +40,7 @@ class MqttConfiguration(val conf: MqttParameters) {
                 clientManager,
                 conf.channels.livez,
                 conf.channels.measurementz,
-                conf.channels.remoteProcResult
+                //conf.channels.remoteProcResult
         )
         adapter.setQos(1)
         adapter.setPayloadType(MqttMessage::class.java)
@@ -59,7 +59,7 @@ class MqttConfiguration(val conf: MqttParameters) {
         val router = HeaderValueRouter(MqttHeaders.RECEIVED_TOPIC)
         router.setChannelMapping(conf.channels.livez, "livez")
         router.setChannelMapping(conf.channels.measurementz, "measurementz")
-        router.setChannelMapping(conf.channels.remoteProcResult, "remoteProcResult")
+        //router.setChannelMapping(conf.channels.remoteProcResult, "remoteProcResult")
         return router
     }
 
@@ -70,8 +70,8 @@ class MqttConfiguration(val conf: MqttParameters) {
 
     @Bean
     @ServiceActivator(inputChannel = "livez")
-    fun handleLivez(): MessageHandler {
-        return LivezMessageHandler()
+    fun handleLivez(carRepository: CarRepository): MessageHandler {
+        return LivezMessageHandler(carRepository)
     }
 
     @Bean
@@ -81,8 +81,8 @@ class MqttConfiguration(val conf: MqttParameters) {
 
     @Bean
     @ServiceActivator(inputChannel = "measurementz")
-    fun handleMeasurementz(measurementRepository: MeasurementRepository, carRepository: CarRepository, schemaRepository: SchemaRepository): MessageHandler {
-        return MeasurementzMessageHandler(measurementRepository, carRepository, schemaRepository)
+    fun handleMeasurementz(measurementRepository: MeasurementRepository, carRepository: CarRepository): MessageHandler {
+        return MeasurementzMessageHandler(measurementRepository, carRepository)
     }
 
 //    @Bean
