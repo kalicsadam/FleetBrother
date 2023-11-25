@@ -19,7 +19,7 @@ class CarController(
         return carService.getCarById(carId)
     }
 
-    @GetMapping
+    @GetMapping("/getCarsForFleet")
     fun getCarsForFleet(@RequestParam fleetId: Int) : List<CarDto> {
         return carService.getCarsForFleet(fleetId)
     }
