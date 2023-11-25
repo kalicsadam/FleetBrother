@@ -1,10 +1,13 @@
 import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { CarOverviewMode } from 'src/app/car-management/components/car-overview/car-overview.component';
 import { Car } from 'src/app/data/dto/car.dto';
 import { Schema } from 'src/app/data/dto/schema.dto';
 import { CarReportingService } from 'src/app/shared/services/car-reporting.service';
 import { FleetManagementService } from 'src/app/shared/services/fleet-management.service';
 import { exportExcel } from 'src/app/shared/util/excel.util';
+import { AlertsManagerComponent } from '../../components/alerts-manager/alerts-manager.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-car-reporting-page',
@@ -16,11 +19,14 @@ export class CarReportingPageComponent {
   car : Car | undefined;
   schemas : Schema[] = []
 
+  exportDisabled : BehaviorSubject<boolean> = new BehaviorSubject(false)
+
   carOverviewMode = CarOverviewMode
 
   constructor(
     private carReportingService : CarReportingService,
-    private fleetManagementService : FleetManagementService
+    private fleetManagementService : FleetManagementService,
+    public dialog: MatDialog
     ){}
 
   @Input() set id(carId: string) {
@@ -38,6 +44,20 @@ export class CarReportingPageComponent {
   }
 
   export(schema : Schema, data : any[]){
+    this.exportDisabled.next(true)
     exportExcel(data, schema.name);
+    this.exportDisabled.next(false)
+  }
+
+  onAlertButton(schema : Schema){
+    this.openAlertsDialog(schema)
+  }
+
+  openAlertsDialog(schema : Schema){
+    this.dialog.open(AlertsManagerComponent, {
+      data: {car: this.car, schema: schema},
+      minHeight: "50%",
+      minWidth: "50%"
+    })
   }
 }

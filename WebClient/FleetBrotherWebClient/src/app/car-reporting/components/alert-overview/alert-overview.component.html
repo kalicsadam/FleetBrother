@@ -1,0 +1,21 @@
+<mat-card *ngIf="alert != null">
+    <div class="alert-overview-container">
+        <div class="alert-overview-info">
+            <mat-card-content style="display: flex;">
+                <mat-card-title>{{alert.name}}</mat-card-title>
+                <mat-card-subtitle>ID: {{alert.id}}</mat-card-subtitle>
+                <h4>Key: {{alert.keyName}}</h4>
+                <h4 *ngIf="isMinValueAlert(alert)">Min: {{alert.minValue}}</h4>
+                <h4 *ngIf="isMaxValueAlert(alert)">Max: {{alert.maxValue}}</h4>
+                <h4 *ngIf="isForbiddenValueAlert(alert)">Forbidden: {{alert.forbiddenValue}}</h4>
+                <h4 *ngIf="isExistsValueAlert(alert)">should not exist</h4>
+            </mat-card-content>
+        </div>
+    
+        <div class="alert-overview-tools">
+            <button mat-icon-button (click)="onDeletePressed(alert)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+</mat-card>

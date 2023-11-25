@@ -1,0 +1,28 @@
+<div *ngIf="schema != null" class="alert-creation">
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="inputName">
+    </mat-form-field>
+    <mat-form-field *ngIf="schema != null">
+        <mat-label>Key</mat-label>
+        <mat-select [(ngModel)]="inputField">
+            <mat-option *ngFor="let field of schema.fields" [value]="field">{{field.key}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select [(ngModel)]="inputType">
+            <mat-option *ngIf="inputField?.type == fieldType.NUMBER" value="min">Min</mat-option>
+            <mat-option *ngIf="inputField?.type == fieldType.NUMBER" value="max">Max</mat-option>
+            <mat-option value="forbidden">Forbidden</mat-option>
+            <mat-option value="exists">Exists</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="inputType != alertType.EXISTS">
+        <mat-label>Value</mat-label>
+        <input matInput [(ngModel)]="inputValue">
+    </mat-form-field>
+    <button mat-icon-button (click)="onSubmit()">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

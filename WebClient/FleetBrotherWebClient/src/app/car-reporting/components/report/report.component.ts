@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Car } from 'src/app/data/dto/car.dto';
 import { Measurement } from 'src/app/data/dto/measurement.dto';
 import { Schema } from 'src/app/data/dto/schema.dto';
 import { CarReportingService } from 'src/app/shared/services/car-reporting.service';
@@ -11,9 +12,11 @@ import { CarReportingService } from 'src/app/shared/services/car-reporting.servi
   styleUrls: ['./report.component.scss']
 })
 export class ReportComponent implements OnChanges, AfterViewInit {
-  @Input() carId : number = 0;
+  @Input() car : Car | undefined;
   @Input() schema : Schema | undefined;
+  @Input() exportDisabled :boolean | null = false;
   @Output() exportedData : EventEmitter<any[]> = new EventEmitter();
+  @Output() onAlertButton : EventEmitter<Schema> = new EventEmitter();
 
   measurements : Measurement[] = []
   rawData : any[] = []
@@ -29,14 +32,14 @@ export class ReportComponent implements OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.carId != null && this.schema != null){
+    if(this.car != null && this.schema != null){
       this.fetchData()
       this.displayedColumns.push(...(this.schema.fields.map(schema => schema.key)))
     }
   }
 
   fetchData(){
-    this.carReportingService.getMeasurements(this.carId, this.schema!.id).subscribe(measurements =>{
+    this.carReportingService.getMeasurements(this.car!.id, this.schema!.id).subscribe(measurements =>{
       this.measurements = measurements
       this.rawData = measurements.map(m => {
         let obj = {...({timestamp: m.timestamp}), ...(m.data)}
@@ -48,5 +51,9 @@ export class ReportComponent implements OnChanges, AfterViewInit {
 
   export(){
     this.exportedData.emit(this.rawData)
+  }
+
+  alert(){
+    this.onAlertButton.emit(this.schema)
   }
 }

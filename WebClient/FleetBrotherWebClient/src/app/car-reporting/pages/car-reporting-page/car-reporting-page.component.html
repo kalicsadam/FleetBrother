@@ -6,7 +6,7 @@
         <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
             <mat-tab *ngFor="let schema of schemas" [label]="schema.name">
                 <ng-template matTabContent>
-                    <app-report [schema]="schema" [carId]="carId" (exportedData)="export(schema, $event)"></app-report>
+                    <app-report [schema]="schema" [car]="car" (exportedData)="export(schema, $event)" (onAlertButton)="onAlertButton($event)" [exportDisabled]="exportDisabled | async"></app-report>
                 </ng-template>
             </mat-tab>
         </mat-tab-group>

@@ -1,0 +1,11 @@
+.alert-creation {
+    display: flex; 
+    align-items: top;
+    & > * {
+        margin-right: 4px;
+    }
+
+    button{
+        margin-top: 4px;
+    }
+}

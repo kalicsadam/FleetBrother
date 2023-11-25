@@ -24,6 +24,9 @@ import { FieldCreationComponent } from './schema-management/components/field-cre
 import { CarReportingPageComponent } from './car-reporting/pages/car-reporting-page/car-reporting-page.component';
 import { SchemaCarAssigmentComponent } from './schema-management/components/schema-car-assigment/schema-car-assigment.component';
 import { ReportComponent } from './car-reporting/components/report/report.component';
+import { AlertsManagerComponent } from './car-reporting/components/alerts-manager/alerts-manager.component';
+import { AlertOverviewComponent } from './car-reporting/components/alert-overview/alert-overview.component';
+import { AlertCreationComponent } from './car-reporting/components/alert-creation/alert-creation.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +47,9 @@ import { ReportComponent } from './car-reporting/components/report/report.compon
     CarReportingPageComponent,
     SchemaCarAssigmentComponent,
     ReportComponent,
+    AlertsManagerComponent,
+    AlertOverviewComponent,
+    AlertCreationComponent,
   ],
   imports: [
     BrowserModule,

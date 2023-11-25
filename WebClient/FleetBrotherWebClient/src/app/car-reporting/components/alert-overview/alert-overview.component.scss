@@ -1,0 +1,16 @@
+.alert-overview-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .alert-overview-info{
+        mat-card-content {
+            display: flex;
+            align-items: center;
+            & > * {
+                margin-bottom: 0px;
+                margin-right: 16px;
+            }
+        }
+    }
+}
