@@ -23,6 +23,7 @@ import { FieldOverviewComponent } from './schema-management/components/field-ove
 import { FieldCreationComponent } from './schema-management/components/field-creation/field-creation.component';
 import { CarReportingPageComponent } from './car-reporting/pages/car-reporting-page/car-reporting-page.component';
 import { SchemaCarAssigmentComponent } from './schema-management/components/schema-car-assigment/schema-car-assigment.component';
+import { ReportComponent } from './car-reporting/components/report/report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,7 @@ import { SchemaCarAssigmentComponent } from './schema-management/components/sche
     FieldCreationComponent,
     CarReportingPageComponent,
     SchemaCarAssigmentComponent,
+    ReportComponent,
   ],
   imports: [
     BrowserModule,

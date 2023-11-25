@@ -4,7 +4,7 @@
 
 <div class="fleet-car-overview" *ngIf="fleet != null">
     <div class="car-overview" *ngFor="let car of fleet.cars">
-        <app-car-overview [car]="car" [mode]="carOverviewModes.DELETE" (onDelete)="onDeletePressed($event)"></app-car-overview>
+        <app-car-overview [car]="car" [mode]="carOverviewModes.MANAGE" (onDelete)="onDeletePressed($event)"></app-car-overview>
     </div>
 </div>
 

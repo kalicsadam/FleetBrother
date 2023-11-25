@@ -3,7 +3,7 @@ import { Car } from 'src/app/data/dto/car.dto';
 
 export enum CarOverviewMode {
   ACCEPT_DECLINE,
-  DELETE
+  MANAGE
 }
 
 @Component({

@@ -1,1 +1,7 @@
-<p>car-reporting-page works!</p>
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab *ngFor="let schema of schemas" [label]="schema.name">
+        <ng-template matTabContent>
+            <app-report [schema]="schema" [carId]="carId"></app-report>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>

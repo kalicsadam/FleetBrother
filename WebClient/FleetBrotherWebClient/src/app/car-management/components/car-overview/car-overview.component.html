@@ -18,7 +18,10 @@
                     <mat-icon>close</mat-icon>
                 </button>
             </div>
-            <div *ngIf="mode == modetype.DELETE" class="tools-delete">
+            <div *ngIf="mode == modetype.MANAGE" class="tools-delete">
+                <button mat-fab color="primary" [routerLink]="['/report', car.id]" [disabled]="disabled">
+                    <mat-icon>report</mat-icon>
+                </button>
                 <button mat-fab color="warn" (click)="onDelete.emit(car)" [disabled]="disabled">
                     <mat-icon>delete</mat-icon>
                 </button>
