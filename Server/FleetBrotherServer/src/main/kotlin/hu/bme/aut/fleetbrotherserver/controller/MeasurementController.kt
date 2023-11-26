@@ -13,7 +13,7 @@ class MeasurementController(
     private val measurementService: MeasurementService
 ) {
     @GetMapping
-    fun getMeasurements(@RequestParam carId: Int, @RequestParam schemeId: Int) : List<MeasurementDto> {
-        return measurementService.getMeasurements(carId, schemeId)
+    fun getMeasurements(@RequestParam carId: Int, @RequestParam schemaId: Int) : List<MeasurementDto> {
+        return measurementService.getMeasurements(carId, schemaId)
     }
 }
