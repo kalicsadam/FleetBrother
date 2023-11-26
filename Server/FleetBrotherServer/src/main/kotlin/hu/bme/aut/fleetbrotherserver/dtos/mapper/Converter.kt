@@ -33,8 +33,8 @@ fun Field.convertToDto() : FieldDto {
     return FieldDto(
         id = this.id,
         key = this.key,
-        elementType = if(this.isList) this.type.toString() else null,
-        type = if(this.isList) "LIST" else this.type.toString(),
+        elementType = if(this.isList) this.type.toString().lowercase() else null,
+        type = if(this.isList) "list" else this.type.toString().lowercase(),
     )
 }
 
