@@ -3,6 +3,7 @@ package hu.bme.aut.fleetbrotherserver.service
 import com.google.firebase.messaging.*
 import hu.bme.aut.fleetbrotherserver.data.entities.AlertHistory
 import hu.bme.aut.fleetbrotherserver.firebase.FirebaseParameters
+import hu.bme.aut.fleetbrotherserver.mail.MailParameters
 import hu.bme.aut.fleetbrotherserver.service.interfaces.NotificationService
 import jakarta.mail.MessagingException
 import jakarta.mail.Session
@@ -16,7 +17,11 @@ import java.util.*
 
 
 @Service
-class NotificationServiceImpl(private val firebaseMessaging: FirebaseMessaging, private val firebaseParameters: FirebaseParameters): NotificationService {
+class NotificationServiceImpl(
+        private val firebaseMessaging: FirebaseMessaging,
+        private val firebaseParameters: FirebaseParameters,
+        private val mailParameters: MailParameters
+): NotificationService {
     private val logger = LoggerFactory.getLogger(NotificationServiceImpl::class.java)!!
 
     override fun dispatchFirebaseAlert(alertHistory: AlertHistory) {
@@ -38,8 +43,8 @@ class NotificationServiceImpl(private val firebaseMessaging: FirebaseMessaging, 
     override fun dispatchEmailAlert(alertHistory: AlertHistory) {
         val props = Properties()
         props["mail.smtp.auth"] = false
-        props["mail.smtp.host"] = "localhost"
-        props["mail.smtp.port"] = "25"
+        props["mail.smtp.host"] = mailParameters.host
+        props["mail.smtp.port"] = mailParameters.port
 
         val session = Session.getInstance(props)
         try {
