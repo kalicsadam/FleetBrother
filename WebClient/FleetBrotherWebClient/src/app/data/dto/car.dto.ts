@@ -1,6 +1,6 @@
 export interface Car {
     id: number,
     name : string,
-    licenasePlate : string,
+    licensePlate : string,
     vin : string
 }

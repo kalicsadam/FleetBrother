@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Car } from 'src/app/data/dto/car.dto';
 import { Fleet } from 'src/app/data/dto/fleet.dto';
 import { FleetCreationRequestBody } from 'src/app/data/requestbody/fleet-creation.dto';
@@ -9,123 +10,54 @@ import { FleetCreationRequestBody } from 'src/app/data/requestbody/fleet-creatio
 })
 export class FleetManagementService {
 
-  constructor() { }
-
-  placeholderCars : Car[] = [
-    {
-      id: 1,
-      licenasePlate: "AAAA-123",
-      vin: "placeholder",
-      name: "WV Golf mk.3"
-    },
-    {
-      id: 2,
-      licenasePlate: "AAAA-234",
-      vin: "placeholder",
-      name: "WV Golf mk.3"
-    },
-    {
-      id: 3,
-      licenasePlate: "AAAA-567",
-      vin: "placeholder",
-      name: "WV Golf mk.3"
-    },
-    {
-      id: 4,
-      licenasePlate: "AAAA-9876",
-      vin: "placeholder",
-      name: "WV Golf mk.3"
-    }
-  ]
-
-  placeholderFleets : Fleet[] = [{
-    id: 1,
-    cars : this.placeholderCars,
-    description: "This is a description for my fleet",
-    name: "Fleet #1"
-  },
-  {
-    id: 2,
-    cars : this.placeholderCars,
-    description: "This is a description for my fleet",
-    name: "Fleet #2"
-  },
-  {
-    id: 3,
-    cars : this.placeholderCars,
-    description: "This is a description for my fleet",
-    name: "Fleet #3"
-  },
-  {
-    id: 4,
-    cars : this.placeholderCars,
-    description: "This is a description for my fleet",
-    name: "Fleet #4"
-  }]
-
+  constructor(private http : HttpClient) { }
   
 
   getAllFleets() : Observable<Fleet[]>{
-    return new BehaviorSubject(this.placeholderFleets);
+    return this.http.get<Fleet[]>("/api/fleet")
   }
 
   getFleetById(fleetId : number) : Observable<Fleet | undefined>{
-    return new BehaviorSubject(this.placeholderFleets.find(fleet => fleet.id == fleetId));
+    return this.http.get<Fleet>("/api/fleet/" + fleetId)
   }
 
   getAllCars(){
-    return new BehaviorSubject(this.placeholderCars);
+    return this.http.get<Car[]>("/api/car")
   }
 
   getCarsForFleet(fleetId : number) : Observable<Car[]>{
-    return new BehaviorSubject(this.placeholderCars);
+    return this.http.get<Car[]>("/api/car/getCarsForFleet", {
+      params: {
+        fleetId: fleetId
+      }
+    })
   }
 
   getNewcomerCars() : Observable<Car[]>{
-    return new BehaviorSubject(this.placeholderCars);
+    return this.http.get<Car[]>("/api/car/newcomers")
   }
 
   getCarById(carId : number) : Observable<Car | undefined>{
-    return new BehaviorSubject(this.placeholderCars.find(car => car.id == carId));
+    return this.http.get<Car>("/api/fleet/" + carId)
   }
 
   createFleet(requestbody: FleetCreationRequestBody) : Observable<boolean> {
-    console.log("fleet create: " + requestbody.name + ", desc: " + requestbody.description)
-    const fleet = {
-      id: this.placeholderFleets[this.placeholderFleets.length -1].id + 1,
-      name: requestbody.name,
-      description: requestbody.description,
-      cars: this.placeholderCars
-    }
-    this.placeholderFleets.push(fleet);
-    return new BehaviorSubject(true);
+    return this.http.put("/api/fleet/create", requestbody, { observe: 'response' }).pipe(map(response => response.ok))
   }
 
   deleteFleet(fleetId : number) : Observable<boolean> {
-    console.log("fleet deleted: " + fleetId)
-    this.placeholderFleets = this.placeholderFleets.filter(fleet => fleet.id != fleetId)
-    return new BehaviorSubject(true);
+    return this.http.delete("/api/fleet/" + fleetId, { observe: 'response' }).pipe(map(response => response.ok))
   }
 
   removeCarFromFleet(carId : number, fleetId : number) : Observable<boolean> {
-    console.log("carId: " + carId + " removed from fleet: " + fleetId)
-    const fleet = this.placeholderFleets.find(fleet => fleet.id == fleetId);
-    if(fleet == null){
-      return new BehaviorSubject(false);
-    }
-    fleet.cars = fleet?.cars.filter(car => car.id != carId) ?? []
-    return new BehaviorSubject(true);
+    return this.http.delete("/api/car/"+carId+"/removeFromFleet", { observe: 'response', params: {fleetId: fleetId} }).pipe(map(response => response.ok))
   }
 
   declineCarJoinRequest(carId : number) : Observable<boolean> {
-    console.log("carId: " + carId + " rejected")
-    this.placeholderCars = this.placeholderCars.filter(car => car.id != carId)
-    return new BehaviorSubject(true);
+    return this.http.delete("/api/car/" + carId + "/declineRequest", { observe: 'response' }).pipe(map(response => response.ok))
   }
 
   acceptCarJoinRequest(carId : number, fleetId : number) : Observable<boolean> {
-    console.log("carId: " + carId + ", fleetId: " + fleetId + " assigned")
-    this.placeholderCars = this.placeholderCars.filter(car => car.id != carId)
-    return new BehaviorSubject(true);
+    return this.http.put("/api/car/" + carId + "/acceptRequest", null, { observe: 'response', params: {fleetId: fleetId} }).pipe(map(response => response.ok))
   }
 }

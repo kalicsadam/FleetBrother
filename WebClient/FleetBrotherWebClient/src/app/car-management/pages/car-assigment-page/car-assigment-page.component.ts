@@ -35,7 +35,7 @@ export class CarAssigmentPageComponent implements OnInit {
   }
 
   onDecline(car : Car){
-    const ref = this.dialogService.openChooseDialog("Decline car join request", `Are you sure you want to decline the request for: #${car.id}: ${car.name}, License plate: ${car.licenasePlate}, VIN: ${car.vin}`)
+    const ref = this.dialogService.openChooseDialog("Decline car join request", `Are you sure you want to decline the request for: #${car.id}: ${car.name}, License plate: ${car.licensePlate}, VIN: ${car.vin}`)
     ref.afterClosed().subscribe((decision) => {
       if(decision){
         this.fleetManagementService.declineCarJoinRequest(car.id).subscribe(result => {

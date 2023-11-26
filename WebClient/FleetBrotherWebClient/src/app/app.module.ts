@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +27,8 @@ import { ReportComponent } from './car-reporting/components/report/report.compon
 import { AlertsManagerComponent } from './car-reporting/components/alerts-manager/alerts-manager.component';
 import { AlertOverviewComponent } from './car-reporting/components/alert-overview/alert-overview.component';
 import { AlertCreationComponent } from './car-reporting/components/alert-creation/alert-creation.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { LoadingInterceptor } from './shared/interceptor/loading-interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +60,10 @@ import { AlertCreationComponent } from './car-reporting/components/alert-creatio
     MaterialModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    importProvidersFrom(HttpClientModule),
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

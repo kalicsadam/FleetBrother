@@ -4,7 +4,7 @@
         <mat-checkbox class="example-margin"
                   [checked]="entry.checked"
                   (change)="entry.checked = $event.checked">
-      #{{entry.car.id}}: {{entry.car.name}} ({{entry.car.licenasePlate}}, VIN: {{entry.car.vin}})
+      #{{entry.car.id}}: {{entry.car.name}} ({{entry.car.licensePlate}}, VIN: {{entry.car.vin}})
     </mat-checkbox>
     </div>
     <button mat-raised-button color="primary" style="margin-top: 16px;" (click)="onAssign()">Assign</button>

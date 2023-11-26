@@ -23,3 +23,13 @@
     flex: 1 1 auto;
 }
 
+.loading {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1001;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
