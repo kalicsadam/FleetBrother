@@ -56,6 +56,6 @@ export class ReportComponent implements OnChanges, AfterViewInit {
     if(element instanceof Array){
       return element.join(", ")
     }
-    return element.toString();
+    return element?.toString() ?? "";
   }
 }
