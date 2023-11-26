@@ -4,13 +4,16 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import hu.bme.aut.fleetbrotherserver.data.entities.*
 import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.AlertHistoryRepository
-import hu.bme.aut.fleetbrotherserver.mqtt.handler.MeasurementzMessageHandler
 import hu.bme.aut.fleetbrotherserver.service.interfaces.AlertService
+import hu.bme.aut.fleetbrotherserver.service.interfaces.NotificationService
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
-class AlertServiceImpl(private val alertHistoryRepository: AlertHistoryRepository) : AlertService {
+class AlertServiceImpl(
+        private val alertHistoryRepository: AlertHistoryRepository,
+        private val notificationService: NotificationService
+) : AlertService {
     private val logger = LoggerFactory.getLogger(AlertServiceImpl::class.java)!!
 
     override fun checkAlerts(car: Car, measurement: Measurement) {
@@ -32,7 +35,9 @@ class AlertServiceImpl(private val alertHistoryRepository: AlertHistoryRepositor
             if(field == null || field.isNull) continue
 
             if(shouldAlert(field, fieldMetadata, alert)) {
-                alertHistoryRepository.addAlertHistory(alert, measurement)
+                val alertHistory = alertHistoryRepository.addAlertHistory(alert, measurement)
+                notificationService.dispatchFirebaseAlert(alertHistory)
+                notificationService.dispatchEmailAlert(alertHistory)
                 logger.info("An alert was dispatched for measurement with id: ${measurement.id}")
             }
         }
