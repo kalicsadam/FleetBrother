@@ -29,6 +29,9 @@ import { AlertOverviewComponent } from './car-reporting/components/alert-overvie
 import { AlertCreationComponent } from './car-reporting/components/alert-creation/alert-creation.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoadingInterceptor } from './shared/interceptor/loading-interceptor';
+import { UserCreationPageComponent } from './user-management/pages/user-creation-page/user-creation-page.component';
+import { UserOverviewComponent } from './user-management/components/user-overview/user-overview.component';
+import { UserCreateComponent } from './user-management/components/user-create/user-create.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +55,9 @@ import { LoadingInterceptor } from './shared/interceptor/loading-interceptor';
     AlertsManagerComponent,
     AlertOverviewComponent,
     AlertCreationComponent,
+    UserCreationPageComponent,
+    UserOverviewComponent,
+    UserCreateComponent,
   ],
   imports: [
     BrowserModule,

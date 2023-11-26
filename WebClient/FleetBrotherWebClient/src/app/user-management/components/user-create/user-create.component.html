@@ -1,0 +1,20 @@
+<div class="user-create">
+    <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input [(ngModel)]="inputUsername" matInput>
+    </mat-form-field>
+    
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input [(ngModel)]="inputPassword" type="password" matInput>
+    </mat-form-field>
+
+    <div class="align">
+        <mat-checkbox [(ngModel)]="inputIsAdmin"> Is Admin
+        </mat-checkbox>
+        
+        <button mat-icon-button (click)="OnSubmit()">
+            <mat-icon>create</mat-icon>
+        </button>
+    </div>
+</div>

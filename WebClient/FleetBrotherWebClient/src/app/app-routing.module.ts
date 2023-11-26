@@ -5,6 +5,7 @@ import { FleetViewPageComponent } from './fleet-management/pages/fleet-view-page
 import { CarAssigmentPageComponent } from './car-management/pages/car-assigment-page/car-assigment-page.component';
 import { SchemaManagementPageComponent } from './schema-management/pages/schema-management-page/schema-management-page.component';
 import { CarReportingPageComponent } from './car-reporting/pages/car-reporting-page/car-reporting-page.component';
+import { UserCreationPageComponent } from './user-management/pages/user-creation-page/user-creation-page.component';
 
 const routes: Routes = 
 [
@@ -27,6 +28,10 @@ const routes: Routes =
   { 
     path: 'report/:id', 
     component: CarReportingPageComponent
+  },
+  { 
+    path: 'users', 
+    component: UserCreationPageComponent
   },
 ];
 

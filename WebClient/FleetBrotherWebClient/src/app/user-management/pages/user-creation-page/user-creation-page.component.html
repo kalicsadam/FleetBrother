@@ -1,0 +1,10 @@
+<h1>User Management</h1>
+
+<div class="users">
+    <div *ngFor="let user of users">
+        <app-user-overview [user]="user" (onDelete)="onDelete($event)"></app-user-overview>
+    </div>    
+</div>
+<div class="create">
+    <app-user-create (onCreate)="onCreate($event)"></app-user-create>
+</div>
