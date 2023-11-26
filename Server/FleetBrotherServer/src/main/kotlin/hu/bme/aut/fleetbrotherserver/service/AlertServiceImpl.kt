@@ -24,9 +24,8 @@ class AlertServiceImpl(
     private val logger = LoggerFactory.getLogger(AlertServiceImpl::class.java)!!
 
     override fun getAlerts(carId: Int): List<AlertDto> {
-        val alserts = alertRepository.getAlertByCar(carId)
-        val alertDtos = alserts.map { it.convertToDto() }
-        return alertDtos
+        val alerts = alertRepository.getAlertByCar(carId)
+        return alerts.map { it.convertToDto() }
     }
 
     override fun createAlert(carId: Int, alertDto: AlertDto) {
