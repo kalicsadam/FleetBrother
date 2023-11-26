@@ -29,9 +29,16 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.data:spring-data-rest-hal-explorer")
-    //implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
+
+    // Mqtt
+    implementation("org.eclipse.paho:org.eclipse.paho.mqttv5.client:1.2.5")
     implementation("org.springframework.integration:spring-integration-mqtt:6.2.0")
     implementation("org.springframework.integration:spring-integration-core")
+
+    // Notification
+    implementation("com.google.firebase:firebase-admin:9.2.0")
+    implementation("jakarta.mail:jakarta.mail-api:2.1.2")
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("org.postgresql:postgresql")

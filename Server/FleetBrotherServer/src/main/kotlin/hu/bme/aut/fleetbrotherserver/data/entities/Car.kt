@@ -2,6 +2,7 @@ package hu.bme.aut.fleetbrotherserver.data.entities
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
+import java.sql.Timestamp
 
 @Entity
 data class Car(
@@ -11,6 +12,7 @@ data class Car(
     var name: String,
     var licensePlate: String,
     var vin: String,
+    var lastLive: Timestamp,
 
     @OneToMany(mappedBy = "car")
     var schemaCars: MutableList<SchemaCar> = mutableListOf(),
