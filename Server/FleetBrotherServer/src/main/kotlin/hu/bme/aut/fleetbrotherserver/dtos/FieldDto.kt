@@ -1,6 +1,5 @@
 package hu.bme.aut.fleetbrotherserver.dtos
 
-import hu.bme.aut.fleetbrotherserver.data.entities.Type
 import java.io.Serializable
 
 /**
@@ -9,6 +8,6 @@ import java.io.Serializable
 data class FieldDto(
     val id: Int? = null,
     val key: String,
-    val elementType: Type?,
+    val elementType: String?,
     val type: String,
 ) : Serializable
