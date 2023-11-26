@@ -8,6 +8,7 @@ import { FleetManagementService } from 'src/app/shared/services/fleet-management
 import { exportExcel } from 'src/app/shared/util/excel.util';
 import { AlertsManagerComponent } from '../../components/alerts-manager/alerts-manager.component';
 import { BehaviorSubject } from 'rxjs';
+import { Field } from 'src/app/data/dto/field.dto';
 
 @Component({
   selector: 'app-car-reporting-page',
@@ -49,13 +50,13 @@ export class CarReportingPageComponent {
     this.exportDisabled.next(false)
   }
 
-  onAlertButton(schema : Schema){
-    this.openAlertsDialog(schema)
+  onAlertButton(){
+    this.openAlertsDialog(this.schemas.flatMap(schema => schema.fields))
   }
 
-  openAlertsDialog(schema : Schema){
+  openAlertsDialog(fields : Field[]){
     this.dialog.open(AlertsManagerComponent, {
-      data: {car: this.car, schema: schema},
+      data: {car: this.car, fields: fields},
       minHeight: "50%",
       minWidth: "50%"
     })

@@ -4,6 +4,7 @@ import { Car } from 'src/app/data/dto/car.dto';
 export enum CarOverviewMode {
   ACCEPT_DECLINE,
   MANAGE,
+  REPORT,
   DISPLAY
 }
 
@@ -21,4 +22,5 @@ export class CarOverviewComponent {
   @Output() onAccept : EventEmitter<Car> = new EventEmitter();
   @Output() onDecline : EventEmitter<Car> = new EventEmitter();
   @Output() onDelete : EventEmitter<Car> = new EventEmitter();
+  @Output() onAlerts : EventEmitter<Car> = new EventEmitter();
 }

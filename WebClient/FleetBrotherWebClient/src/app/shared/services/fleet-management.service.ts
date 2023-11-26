@@ -38,7 +38,7 @@ export class FleetManagementService {
   }
 
   getCarById(carId : number) : Observable<Car | undefined>{
-    return this.http.get<Car>("/api/fleet/" + carId)
+    return this.http.get<Car>("/api/car/" + carId)
   }
 
   createFleet(requestbody: FleetCreationRequestBody) : Observable<boolean> {
