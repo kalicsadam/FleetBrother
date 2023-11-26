@@ -10,5 +10,5 @@ data class SchemaDto(
     val name: String,
     val fields: List<FieldDto> = mutableListOf(),
     val measurements: List<MeasurementDto> = mutableListOf(),
-    val cars: List<CarDto> = mutableListOf(),
+    val carIds: List<Int> = mutableListOf(),
 ) : Serializable

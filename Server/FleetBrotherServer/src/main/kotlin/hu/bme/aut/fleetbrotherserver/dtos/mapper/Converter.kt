@@ -61,7 +61,7 @@ fun Schema.convertToDto() : SchemaDto {
         name = this.name,
         fields = this.fields.map { it.convertToDto() },
         measurements = this.measurements.map { it.convertToDto() },
-        cars = this.schemaCars.map { it.car.convertToDto() },
+        carIds = this.schemaCars.map { it.car.id },
     )
 }
 
