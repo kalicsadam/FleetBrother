@@ -18,7 +18,7 @@ data class Alert(
 
     @ManyToOne
     @JoinColumn(name = "car_id")
-    var car: Car?,
+    var car: Car? = null,
 
     @OneToMany(mappedBy = "alert")
     var alertHistories: MutableList<AlertHistory> = mutableListOf(),

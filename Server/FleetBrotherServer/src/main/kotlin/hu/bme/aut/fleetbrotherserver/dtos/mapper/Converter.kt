@@ -71,3 +71,27 @@ fun SchemaDto.convertBackFromDto() : Schema {
         name = this.name
     )
 }
+
+fun Alert.convertToDto() : AlertDto {
+    return AlertDto(
+        id = this.id,
+        name = this.name,
+        keyName = this.keyName,
+        minValue = this.minValue,
+        maxValue = this.maxValue,
+        forbiddenValue = this.forbiddenValue,
+        exists = this.exists
+    )
+}
+
+fun AlertDto.convertBackFromDto() : Alert {
+    return Alert(
+        id = this.id ?: 0,
+        name = this.name,
+        keyName = this.keyName,
+        minValue = this.minValue,
+        maxValue = this.maxValue,
+        forbiddenValue = this.forbiddenValue,
+        exists = this.exists
+    )
+}

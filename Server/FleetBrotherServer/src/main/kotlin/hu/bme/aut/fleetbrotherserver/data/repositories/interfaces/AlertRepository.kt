@@ -5,8 +5,13 @@ import hu.bme.aut.fleetbrotherserver.data.entities.Measurement
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 
-interface AlertRepository : JpaRepository<Alert, Int>, CustomAlertRepository
+interface AlertRepository : JpaRepository<Alert, Int>, CustomAlertRepository {
+
+    @Query("SELECT a FROM Alert a WHERE a.car.id = :carId")
+    fun getAlertByCar(carId: Int) : List<Alert>
+}
 
 interface CustomAlertRepository {
     fun addMeasurement(alertId: Int, measurementId: Int)

@@ -20,7 +20,6 @@ data class Car(
     @JsonBackReference
     var fleet: Fleet? = null,
 
-
     @OneToMany(mappedBy = "car")
     var alerts: MutableList<Alert>,
 
