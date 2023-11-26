@@ -32,6 +32,9 @@ import { LoadingInterceptor } from './shared/interceptor/loading-interceptor';
 import { UserCreationPageComponent } from './user-management/pages/user-creation-page/user-creation-page.component';
 import { UserOverviewComponent } from './user-management/components/user-overview/user-overview.component';
 import { UserCreateComponent } from './user-management/components/user-create/user-create.component';
+import { LoginPageComponent } from './login/pages/login-page/login-page.component';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +61,7 @@ import { UserCreateComponent } from './user-management/components/user-create/us
     UserCreationPageComponent,
     UserOverviewComponent,
     UserCreateComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +72,8 @@ import { UserCreateComponent } from './user-management/components/user-create/us
   ],
   providers: [
     importProvidersFrom(HttpClientModule),
-    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
