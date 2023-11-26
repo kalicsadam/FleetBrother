@@ -6,7 +6,7 @@
     <mat-form-field>
         <mat-label>Key</mat-label>
         <mat-select [(ngModel)]="inputField">
-            <mat-option *ngFor="let field of fields" [value]="field">{{field.key}}</mat-option>
+            <mat-option *ngFor="let field of fields" [value]="field">{{field.key}} : {{field.type}}{{field.type == fieldType.LIST ? "\<"+ field.elementType + "\>" : ""}}</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field>

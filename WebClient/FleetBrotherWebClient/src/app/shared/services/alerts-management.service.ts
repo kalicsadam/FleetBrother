@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { Alert } from 'src/app/data/dto/alert.dto';
 import { AlertCreationRequestBody } from 'src/app/data/requestbody/alert-creation.dto';
 
@@ -8,49 +9,18 @@ import { AlertCreationRequestBody } from 'src/app/data/requestbody/alert-creatio
 })
 export class AlertsManagementService {
 
-  constructor() { }
-
-  placeholderAlerts : Alert[] = [
-    {
-    id: 1,
-    name: "Alert 1",
-    keyName: "key",
-    minValue: 12
-  },
-  {
-    id: 2,
-    name: "Alert 2",
-    keyName: "key",
-    maxValue: 99
-  },
-  {
-    id: 3,
-    name: "Alert 3",
-    keyName: "key",
-    forbiddenValue: 2.8
-  },
-  {
-    id: 5,
-    name: "Alert 4",
-    keyName: "key",
-    exists: true
-  },
-]
-
+  constructor(private http: HttpClient) { }
+  
   getAlerts(carId : number){
-    return new BehaviorSubject(this.placeholderAlerts)
+    return this.http.get<Alert[]>("/api/alert", {params: {carId: carId}})
   }
 
   createAlert(carId : number, alert : AlertCreationRequestBody){
-    this.placeholderAlerts.push({
-      ...{id : this.placeholderAlerts[this.placeholderAlerts.length -1].id + 1}, ...(alert)
-    });
-    return new BehaviorSubject(true)
+    return this.http.put("/api/alert", alert, { params: {carId: carId} ,observe: 'response' }).pipe(map(response => response.ok))
 
   }
 
-  deleteAlert(carId : number, alertId : number){
-    this.placeholderAlerts = this.placeholderAlerts.filter(alert => alert.id != alertId)
-    return new BehaviorSubject(true)
+  deleteAlert(alertId : number){
+    return this.http.delete("/api/alert/" + alertId, { observe: 'response' }).pipe(map(response => response.ok))
   }
 }

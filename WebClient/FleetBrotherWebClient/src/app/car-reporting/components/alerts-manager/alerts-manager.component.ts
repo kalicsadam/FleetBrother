@@ -53,7 +53,7 @@ export class AlertsManagerComponent implements OnInit {
     const ref = this.dialogService.openChooseDialog("Delete alert for car", `Are you sure you want to delete alert: #${alert.id}: ${alert.name} for #${this.car.id}: ${this.car.name}, License plate: ${this.car.licensePlate}, VIN: ${this.car.vin}?`)
     ref.afterClosed().subscribe((decision) => {
       if(decision){
-        this.alertService.deleteAlert(this.car.id, alert.id).subscribe(result => {
+        this.alertService.deleteAlert(alert.id).subscribe(result => {
           if(result){
             this.dialogService.openSuccessDialog("Operation successful.", "Alert has been deleted.")
           } else {
