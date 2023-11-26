@@ -37,11 +37,11 @@ export class AlertsManagementService {
   },
 ]
 
-  getAlerts(carId : number, schemaId : number){
+  getAlerts(carId : number){
     return new BehaviorSubject(this.placeholderAlerts)
   }
 
-  createAlert(carId : number, schemaId : number, alert : AlertCreationRequestBody){
+  createAlert(carId : number, alert : AlertCreationRequestBody){
     this.placeholderAlerts.push({
       ...{id : this.placeholderAlerts[this.placeholderAlerts.length -1].id + 1}, ...(alert)
     });
@@ -49,7 +49,7 @@ export class AlertsManagementService {
 
   }
 
-  deleteAlert(carId : number, schemaId : number, alertId : number){
+  deleteAlert(carId : number, alertId : number){
     this.placeholderAlerts = this.placeholderAlerts.filter(alert => alert.id != alertId)
     return new BehaviorSubject(true)
   }

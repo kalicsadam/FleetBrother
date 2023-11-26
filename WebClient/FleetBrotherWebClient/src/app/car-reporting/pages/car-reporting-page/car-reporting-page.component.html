@@ -1,14 +1,14 @@
 <h1>Report</h1>
 
 <div class="overview">
-    <app-car-overview [car]="car" [mode]="carOverviewMode.DISPLAY"></app-car-overview>
+    <app-car-overview [car]="car" [mode]="carOverviewMode.REPORT" (onAlerts)="onAlertButton()"></app-car-overview>
 </div>
 <div class="report">
     <mat-card>
         <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
             <mat-tab *ngFor="let schema of schemas" [label]="schema.name">
                 <ng-template matTabContent>
-                    <app-report [schema]="schema" [car]="car" (exportedData)="export(schema, $event)" (onAlertButton)="onAlertButton($event)" [exportDisabled]="exportDisabled | async"></app-report>
+                    <app-report [schema]="schema" [car]="car" (exportedData)="export(schema, $event)" [exportDisabled]="exportDisabled | async"></app-report>
                 </ng-template>
             </mat-tab>
         </mat-tab-group>

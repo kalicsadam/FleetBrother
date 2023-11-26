@@ -1,12 +1,12 @@
 import * as FileSaver from 'file-saver';
+import * as xlsx from 'xlsx'
 
 export function exportExcel(data : any[], filename : string) {
-    import('xlsx').then((xlsx) => {
-        const worksheet = xlsx.utils.json_to_sheet(data);
-        const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-        const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+    data = data.map(entry => changeListsToString(entry))
+    const worksheet = xlsx.utils.json_to_sheet(data);
+    const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
         saveAsExcelFile(excelBuffer, filename);
-    });
 }
 
 function saveAsExcelFile(buffer: any, fileName: string): void {
@@ -16,4 +16,13 @@ function saveAsExcelFile(buffer: any, fileName: string): void {
         type: EXCEL_TYPE
     });
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+}
+
+function changeListsToString(o : any) {
+    Object.keys(o).forEach(k => {
+      if (o[k] instanceof Array) {
+        o[k] = o[k].join(", ");
+      }
+    });
+    return o;
 }

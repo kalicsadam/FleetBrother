@@ -1,12 +1,12 @@
-<div *ngIf="schema != null" class="alert-creation">
+<div class="alert-creation">
     <mat-form-field>
         <mat-label>Name</mat-label>
         <input matInput [(ngModel)]="inputName">
     </mat-form-field>
-    <mat-form-field *ngIf="schema != null">
+    <mat-form-field>
         <mat-label>Key</mat-label>
         <mat-select [(ngModel)]="inputField">
-            <mat-option *ngFor="let field of schema.fields" [value]="field">{{field.key}}</mat-option>
+            <mat-option *ngFor="let field of fields" [value]="field">{{field.key}}</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field>

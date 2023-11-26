@@ -16,7 +16,6 @@ export class ReportComponent implements OnChanges, AfterViewInit {
   @Input() schema : Schema | undefined;
   @Input() exportDisabled :boolean | null = false;
   @Output() exportedData : EventEmitter<any[]> = new EventEmitter();
-  @Output() onAlertButton : EventEmitter<Schema> = new EventEmitter();
 
   measurements : Measurement[] = []
   rawData : any[] = []
@@ -43,7 +42,7 @@ export class ReportComponent implements OnChanges, AfterViewInit {
       this.measurements = measurements
       this.rawData = measurements.map(m => {
         let obj = {...({timestamp: m.timestamp}), ...(m.data)}
-        return obj
+        return obj;
       })
       this.dataSource.data = this.rawData
     })
@@ -53,7 +52,10 @@ export class ReportComponent implements OnChanges, AfterViewInit {
     this.exportedData.emit(this.rawData)
   }
 
-  alert(){
-    this.onAlertButton.emit(this.schema)
+  convertData(element : any){
+    if(element instanceof Array){
+      return element.join(", ")
+    }
+    return element.toString();
   }
 }

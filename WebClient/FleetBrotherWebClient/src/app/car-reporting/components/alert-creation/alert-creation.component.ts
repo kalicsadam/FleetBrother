@@ -16,7 +16,7 @@ enum AlertType {
   styleUrls: ['./alert-creation.component.scss']
 })
 export class AlertCreationComponent {
-  @Input() schema : Schema | undefined;
+  @Input() fields : Field[] = [];
   inputName : string = ""
   inputField : Field | undefined
   inputType : AlertType | undefined = undefined

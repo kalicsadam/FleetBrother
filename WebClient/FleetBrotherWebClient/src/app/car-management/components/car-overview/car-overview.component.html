@@ -26,6 +26,11 @@
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>
+            <div *ngIf="mode == modetype.REPORT">
+                <button mat-fab color="warn" (click)="onAlerts.emit(car)" [disabled]="disabled">
+                    <mat-icon>notifications_active</mat-icon>
+                </button>
+            </div>
         </div>
     </mat-card-content>
 </mat-card>

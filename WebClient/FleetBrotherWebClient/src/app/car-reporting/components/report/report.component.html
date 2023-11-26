@@ -3,10 +3,6 @@
         <mat-icon>save</mat-icon>
         Export
     </button>
-    <button mat-raised-button color="warn" (click)="alert()">
-        <mat-icon>notifications_active</mat-icon>
-        Alerts
-    </button>
 </div>
 
 <table *ngIf="schema != null" mat-table [dataSource]="dataSource" matSort>
@@ -17,7 +13,7 @@
 
     <ng-container *ngFor="let field of schema.fields" [matColumnDef]="field.key">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{field.key}} </th>
-      <td mat-cell *matCellDef="let element"> {{element[field.key]}} </td>
+      <td mat-cell *matCellDef="let element"> {{convertData(element[field.key])}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
