@@ -9,5 +9,7 @@ import java.sql.Timestamp
 data class MeasurementDto(
     val id: Int,
     val timestamp: Timestamp,
-    val data: String
+    val data: String,
+    val schemaId: Int?,
+    val carId: Int?
 ) : Serializable

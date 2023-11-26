@@ -7,8 +7,16 @@ import hu.bme.aut.fleetbrotherserver.data.entities.Schema
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 
-interface SchemaRepository : JpaRepository<Schema, Int>, CustomSchemaRepository
+interface SchemaRepository : JpaRepository<Schema, Int>, CustomSchemaRepository {
+
+    @Query("SELECT s " +
+            "FROM Schema s " +
+            "INNER JOIN SchemaCar sc ON sc.schema.id = s.id " +
+            "WHERE sc.car.id = :carId")
+    fun getSchemaByCar(carId: Int) : List<Schema>
+}
 
 interface CustomSchemaRepository {
     fun addCar(schemaId: Int, carId: Int)

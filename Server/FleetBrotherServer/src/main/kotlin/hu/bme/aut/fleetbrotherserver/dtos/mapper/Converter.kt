@@ -52,6 +52,8 @@ fun Measurement.convertToDto() : MeasurementDto {
         id = this.id,
         timestamp = this.timestamp,
         data = this.data,
+        schemaId = this.schema?.id,
+        carId = this.car?.id
     )
 }
 

@@ -21,6 +21,12 @@ class SchemaServiceImpl(
         return schemaDtos
     }
 
+    override fun getSchemasForCar(carId: Int): List<SchemaDto> {
+        var schemas = schemaRepository.getSchemaByCar(carId)
+        val schemaDtos = schemas.map { it.convertToDto() }
+        return schemaDtos
+    }
+
     override fun createSchema(schemaDto: SchemaDto) {
         val schema = schemaDto.convertBackFromDto()
         schemaRepository.save(schema)

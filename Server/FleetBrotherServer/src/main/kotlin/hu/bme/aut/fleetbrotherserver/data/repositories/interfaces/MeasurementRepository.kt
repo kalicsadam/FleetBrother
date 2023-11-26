@@ -5,8 +5,14 @@ import hu.bme.aut.fleetbrotherserver.data.entities.Measurement
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 
-interface MeasurementRepository : JpaRepository<Measurement, Int>, CustomMeasurementRepository
+interface MeasurementRepository : JpaRepository<Measurement, Int>, CustomMeasurementRepository {
+    @Query("SELECT m " +
+            "FROM Measurement m " +
+            "WHERE m.car.id = :carId AND m.schema.id = :schemaId")
+    fun getMeasurementsByCarAndSchema(carId: Int, schemaId: Int) : List<Measurement>
+}
 interface CustomMeasurementRepository {
     fun addAlert(measurementId: Int, alertId: Int)
     fun addAlert(measurement: Measurement, alert: Alert)

@@ -16,6 +16,11 @@ class SchemaController(
         return schemaService.getAllSchemas()
     }
 
+    @GetMapping("/getSchemasForCar")
+    fun getSchemasForCar(@RequestParam carId: Int) : List<SchemaDto> {
+        return schemaService.getSchemasForCar(carId)
+    }
+
     @PutMapping("/create")
     fun createSchema(@RequestBody schemaDto: SchemaDto) {
         schemaService.createSchema(schemaDto)
