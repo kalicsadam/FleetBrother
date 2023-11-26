@@ -1,10 +1,7 @@
 package hu.bme.aut.fleetbrotherserver.mqtt
 
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.CarRepository
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.MeasurementRepository
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.SchemaRepository
-import hu.bme.aut.fleetbrotherserver.mqtt.handler.LivezMessageHandler
-import hu.bme.aut.fleetbrotherserver.mqtt.handler.MeasurementzMessageHandler
+import hu.bme.aut.fleetbrotherserver.service.interfaces.LivezHandlerService
+import hu.bme.aut.fleetbrotherserver.service.interfaces.MeasurementzHandlerService
 import org.eclipse.paho.mqttv5.client.*
 import org.eclipse.paho.mqttv5.client.persist.MqttDefaultFilePersistence
 import org.eclipse.paho.mqttv5.common.MqttMessage
@@ -70,8 +67,8 @@ class MqttConfiguration(val conf: MqttParameters) {
 
     @Bean
     @ServiceActivator(inputChannel = "livez")
-    fun handleLivez(carRepository: CarRepository): MessageHandler {
-        return LivezMessageHandler(carRepository)
+    fun handleLivez(livezHandlerService: LivezHandlerService): MessageHandler {
+        return livezHandlerService
     }
 
     @Bean
@@ -81,8 +78,8 @@ class MqttConfiguration(val conf: MqttParameters) {
 
     @Bean
     @ServiceActivator(inputChannel = "measurementz")
-    fun handleMeasurementz(measurementRepository: MeasurementRepository, carRepository: CarRepository): MessageHandler {
-        return MeasurementzMessageHandler(measurementRepository, carRepository)
+    fun handleMeasurementz(measurementzHandlerService: MeasurementzHandlerService): MessageHandler {
+        return measurementzHandlerService
     }
 
 //    @Bean
