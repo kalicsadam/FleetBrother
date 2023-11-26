@@ -80,6 +80,8 @@ fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
         shape = RoundedCornerShape(10.dp),
         elevation = 20.dp
     ) {
+        var livez by remember { mutableStateOf(clientDetailsViewModel.client?.livezPeriod.toString()) }
+        var param by remember { mutableStateOf( clientDetailsViewModel.client?.paramPeriod.toString()) }
         Column(
             modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(20.dp).verticalScroll(state = ScrollState(0))
         ) {
@@ -89,44 +91,101 @@ fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
             ) { Icon(imageVector = Icons.Default.Close, contentDescription = null) }
 
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(){
+                Column(modifier = Modifier.weight(1.0f)){
                     Text(modifier = Modifier.padding(20.dp), fontSize = 30.sp, text = clientDetailsViewModel.client!!.name)
                     Text(modifier = Modifier.padding(20.dp), fontSize = 15.sp, text = clientDetailsViewModel.client!!.id)
+                }
+                Column {
+                    Text("Livez period:")
+                    Row{
+                        TextField(
+                            modifier = Modifier.width(100.dp),
+                            value = livez,
+                            onValueChange = { txt ->
+                                livez = txt
+                            }
+                        )
+                        Button(
+                            modifier = Modifier.padding(start = 15.dp,end=15.dp),
+                            onClick = {
+                                clientDetailsViewModel.client?.livezPeriod = livez.toLong()
+                            },
+                            enabled = ((livez.isNotEmpty() && livez.matches("^[0-9]*\$".toRegex())))
+                        ){ Text("Set") }
+                    }
+                }
+
+                Column {
+                    Text("Measurementz period:")
+                    Row{
+                        TextField(
+                            modifier = Modifier.width(100.dp),
+                            value = param,
+                            onValueChange = { txt ->
+                                param = txt
+                            }
+                        )
+                        Button(
+                            modifier = Modifier.padding(start = 15.dp,end=15.dp),
+                            onClick = {
+                                clientDetailsViewModel.client?.paramPeriod = param.toLong()
+                            },
+                            enabled = ((param.isNotEmpty() && param.matches("^[0-9]*\$".toRegex())))
+                        ){ Text("Set") }
+                    }
                 }
 
                 //alertBox(/*alert*/clientDetailsViewModel)
             }
 
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround
+                modifier = Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.SpaceAround
             ){
                 Column (
-                    modifier = Modifier.weight(1.0f),
+                    modifier = Modifier.padding(16.dp).weight(1.0f),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Row{ Text("Status:"); Text(clientDetailsViewModel.client?.engineStatus!!.state.name) }
-                    Row{ Text("Curr. speed:"); Text(clientDetailsViewModel.client?.currentSpeed!!.value.toString()); Text(clientDetailsViewModel.client?.currentSpeed!!.unit.name) }
-                    Row{
+                    Row(modifier = Modifier.padding(16.dp)){ Text("Status:"); Text(clientDetailsViewModel.client?.engineStatus!!.state.name) }
+                    Row(modifier = Modifier.padding(16.dp)){ Text("Curr. speed:"); Text(clientDetailsViewModel.client?.currentSpeed!!.value.toString()); Text(clientDetailsViewModel.client?.currentSpeed!!.unit.name) }
+                    Row(modifier = Modifier.padding(16.dp)){
                         Text("Curr. location:")
-                        Column {
-                            Row{ Text("long.: ${clientDetailsViewModel.client?.currentlocation?.longitude}°,") }
-                            Row{ Text("lat.: ${clientDetailsViewModel.client?.currentlocation?.latitude}°") }
+                        Column (modifier = Modifier.padding(16.dp)){
+                            Row(modifier = Modifier.padding(16.dp)){ Text("long.: ${clientDetailsViewModel.client?.currentlocation?.longitude}°,") }
+                            Row(modifier = Modifier.padding(16.dp)){ Text("lat.: ${clientDetailsViewModel.client?.currentlocation?.latitude}°") }
                         }
                     }
-                    Row{
+                    Row(modifier = Modifier.padding(16.dp)){
                         Text("Temperature:")
-                        Column {
-                            Row{ Text("int.: ${clientDetailsViewModel.client?.temperature?.internal} ${clientDetailsViewModel.client?.tempUnit},") }
-                            Row{ Text("ext.: ${clientDetailsViewModel.client?.temperature?.external} ${clientDetailsViewModel.client?.tempUnit}") }
+                        Column (modifier = Modifier.padding(16.dp)){
+                            Row(modifier = Modifier.padding(16.dp)){ Text("int.: ${clientDetailsViewModel.client?.temperature?.internal} ${clientDetailsViewModel.client?.tempUnit},") }
+                            Row(modifier = Modifier.padding(16.dp)){ Text("ext.: ${clientDetailsViewModel.client?.temperature?.external} ${clientDetailsViewModel.client?.tempUnit}") }
+                        }
+                    }
+                    Row(modifier = Modifier.padding(16.dp)){
+                        Text("Tire pressure (in ${clientDetailsViewModel.client?.pressureUnit}):")
+                        Column (modifier = Modifier.padding(16.dp)){
+                            Row(modifier = Modifier.padding(16.dp)){
+                                Text(clientDetailsViewModel.client?.tirePressure?.front_left.toString())
+                                Text(modifier = Modifier.padding(start = 15.dp),text=clientDetailsViewModel.client?.tirePressure?.front_right.toString().format("#.##"))
+                            }
+                            Row(modifier = Modifier.padding(16.dp)){
+                                Text(clientDetailsViewModel.client?.tirePressure?.back_left.toString())
+                                Text(modifier = Modifier.padding(start = 15.dp),text=clientDetailsViewModel.client?.tirePressure?.back_right.toString().format("#.##"))
+                            }
                         }
                     }
                 }
                 Column (
-                    modifier = Modifier.weight(1.0f),
+                    modifier = Modifier.padding(16.dp).weight(1.0f),
                     horizontalAlignment = Alignment.Start
                 ){
+                    Row(modifier = Modifier.padding(16.dp)){ Text("Odometer:"); Text(" ${clientDetailsViewModel.client?.odometer?.value} ${clientDetailsViewModel.client?.distanceUnit}") }
+                    Row(modifier = Modifier.padding(16.dp)){ Text("Fuel level:"); Text(" ${clientDetailsViewModel.client?.fuel?.percentage}%") }
+                    Row(modifier = Modifier.padding(16.dp)){ Text("Engine oil level:"); Text(" ${clientDetailsViewModel.client?.oil?.level}") }
+                    Row(modifier = Modifier.padding(16.dp)){ Text("Windshield cleaner level:"); Text(" ${clientDetailsViewModel.client?.windshieldCleaner?.level}") }
+                    Row(modifier = Modifier.padding(16.dp)){ Text("Battery charge:"); Text(" ${clientDetailsViewModel.client?.batteryStatus?.percentage}%") }
 
                 }
 

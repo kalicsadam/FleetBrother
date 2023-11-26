@@ -22,8 +22,8 @@ class Client(
     var mqttClient: MqttClient = MqttClient(serverURI, id)
 
     //var mqttCallback: MqttCallback = OBUCallback(this@Client)
-    private var livezPeriod = 10L
-    private var paramPeriod = 30L
+    var livezPeriod by mutableStateOf(10L)
+    var paramPeriod by mutableStateOf(30L)
 
     var tempUnit = TempUnit.Celsius
     var speedUnit = SpeedUnit.kph
@@ -34,16 +34,35 @@ class Client(
     //var immobilized by mutableStateOf(false)
     //var latestAlert by mutableStateOf(OperatorAlert(AlertPriority.NONE, ""))
     //var latestAction by mutableStateOf(OperatorAction(Action.NONE))
-    var engineStatus by mutableStateOf(engineStatus(EngineState.off, 0.0, tempUnit))
+    var engineStatus by mutableStateOf(engineStatus(EngineState.running, 95.0, tempUnit))
     var currentSpeed by mutableStateOf(currentSpeed(Random.nextInt(from = 20, until = 90), speedUnit))
-    var currentlocation by mutableStateOf(location(latitude = Random.nextDouble(from = 45.7419, until = 48.5851), longitude = Random.nextDouble(from = 16.1136, until = 22.8968)))
-    var temperature by mutableStateOf(temperature(Random.nextDouble(10.0,30.0), Random.nextDouble(10.0,40.0), tempUnit))
+    var currentlocation by mutableStateOf(
+        location(
+            latitude = String.format(Locale.US,"%.6f",Random.nextDouble(from = 45.7419, until = 48.5851)).toDouble(),
+            longitude = String.format(Locale.US,"%.6f",Random.nextDouble(from = 16.1136, until = 22.8968)).toDouble()
+        )
+    )
+    var temperature by mutableStateOf(
+        temperature(
+            String.format(Locale.US,"%.2f",Random.nextDouble(10.0, 30.0)).toDouble(),
+            String.format(Locale.US,"%.2f",Random.nextDouble(10.0, 40.0)).toDouble(),
+            tempUnit
+        )
+    )
     var fuel by mutableStateOf(fuelLevel(Random.nextInt(80, 100)))
-    var odometer by mutableStateOf(odometer(Random.nextDouble(0.0, 100000.0), distanceUnit, 0))
+    var odometer by mutableStateOf(odometer(String.format(Locale.US,"%.2f",Random.nextDouble(0.0, 100000.0)).toDouble(), distanceUnit, 0))
     var batteryStatus by mutableStateOf(batteryStatus(Random.nextInt(80, 100)))
-    var tirePressure by mutableStateOf(tirePressure(pressureUnit, 0.0, 0.0, 0.0, 0.0))
-    var oil by mutableStateOf(oil(FluidLevel.Refill_needed))
-    var windshieldCleaner by mutableStateOf(windshieldCleaner(FluidLevel.Refill_needed))
+    var tirePressure by mutableStateOf(
+        tirePressure(
+            pressureUnit,
+            String.format(Locale.US,"%.2f",Random.nextDouble(1.8, 2.4)).toDouble(),
+            String.format(Locale.US,"%.2f",Random.nextDouble(1.8, 2.4)).toDouble(),
+            String.format(Locale.US,"%.2f",Random.nextDouble(1.8, 2.4)).toDouble(),
+            String.format(Locale.US,"%.2f",Random.nextDouble(1.8, 2.4)).toDouble()
+        )
+    )
+    var oil by mutableStateOf(oil(FluidLevel.Sufficient))
+    var windshieldCleaner by mutableStateOf(windshieldCleaner(FluidLevel.Sufficient))
 
 
     init {
@@ -84,7 +103,7 @@ class Client(
             val engine = buildJsonObject {
                 put("schema", JsonPrimitive("engine_status"))
                 put("id", JsonPrimitive(id))
-                putJsonObject("data"){
+                putJsonObject("data") {
                     engine_.forEach { (key, value) ->
                         put(key, value)
                     }
@@ -93,11 +112,11 @@ class Client(
             msg.payload = engine.toString().toByteArray()
             mqttClient.publish("measurementz", msg)
 
-            val speed_= Json.encodeToJsonElement(currentSpeed) as JsonObject
+            val speed_ = Json.encodeToJsonElement(currentSpeed) as JsonObject
             val speed = buildJsonObject {
                 put("schema", JsonPrimitive("current_speed"))
                 put("id", JsonPrimitive(id))
-                putJsonObject("data"){
+                putJsonObject("data") {
                     speed_.forEach { (key, value) ->
                         put(key, value)
                     }
@@ -110,7 +129,7 @@ class Client(
             val location = buildJsonObject {
                 put("schema", JsonPrimitive("location"))
                 put("id", JsonPrimitive(id))
-                putJsonObject("data"){
+                putJsonObject("data") {
                     location_.forEach { (key, value) ->
                         put(key, value)
                     }
@@ -123,7 +142,7 @@ class Client(
             val temperature = buildJsonObject {
                 put("schema", JsonPrimitive("temperature"))
                 put("id", JsonPrimitive(id))
-                putJsonObject("data"){
+                putJsonObject("data") {
                     temperature_.forEach { (key, value) ->
                         put(key, value)
                     }
@@ -136,7 +155,7 @@ class Client(
             val fuel = buildJsonObject {
                 put("schema", JsonPrimitive("fuel_level"))
                 put("id", JsonPrimitive(id))
-                putJsonObject("data"){
+                putJsonObject("data") {
                     fuel_.forEach { (key, value) ->
                         put(key, value)
                     }
@@ -149,7 +168,7 @@ class Client(
             val odometer = buildJsonObject {
                 put("schema", JsonPrimitive("odometer"))
                 put("id", JsonPrimitive(id))
-                putJsonObject("data"){
+                putJsonObject("data") {
                     odometer_.forEach { (key, value) ->
                         put(key, value)
                     }
@@ -162,7 +181,7 @@ class Client(
             val battery = buildJsonObject {
                 put("schema", JsonPrimitive("battery_status"))
                 put("id", JsonPrimitive(id))
-                putJsonObject("data"){
+                putJsonObject("data") {
                     battery_.forEach { (key, value) ->
                         put(key, value)
                     }
@@ -175,7 +194,7 @@ class Client(
             val tire = buildJsonObject {
                 put("schema", JsonPrimitive("tire_pressure"))
                 put("id", JsonPrimitive(id))
-                putJsonObject("data"){
+                putJsonObject("data") {
                     tire_.forEach { (key, value) ->
                         put(key, value)
                     }
@@ -188,7 +207,7 @@ class Client(
             val oil = buildJsonObject {
                 put("schema", JsonPrimitive("oil"))
                 put("id", JsonPrimitive(id))
-                putJsonObject("data"){
+                putJsonObject("data") {
                     oil_.forEach { (key, value) ->
                         put(key, value)
                     }
@@ -201,7 +220,7 @@ class Client(
             val windshield = buildJsonObject {
                 put("schema", JsonPrimitive("windshield_cleaner"))
                 put("id", JsonPrimitive(id))
-                putJsonObject("data"){
+                putJsonObject("data") {
                     windshield_.forEach { (key, value) ->
                         put(key, value)
                     }
@@ -212,18 +231,34 @@ class Client(
         }
     }
 
-    private fun generateRandomParams(){
+    private fun generateRandomParams() {
         engineStatus = engineStatus(
             EngineState.values().random(),
-            Random.nextDouble(from = 90.0, until = 105.0),
+            String.format(Locale.US,"%.2f",Random.nextDouble(from = 90.0, until = 105.0)).toDouble(),
             TempUnit.Celsius
         )
-        currentSpeed = currentSpeed(Random.nextInt(from = currentSpeed.value - 10, until = currentSpeed.value + 10), speedUnit)
+        currentSpeed =
+            currentSpeed(Random.nextInt(from = currentSpeed.value - 10, until = currentSpeed.value + 10), speedUnit)
         currentlocation = location(
-            latitude = Random.nextDouble(maxOf(45.7419, currentlocation.latitude - 0.5), minOf(48.5851,currentlocation.latitude + 0.5)),
-            longitude = Random.nextDouble(maxOf(16.1136, currentlocation.longitude - 0.5), minOf(22.8968,currentlocation.longitude + 0.5))
+            latitude = String.format(Locale.US,"%.6f",
+                Random.nextDouble(
+                maxOf(45.7419, currentlocation.latitude - 0.01),
+                minOf(48.5851, currentlocation.latitude + 0.01)
+            )).toDouble(),
+            longitude = String.format(Locale.US,"%.6f",
+                Random.nextDouble(
+                maxOf(16.1136, currentlocation.longitude - 0.01),
+                minOf(22.8968, currentlocation.longitude + 0.01)
+            )).toDouble()
         )
-        temperature = temperature(Random.nextDouble(maxOf(10.0, temperature.internal - 0.5), minOf(30.0,temperature.internal + 0.5)), Random.nextDouble(maxOf(10.0, temperature.external - 0.5), minOf(40.0,temperature.external + 0.5)), tempUnit)
+        temperature = temperature(
+            String.format(Locale.US,"%.2f",Random.nextDouble(
+                maxOf(10.0, temperature.internal - 0.5),
+                minOf(30.0, temperature.internal + 0.5)
+            )).toDouble(),
+            String.format(Locale.US,"%.2f",Random.nextDouble(maxOf(10.0, temperature.external - 0.5), minOf(40.0, temperature.external + 0.5))).toDouble(),
+            tempUnit
+        )
         fuel = fuelLevel(
             percentage =
             if (Random.nextInt(0, 100) % 16 == 0) {
@@ -234,9 +269,7 @@ class Client(
         )
         odometer = odometer(
             value =
-            if (Random.nextInt(0, 100) % 3 == 0) {
-                odometer.value + 1
-            } else odometer.value,
+            odometer.value + String.format(Locale.US,"%.2f",Random.nextDouble(0.0,1.0)).toDouble(),
             distanceUnit,
             rollbacks =
             if (odometer.value > Random.nextDouble(100000.0, 300000.0)) odometer.rollbacks + 1
@@ -249,10 +282,10 @@ class Client(
         )
         tirePressure = tirePressure(
             pressureUnit,
-            Random.nextDouble(1.8, 2.4),
-            Random.nextDouble(1.8, 2.4),
-            Random.nextDouble(1.8, 2.4),
-            Random.nextDouble(1.8, 2.4)
+            String.format(Locale.US,"%.2f",Random.nextDouble(1.8, 2.4)).toDouble(),
+            String.format(Locale.US,"%.2f",Random.nextDouble(1.8, 2.4)).toDouble(),
+            String.format(Locale.US,"%.2f",Random.nextDouble(1.8, 2.4)).toDouble(),
+            String.format(Locale.US,"%.2f",Random.nextDouble(1.8, 2.4)).toDouble()
         )
         oil = oil(
             level =
