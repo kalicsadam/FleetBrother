@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { LoadingService } from './shared/services/loading.service';
 
 
 @Component({
@@ -12,16 +13,25 @@ import { getMessaging, getToken, onMessage } from "firebase/messaging";
 })
 export class AppComponent implements OnInit {
 
-  constructor(private snackBar : MatSnackBar){
+  constructor(
+    private snackBar : MatSnackBar,
+    private loadingService : LoadingService,
+    private ref: ChangeDetectorRef
+    ){
 
   }
 
   ngOnInit(): void {
     this.requestPermission();
+    this.loadingService.isLoading.subscribe(value=> {
+      this.isLoading = value
+      this.ref.detectChanges()
+    })
   }
 
   title = 'FleetBrotherWebClient';
   sideBarOpened: boolean = false;
+  isLoading : boolean = false;
 
   firebaseConfig = {
     apiKey: "AIzaSyDM9uDH71OjUhydk7sK-utarrQmGe_sYiE",

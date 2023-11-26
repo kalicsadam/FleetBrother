@@ -34,7 +34,7 @@ export class FleetViewPageComponent{
   }
 
   onDeletePressed(car : Car){
-    const ref = this.dialogService.openChooseDialog("Remove car from fleet", `Are you sure you want remove car (#${car.id}: ${car.name}, License plate: ${car.licenasePlate}, VIN: ${car.vin}) from fleet (#${this.fleet?.id}: ${this.fleet?.name})?`)
+    const ref = this.dialogService.openChooseDialog("Remove car from fleet", `Are you sure you want remove car (#${car.id}: ${car.name}, License plate: ${car.licensePlate}, VIN: ${car.vin}) from fleet (#${this.fleet?.id}: ${this.fleet?.name})?`)
     ref.afterClosed().subscribe(decision => {
       if(decision){
         this.fleetManagementService.removeCarFromFleet(car.id, this.fleet?.id ?? 0).subscribe(result => {
