@@ -12,7 +12,6 @@ import androidx.compose.ui.window.Dialog
 @Composable
 fun ErrorDialog(message: String, onClose: () -> Unit) {
     Dialog(onCloseRequest = onClose) {
-        // Dialog content
         Column(
             modifier = Modifier
                 .padding(16.dp)

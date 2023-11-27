@@ -35,10 +35,11 @@ import viewmodel.NewClientViewModel
 
 var clientlist by mutableStateOf(SnapshotStateList<Client>())
 var serverURI by mutableStateOf("")
-var serverPort by mutableStateOf("1883")
+var serverPort by mutableStateOf("")
 var ipaddr_regex = "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}\$".toRegex()
 var domain_regex = "^(?!:\\/\\/)([a-zA-Z0-9-]{1,63}\\.?){1,}([a-zA-Z]{2,63})\$\n".toRegex()
-var port_regex = "^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))\$".toRegex()
+var port_regex =
+    "^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))\$".toRegex()
 
 @Composable
 fun clientWidget(item: Client, clientDetailsViewModel: ClientDetailsViewModel) {
@@ -87,24 +88,20 @@ fun App() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                /*Text(
-                    modifier = Modifier.padding(16.dp).weight(3.0f),
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Black,
-                    text = "Clients"
-                )*/
-                Column(horizontalAlignment = Alignment.CenterHorizontally){
-                    Image(modifier = Modifier.width(250.dp).padding(start=20.dp, end = 20.dp),
+
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(
+                        modifier = Modifier.width(250.dp).padding(start = 20.dp, end = 20.dp),
                         painter = painterResource("fleetbrother-logo_small.png"),
                         contentDescription = "logo"
                     )
-                    Text(modifier = Modifier.padding(start = 20.dp), text="OBU Simulator", color = Color.Black)
+                    Text(modifier = Modifier.padding(start = 20.dp), text = "OBU Simulator", color = Color.Black)
                 }
 
                 TextField(
                     modifier = Modifier.padding(16.dp).weight(3.0f),
                     value = serverURI,
-                    placeholder = {Text("Server address")},
+                    placeholder = { Text("Server address") },
                     onValueChange = { newText ->
                         serverURI = newText
                     }
@@ -112,7 +109,7 @@ fun App() {
                 TextField(
                     modifier = Modifier.padding(16.dp).weight(2.0f),
                     value = serverPort,
-                    placeholder = {Text("Server port")},
+                    placeholder = { Text("Server port") },
                     onValueChange = { newText ->
                         serverPort = newText
                     }
@@ -122,7 +119,9 @@ fun App() {
                     onClick = {
                         newClientViewModel.isdialogvisible = true
                     },
-                    enabled = (serverURI.isNotEmpty() && (serverURI.matches(ipaddr_regex) || serverURI.matches(domain_regex))) /*&& (serverPort.isNotEmpty() && serverPort.matches(port_regex))*/,
+                    enabled = (serverURI.isNotEmpty() && (serverURI.matches(ipaddr_regex) || serverURI.matches(
+                        domain_regex
+                    ))) /*&& (serverPort.isNotEmpty() && serverPort.matches(port_regex))*/,
                     shape = CircleShape
                 ) {
                     Icon(Icons.Default.Add, contentDescription = "Add")
@@ -132,7 +131,7 @@ fun App() {
                 columns = GridCells.Adaptive(minSize = 250.dp)
             ) {
                 items(clientlist.size) { idx ->
-                    clientWidget(clientlist[idx],clientDetailsViewModel)
+                    clientWidget(clientlist[idx], clientDetailsViewModel)
                 }
             }
             if (newClientViewModel.isdialogvisible) {
@@ -164,7 +163,7 @@ fun newClientDialog(newClientViewModel: NewClientViewModel) {
                 TextField(
                     modifier = Modifier.padding(10.dp),
                     value = newClientViewModel.clientname,
-                    placeholder = {Text("Name")},
+                    placeholder = { Text("Name") },
                     onValueChange = { newText ->
                         newClientViewModel.clientname = newText
                     }
@@ -172,7 +171,7 @@ fun newClientDialog(newClientViewModel: NewClientViewModel) {
                 TextField(
                     modifier = Modifier.padding(10.dp),
                     value = newClientViewModel.clientLicensePlate,
-                    placeholder = {Text("License plate")},
+                    placeholder = { Text("License plate") },
                     onValueChange = { newText ->
                         newClientViewModel.clientLicensePlate = newText
                     }
@@ -180,7 +179,7 @@ fun newClientDialog(newClientViewModel: NewClientViewModel) {
                 TextField(
                     modifier = Modifier.padding(10.dp),
                     value = newClientViewModel.clientVin,
-                    placeholder = {Text("VIN")},
+                    placeholder = { Text("VIN") },
                     onValueChange = { newText ->
                         newClientViewModel.clientVin = newText
                     }
@@ -193,10 +192,11 @@ fun newClientDialog(newClientViewModel: NewClientViewModel) {
             Button(
                 onClick = {
                     //GlobalScope.launch (Dispatchers.Swing){
-                    try{
+                    try {
                         if (newClientViewModel.clientname.isNotEmpty() &&
                             newClientViewModel.clientLicensePlate.isNotEmpty() &&
-                            newClientViewModel.clientVin.isNotEmpty()) {
+                            newClientViewModel.clientVin.isNotEmpty()
+                        ) {
                             val newclient = Client(
                                 name = newClientViewModel.clientname,
                                 licensePlate = newClientViewModel.clientLicensePlate,
@@ -207,7 +207,7 @@ fun newClientDialog(newClientViewModel: NewClientViewModel) {
                             clientlist.add(newclient)
                             newClientViewModel.isdialogvisible = false
                         }
-                    }catch(e: Exception){
+                    } catch (e: Exception) {
                         errorMessage = "An error occurred: ${e.message}"
                     }
                     //}

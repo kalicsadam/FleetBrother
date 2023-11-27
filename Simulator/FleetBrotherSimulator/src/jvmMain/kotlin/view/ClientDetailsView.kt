@@ -48,23 +48,23 @@ fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
             ) {
                 Column(modifier = Modifier.weight(1.0f)) {
                     Text(
-                        modifier = Modifier.padding(start=20.dp, bottom = 20.dp),
+                        modifier = Modifier.padding(start = 20.dp, bottom = 20.dp),
                         fontSize = 30.sp,
                         fontWeight = FontWeight.Bold,
                         text = clientDetailsViewModel.client!!.name
                     )
                     Text(
-                        modifier = Modifier.padding(start=20.dp, bottom = 20.dp),
+                        modifier = Modifier.padding(start = 20.dp, bottom = 20.dp),
                         fontSize = 15.sp,
                         text = "License plate: ${clientDetailsViewModel.client!!.licensePlate}"
                     )
                     Text(
-                        modifier = Modifier.padding(start=20.dp, bottom = 20.dp),
+                        modifier = Modifier.padding(start = 20.dp, bottom = 20.dp),
                         fontSize = 15.sp,
                         text = "VIN: ${clientDetailsViewModel.client!!.vin}"
                     )
                     Text(
-                        modifier = Modifier.padding(start=20.dp, bottom = 20.dp),
+                        modifier = Modifier.padding(start = 20.dp, bottom = 20.dp),
                         fontSize = 15.sp,
                         text = "uuid: ${clientDetailsViewModel.client!!.uuid}"
                     )
@@ -110,11 +110,11 @@ fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
             Button(
                 modifier = Modifier.padding(start = 20.dp),
                 onClick = {
-                    try{
+                    try {
                         val datajson = Json.parseToJsonElement(data) as JsonObject
                         val json = buildJsonObject {
-                            put("id",clientDetailsViewModel.client?.carId)
-                            put("schema",schema)
+                            put("id", clientDetailsViewModel.client?.carId)
+                            put("schema", schema)
                             putJsonObject("data") {
                                 datajson.forEach { (key, value) ->
                                     put(key, value)
@@ -125,13 +125,13 @@ fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
                         msg.qos = 0
                         msg.isRetained = true
                         msg.payload = json.toString().toByteArray()
-                        clientDetailsViewModel.client?.mqttClient?.publish("measurementz",msg)
-                    } catch (e: Exception){
+                        clientDetailsViewModel.client?.mqttClient?.publish("measurementz", msg)
+                    } catch (e: Exception) {
                         errorMessage = "An error occurred: ${e.message}"
                     }
                 },
                 enabled = !(clientDetailsViewModel.client?.carId.isNullOrEmpty()) && (data.isNotEmpty())
-            ){ Text("Send") }
+            ) { Text("Send") }
             errorMessage?.let { message ->
                 ErrorDialog(message = message, onClose = { errorMessage = null })
             }

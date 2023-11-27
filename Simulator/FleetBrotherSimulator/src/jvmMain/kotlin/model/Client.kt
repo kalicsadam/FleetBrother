@@ -38,10 +38,10 @@ class Client(
             override fun connectionLost(cause: Throwable?) {}
 
             override fun messageArrived(topic: String?, message: MqttMessage?) {
-                when(topic){
+                when (topic) {
                     "obu-config" -> {
                         var msg = Json.decodeFromString<ObuConfig>(message?.payload?.decodeToString()!!)
-                        if(uuid==msg.uuid){
+                        if (uuid == msg.uuid) {
                             carId = msg.id
                             startHeartbeat()
                         }
@@ -58,7 +58,7 @@ class Client(
     fun acquireCarId() {
         GlobalScope.launch {
             while (carId.isNullOrEmpty()) {
-                if(mqttClient.isConnected){
+                if (mqttClient.isConnected) {
                     val msg = MqttMessage()
                     msg.qos = 0
                     msg.isRetained = true
