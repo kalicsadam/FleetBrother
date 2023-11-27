@@ -5,6 +5,7 @@ import hu.bme.aut.fleetbrotherserver.dtos.UserDto
 import hu.bme.aut.fleetbrotherserver.dtos.mapper.convertBackFromDto
 import hu.bme.aut.fleetbrotherserver.dtos.mapper.convertToDto
 import hu.bme.aut.fleetbrotherserver.service.interfaces.UserService
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 
 @Component
@@ -24,5 +25,16 @@ class UserServiceImpl(
 
     override fun deleteUser(userId: Int) {
         userRepository.deleteById(userId)
+    }
+
+    override fun loadUserByUsername(email: String): UserDetails {
+        val user = userRepository.findUserByEmail(email)
+        val userDetails = org.springframework.security.core.userdetails.User.builder()
+            .username(user.email)
+            .password(user.passwordHash)
+            .roles(user.role)
+            .build()
+
+        return userDetails
     }
 }

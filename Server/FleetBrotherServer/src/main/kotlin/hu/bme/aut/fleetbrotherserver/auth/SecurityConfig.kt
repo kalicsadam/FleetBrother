@@ -1,6 +1,6 @@
 package hu.bme.aut.fleetbrotherserver.auth
 
-import hu.bme.aut.fleetbrotherserver.service.CustomUserDetailsService
+import hu.bme.aut.fleetbrotherserver.service.interfaces.UserService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -25,7 +25,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
     prePostEnabled = true
 )
 class SecurityConfig(
-    private val userDetailsService: CustomUserDetailsService,
+    private val userService: UserService,
     private val jwtAuthorizationFilter: JwtAuthorizationFilter
 ) : GlobalMethodSecurityConfiguration() {
     @Bean
@@ -33,7 +33,7 @@ class SecurityConfig(
         val authenticationManagerBuilder =
             http.getSharedObject(AuthenticationManagerBuilder::class.java)
 
-        authenticationManagerBuilder.userDetailsService<UserDetailsService>(userDetailsService)
+        authenticationManagerBuilder.userDetailsService<UserDetailsService>(userService)
             .passwordEncoder(noOpPasswordEncoder)
 
         return authenticationManagerBuilder.build()
@@ -52,12 +52,6 @@ class SecurityConfig(
 
         return http.build()
     }
-
-//    @Bean
-//    @Suppress("deprecation")
-//    fun passwordEncoder(): NoOpPasswordEncoder {
-//        return NoOpPasswordEncoder.getInstance() as NoOpPasswordEncoder
-//    }
 
     @Bean
     @Suppress("deprecation")
