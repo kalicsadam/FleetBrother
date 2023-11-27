@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.*
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.*
 import kotlinx.serialization.json.Json.Default.encodeToJsonElement
 import org.eclipse.paho.client.mqttv3.*
@@ -102,6 +103,10 @@ class Client(
         mqttClient.unsubscribe("#")
         mqttClient.disconnect()
     }
-
-
 }
+
+@Serializable
+data class ObuConfig(
+    var uuid: String,
+    var id: String
+)
