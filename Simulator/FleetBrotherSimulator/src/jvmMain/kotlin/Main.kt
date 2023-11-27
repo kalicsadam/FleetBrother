@@ -25,14 +25,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.swing.Swing
 import model.Client
 import view.detailsView
 import viewmodel.ClientDetailsViewModel
-import viewmodel.LoadingViewModel
 import viewmodel.NewClientViewModel
 
 
@@ -72,7 +67,7 @@ fun clientWidget(item: Client, clientDetailsViewModel: ClientDetailsViewModel) {
                     Icon(Icons.Default.Delete, contentDescription = null)
                 }
             }
-            Text(modifier = Modifier.padding(10.dp), fontSize = 10.sp, fontWeight = FontWeight.Light, text = item.id)
+            Text(modifier = Modifier.padding(10.dp), fontSize = 10.sp, fontWeight = FontWeight.Light, text = item.uuid)
         }
     }
 }
@@ -81,7 +76,6 @@ fun clientWidget(item: Client, clientDetailsViewModel: ClientDetailsViewModel) {
 @Preview
 fun App() {
     var newClientViewModel = NewClientViewModel()
-    var loadingViewModel = LoadingViewModel()
     var clientDetailsViewModel = ClientDetailsViewModel()
 
     MaterialTheme {
@@ -125,14 +119,14 @@ fun App() {
                 }
             }
             LazyVerticalGrid(
-                columns = GridCells.Adaptive(minSize = 180.dp)
+                columns = GridCells.Adaptive(minSize = 250.dp)
             ) {
                 items(clientlist.size) { idx ->
                     clientWidget(clientlist[idx],clientDetailsViewModel)
                 }
             }
             if (newClientViewModel.isdialogvisible) {
-                newClientDialog(newClientViewModel, loadingViewModel)
+                newClientDialog(newClientViewModel)
             }
         }
 
@@ -142,51 +136,66 @@ fun App() {
         ) {
             detailsView(clientDetailsViewModel)
         }
-
-        AnimatedVisibility(
-            visible = loadingViewModel.visible,
-            enter = fadeIn(animationSpec = tween(durationMillis = 200)),
-            exit = fadeOut(animationSpec = tween(durationMillis = 200))
-        ) {
-            Surface(
-                elevation = 10.dp,
-                shape = RoundedCornerShape(20.dp),
-                modifier = Modifier.size(100.dp).padding(20.dp)
-            ) {
-                CircularProgressIndicator()
-            }
-        }
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun newClientDialog(newClientViewModel: NewClientViewModel, loadingViewModel: LoadingViewModel) {
+fun newClientDialog(newClientViewModel: NewClientViewModel) {
     newClientViewModel.clientname = ""
+    newClientViewModel.clientLicensePlate = ""
+    newClientViewModel.clientVin = ""
+
     AlertDialog(
         title = { Text("Create new client") },
         text = {
-            TextField(
-                modifier = Modifier.padding(10.dp),
-                value = newClientViewModel.clientname,
-                onValueChange = { newText ->
-                    newClientViewModel.clientname = newText
-                }
-            )
+            Row {
+                TextField(
+                    modifier = Modifier.padding(10.dp),
+                    value = newClientViewModel.clientname,
+                    placeholder = {Text("Name")},
+                    onValueChange = { newText ->
+                        newClientViewModel.clientname = newText
+                    }
+                )
+                TextField(
+                    modifier = Modifier.padding(10.dp),
+                    value = newClientViewModel.clientLicensePlate,
+                    placeholder = {Text("License plate")},
+                    onValueChange = { newText ->
+                        newClientViewModel.clientLicensePlate = newText
+                    }
+                )
+                TextField(
+                    modifier = Modifier.padding(10.dp),
+                    value = newClientViewModel.clientVin,
+                    placeholder = {Text("VIN")},
+                    onValueChange = { newText ->
+                        newClientViewModel.clientVin = newText
+                    }
+                )
+            }
+
         },
         onDismissRequest = {},
         confirmButton = {
             Button(
                 onClick = {
-                    GlobalScope.launch (Dispatchers.Swing){
-                        loadingViewModel.visible = true
-                        if (newClientViewModel.clientname.isNotEmpty()) {
-                            val newclient = Client(name = newClientViewModel.clientname, serverURI = "tcp://${serverURI}:${serverPort}")
+                    //GlobalScope.launch (Dispatchers.Swing){
+                        if (newClientViewModel.clientname.isNotEmpty() &&
+                            newClientViewModel.clientLicensePlate.isNotEmpty() &&
+                            newClientViewModel.clientVin.isNotEmpty()) {
+                            val newclient = Client(
+                                name = newClientViewModel.clientname,
+                                licensePlate = newClientViewModel.clientLicensePlate,
+                                vin = newClientViewModel.clientVin,
+                                serverURI = "tcp://${serverURI}:${serverPort}"
+                            )
+
                             clientlist.add(newclient)
-                            loadingViewModel.visible = false
                             newClientViewModel.isdialogvisible = false
                         }
-                    }
+                    //}
                 }
             ) { Text("Create") }
         },
