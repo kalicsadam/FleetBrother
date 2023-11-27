@@ -47,4 +47,9 @@ class AuthController(
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body<ErrorRes>(errorResponse)
         }
     }
+
+    @PostMapping("/checkToken")
+    fun checkToken() : ResponseEntity<String> {
+        return ResponseEntity.ok().body("OK")
+    }
 }
