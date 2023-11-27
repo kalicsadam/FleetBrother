@@ -21,10 +21,6 @@ import org.json.JSONObject
 import viewmodel.ClientDetailsViewModel
 import java.lang.Exception
 
-/*var coord_regex =
-    "^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)\$\n".toRegex()
-val double_regex = """^[-+]?(\d*\.\d+|\d+(\.\d*)?)$""".toRegex()*/
-
 @Composable
 fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
     Surface(
@@ -52,23 +48,23 @@ fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
             ) {
                 Column(modifier = Modifier.weight(1.0f)) {
                     Text(
-                        modifier = Modifier.padding(start=20.dp, bottom = 20.dp),
+                        modifier = Modifier.padding(start = 20.dp, bottom = 20.dp),
                         fontSize = 30.sp,
                         fontWeight = FontWeight.Bold,
                         text = clientDetailsViewModel.client!!.name
                     )
                     Text(
-                        modifier = Modifier.padding(start=20.dp, bottom = 20.dp),
+                        modifier = Modifier.padding(start = 20.dp, bottom = 20.dp),
                         fontSize = 15.sp,
                         text = "License plate: ${clientDetailsViewModel.client!!.licensePlate}"
                     )
                     Text(
-                        modifier = Modifier.padding(start=20.dp, bottom = 20.dp),
+                        modifier = Modifier.padding(start = 20.dp, bottom = 20.dp),
                         fontSize = 15.sp,
                         text = "VIN: ${clientDetailsViewModel.client!!.vin}"
                     )
                     Text(
-                        modifier = Modifier.padding(start=20.dp, bottom = 20.dp),
+                        modifier = Modifier.padding(start = 20.dp, bottom = 20.dp),
                         fontSize = 15.sp,
                         text = "uuid: ${clientDetailsViewModel.client!!.uuid}"
                     )
@@ -94,31 +90,33 @@ fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
                 }
 
             }
-            Text("Schema ID")
+            Divider()
+            Text(modifier = Modifier.padding(start = 20.dp, bottom = 20.dp, top = 20.dp), text = "Schema ID")
             TextField(
+                modifier = Modifier.padding(start = 20.dp, bottom = 20.dp),
                 value = schema,
                 onValueChange = { txt ->
                     schema = txt
                 }
             )
-            Text("Data")
+            Text(modifier = Modifier.padding(start = 20.dp, bottom = 20.dp), text = "Data")
             TextField(
-                modifier = Modifier.height(300.dp),
+                modifier = Modifier.padding(start = 20.dp, bottom = 20.dp).height(250.dp).width(350.dp),
                 value = data,
                 onValueChange = { txt ->
                     data = txt
                 }
             )
             Button(
+                modifier = Modifier.padding(start = 20.dp),
                 onClick = {
-                    //var datajson: JsonObject? = null
-                    try{
+                    try {
                         val datajson = Json.parseToJsonElement(data) as JsonObject
                         val json = buildJsonObject {
-                            put("id",clientDetailsViewModel.client?.carId)
-                            put("schema",schema)
+                            put("id", clientDetailsViewModel.client?.carId)
+                            put("schema", schema)
                             putJsonObject("data") {
-                                datajson?.forEach { (key, value) ->
+                                datajson.forEach { (key, value) ->
                                     put(key, value)
                                 }
                             }
@@ -127,13 +125,13 @@ fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
                         msg.qos = 0
                         msg.isRetained = true
                         msg.payload = json.toString().toByteArray()
-                        clientDetailsViewModel.client?.mqttClient?.publish("measurementz",msg)
-                    } catch (e: Exception){
+                        clientDetailsViewModel.client?.mqttClient?.publish("measurementz", msg)
+                    } catch (e: Exception) {
                         errorMessage = "An error occurred: ${e.message}"
                     }
                 },
                 enabled = !(clientDetailsViewModel.client?.carId.isNullOrEmpty()) && (data.isNotEmpty())
-            ){ Text("Send") }
+            ) { Text("Send") }
             errorMessage?.let { message ->
                 ErrorDialog(message = message, onClose = { errorMessage = null })
             }
@@ -141,26 +139,6 @@ fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
     }
 }
 
-@Composable
-fun ErrorDialog(message: String, onClose: () -> Unit) {
-    Dialog(onCloseRequest = onClose) {
-        // Dialog content
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text("Error")
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(message)
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = onClose) {
-                Text("OK")
-            }
-        }
-    }
-}
 @Composable
 fun autoreportingview(clientDetailsViewModel: ClientDetailsViewModel) {
     Row(

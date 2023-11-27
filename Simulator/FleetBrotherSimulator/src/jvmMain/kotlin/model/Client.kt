@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.*
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.*
 import kotlinx.serialization.json.Json.Default.encodeToJsonElement
 import org.eclipse.paho.client.mqttv3.*
@@ -37,10 +38,10 @@ class Client(
             override fun connectionLost(cause: Throwable?) {}
 
             override fun messageArrived(topic: String?, message: MqttMessage?) {
-                when(topic){
+                when (topic) {
                     "obu-config" -> {
                         var msg = Json.decodeFromString<ObuConfig>(message?.payload?.decodeToString()!!)
-                        if(uuid==msg.uuid){
+                        if (uuid == msg.uuid) {
                             carId = msg.id
                             startHeartbeat()
                         }
@@ -57,19 +58,21 @@ class Client(
     fun acquireCarId() {
         GlobalScope.launch {
             while (carId.isNullOrEmpty()) {
-                val msg = MqttMessage()
-                msg.qos = 0
-                msg.isRetained = true
-                val connReq = buildJsonObject {
-                    put("method", "register")
-                    put("uuid", uuid)
-                    put("name", name)
-                    put("lincense_plate", licensePlate)
-                    put("vin", vin)
+                if (mqttClient.isConnected) {
+                    val msg = MqttMessage()
+                    msg.qos = 0
+                    msg.isRetained = true
+                    val connReq = buildJsonObject {
+                        put("method", "register")
+                        put("uuid", uuid)
+                        put("name", name)
+                        put("lincense_plate", licensePlate)
+                        put("vin", vin)
+                    }
+                    msg.payload = connReq.toString().toByteArray()
+                    mqttClient.publish("livez", msg)
+                    delay(10000L)
                 }
-                msg.payload = connReq.toString().toByteArray()
-                mqttClient.publish("livez", msg)
-                delay(10000L)
             }
         }
     }
@@ -102,6 +105,10 @@ class Client(
         mqttClient.unsubscribe("#")
         mqttClient.disconnect()
     }
-
-
 }
+
+@Serializable
+data class ObuConfig(
+    var uuid: String,
+    var id: String
+)
