@@ -24,3 +24,4 @@ hs_err_pid*
 replay_pid*
 WebClient/FleetBrotherWebClient/documentation/*
 Server/FleetBrotherServer/server123/.lck
+Simulator/FleetBrotherSimulator/wix311/*
