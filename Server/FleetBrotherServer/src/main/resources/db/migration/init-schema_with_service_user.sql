@@ -8,6 +8,7 @@ CREATE TABLE alert
     forbidden_value VARCHAR(255),
     exists_boolean  BOOLEAN,
     car_id          INTEGER,
+    is_deleted      BOOLEAN                                  NOT NULL,
     CONSTRAINT pk_alert PRIMARY KEY (id)
 );
 

@@ -25,7 +25,9 @@ class AlertServiceImpl(
 
     override fun getAlerts(carId: Int): List<AlertDto> {
         val alerts = alertRepository.getAlertByCar(carId)
-        return alerts.map { it.convertToDto() }
+        return alerts
+            .filter { !it.isDeleted }
+            .map { it.convertToDto() }
     }
 
     override fun createAlert(carId: Int, alertDto: AlertDto) {
@@ -44,7 +46,9 @@ class AlertServiceImpl(
         val schema = measurement.schema!!
         val dataRoot = ObjectMapper().readTree(measurement.data)
 
-        for(alert in car.alerts) {
+        val validAlerts = car.alerts.filter { !it.isDeleted }
+
+        for(alert in validAlerts) {
             val fieldMetadata = schema.fields.find {
                 it.key == alert.keyName
             }

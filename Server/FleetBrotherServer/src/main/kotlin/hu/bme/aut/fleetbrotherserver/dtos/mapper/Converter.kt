@@ -82,7 +82,8 @@ fun Alert.convertToDto() : AlertDto {
         minValue = this.minValue,
         maxValue = this.maxValue,
         forbiddenValue = this.forbiddenValue,
-        exists = this.exists
+        exists = this.exists,
+        isDeleted = this.isDeleted
     )
 }
 

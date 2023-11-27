@@ -12,5 +12,6 @@ data class AlertDto(
     val minValue: Double? = null,
     val maxValue: Double? = null,
     val forbiddenValue: String? = null,
-    val exists: Boolean? = null
+    val exists: Boolean? = null,
+    val isDeleted: Boolean? = false
 ) : Serializable

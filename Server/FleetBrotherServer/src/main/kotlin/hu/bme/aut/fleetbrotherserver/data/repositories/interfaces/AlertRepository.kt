@@ -18,6 +18,8 @@ interface CustomAlertRepository {
     fun addMeasurement(alert: Alert, measurement: Measurement)
     fun removeMeasurement(alertId: Int, measurementId: Int)
     fun removeMeasurement(alert: Alert, measurement: Measurement)
+
+    fun setAlertDeleted(alertId: Int)
 }
 
 open class CustomAlertRepositoryImpl(
@@ -46,6 +48,13 @@ open class CustomAlertRepositoryImpl(
     @Transactional
     override fun removeMeasurement(alert: Alert, measurement: Measurement) {
         alertHistoryRepository.removeAlertHistory(alert, measurement)
+    }
+
+    @Transactional
+    override fun setAlertDeleted(alertId: Int) {
+        val alert = entityManager.find(Alert::class.java, alertId)
+        alert.isDeleted = true
+        entityManager.persist(alert)
     }
 
 }

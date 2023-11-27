@@ -22,4 +22,6 @@ data class Alert(
 
     @OneToMany(mappedBy = "alert")
     var alertHistories: MutableList<AlertHistory> = mutableListOf(),
+
+    var isDeleted: Boolean = false
 )
