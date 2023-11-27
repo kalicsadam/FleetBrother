@@ -86,9 +86,10 @@ class AlertServiceImpl(
             alert.forbiddenValue != null && field.asText() == alert.forbiddenValue -> true
             // Force cast was necessary because the compiler insisted that
             // the values could've been changed after the null check, because they're mutable.
-            type == Type.NUMBER && (
-                    alert.minValue != null && field.isDouble && field.asDouble() < alert.minValue!! ||
-                    alert.maxValue != null && field.isDouble && field.asDouble() > alert.maxValue!!) -> true
+            type == Type.NUMBER &&
+                    alert.minValue != null && field.isDouble && field.asDouble() < alert.minValue!! -> true
+            type == Type.NUMBER &&
+                    alert.maxValue != null && field.isDouble && field.asDouble() > alert.maxValue!! -> true
             else -> false
         }
     }
