@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Alert } from 'src/app/data/dto/alert.dto';
 import { FieldType } from 'src/app/data/dto/field.dto';
 import { Measurement } from 'src/app/data/dto/measurement.dto';
 import { Schema } from 'src/app/data/dto/schema.dto';
@@ -17,12 +18,13 @@ export class CarReportingService {
   }
 
   getMeasurements(carId: number, schemaId: number): Observable<Measurement[]> {
-    return this.http.get<{ timestamp: string, data: string }[]>("/api/measurement", { params: { carId: carId, schemaId: schemaId } })
+    return this.http.get<{ timestamp: string, data: string, alerts : Alert[] }[]>("/api/measurement", { params: { carId: carId, schemaId: schemaId } })
       .pipe(map(result => {
         return result.map(m => {
           return {
             timestamp: new Date(m.timestamp),
-            data: JSON.parse(m.data)
+            data: JSON.parse(m.data),
+            alerts: m.alerts
           }
         })
       }))

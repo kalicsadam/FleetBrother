@@ -1,4 +1,7 @@
+import { Alert } from "./alert.dto";
+
 export interface Measurement {
     timestamp : Date,
-    data : any
+    data : any,
+    alerts: Alert[]
 }

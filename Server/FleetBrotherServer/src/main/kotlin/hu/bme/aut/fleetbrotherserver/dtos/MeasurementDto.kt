@@ -10,4 +10,5 @@ data class MeasurementDto(
     val id: Int,
     val timestamp: Timestamp,
     val data: String,
+    val alerts: List<AlertDto>
 ) : Serializable

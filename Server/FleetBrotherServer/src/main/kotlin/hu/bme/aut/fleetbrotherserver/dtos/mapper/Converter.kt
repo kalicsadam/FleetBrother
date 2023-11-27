@@ -52,6 +52,7 @@ fun Measurement.convertToDto() : MeasurementDto {
         id = this.id,
         timestamp = this.timestamp,
         data = this.data,
+        alerts = this.alertHistories.map { it.alert.convertToDto() }
     )
 }
 

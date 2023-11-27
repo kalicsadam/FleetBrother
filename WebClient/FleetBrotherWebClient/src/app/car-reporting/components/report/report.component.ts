@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Alert } from 'src/app/data/dto/alert.dto';
 import { Car } from 'src/app/data/dto/car.dto';
 import { Measurement } from 'src/app/data/dto/measurement.dto';
 import { Schema } from 'src/app/data/dto/schema.dto';
@@ -19,7 +20,7 @@ export class ReportComponent implements OnChanges, AfterViewInit {
 
   measurements : Measurement[] = []
   rawData : any[] = []
-  displayedColumns: string[] = ["timestamp"];
+  displayedColumns: string[] = ["timestamp", "data", "alerts"];
   dataSource : MatTableDataSource<any> = new MatTableDataSource();
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -33,7 +34,8 @@ export class ReportComponent implements OnChanges, AfterViewInit {
   ngOnChanges(changes: SimpleChanges): void {
     if(this.car != null && this.schema != null){
       this.fetchData()
-      this.displayedColumns.push(...(this.schema.fields.map(schema => schema.key)))
+      const index = this.displayedColumns.indexOf("data")
+      this.displayedColumns.splice(index, 1, ...(this.schema.fields.map(schema => schema.key)))
     }
   }
 
@@ -41,7 +43,7 @@ export class ReportComponent implements OnChanges, AfterViewInit {
     this.carReportingService.getMeasurements(this.car!.id, this.schema!.id).subscribe(measurements =>{
       this.measurements = measurements
       this.rawData = measurements.map(m => {
-        let obj = {...({timestamp: m.timestamp}), ...(m.data)}
+        let obj = {...({timestamp: m.timestamp}), ...(m.data), ...({alerts: m.alerts.map(alert => alert.name)})}
         return obj;
       })
       this.dataSource.data = this.rawData
@@ -49,7 +51,7 @@ export class ReportComponent implements OnChanges, AfterViewInit {
   }
 
   export(){
-    this.exportedData.emit(this.rawData)
+    this.exportedData.emit(this.copy(this.rawData))
   }
 
   convertData(element : any){
@@ -57,5 +59,13 @@ export class ReportComponent implements OnChanges, AfterViewInit {
       return element.join(", ")
     }
     return element?.toString() ?? "";
+  }
+
+  getAlertsText(alerts : string[]){
+    return alerts.join("\n")
+  }
+
+  copy(data : any){
+    return JSON.parse(JSON.stringify(data));
   }
 }
