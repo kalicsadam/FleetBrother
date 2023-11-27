@@ -20,7 +20,12 @@ class FirebaseConfiguration(val firebaseParams: FirebaseParameters) {
         val options: FirebaseOptions = FirebaseOptions.builder()
                 .setCredentials(credentials)
                 .build()
-        return FirebaseApp.initializeApp(options)
+
+        return if(FirebaseApp.getApps().isEmpty()) {
+            FirebaseApp.initializeApp(options)
+        } else {
+            FirebaseApp.getApps().first()
+        }
     }
 
     @Bean

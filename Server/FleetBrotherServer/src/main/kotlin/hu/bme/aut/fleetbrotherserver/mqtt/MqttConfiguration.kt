@@ -12,6 +12,7 @@ import org.springframework.integration.channel.DirectChannel
 import org.springframework.integration.core.MessageProducer
 import org.springframework.integration.mqtt.core.*
 import org.springframework.integration.mqtt.inbound.Mqttv5PahoMessageDrivenChannelAdapter
+import org.springframework.integration.mqtt.outbound.Mqttv5PahoMessageHandler
 import org.springframework.integration.mqtt.support.MqttHeaders
 import org.springframework.integration.router.HeaderValueRouter
 import org.springframework.messaging.MessageChannel
@@ -95,17 +96,17 @@ class MqttConfiguration(val conf: MqttParameters) {
 //        }
 //    }
 
-//    @Bean
-//    fun mqttOutboundChannel(): MessageChannel {
-//        return DirectChannel()
-//    }
-//
-//    @Bean
-//    @ServiceActivator(inputChannel = "mqttOutboundChannel")
-//    fun mqttOutbound(clientManager: ClientManager<IMqttAsyncClient, MqttConnectionOptions>): MessageHandler {
-//        val messageHandler = Mqttv5PahoMessageHandler(clientManager)
-//        messageHandler.setAsync(true)
-//        messageHandler.setDefaultQos(1)
-//        return messageHandler
-//    }
+    @Bean
+    fun mqttOutboundChannel(): MessageChannel {
+        return DirectChannel()
+    }
+
+    @Bean
+    @ServiceActivator(inputChannel = "mqttOutboundChannel")
+    fun mqttOutbound(clientManager: ClientManager<IMqttAsyncClient, MqttConnectionOptions>): MessageHandler {
+        val messageHandler = Mqttv5PahoMessageHandler(clientManager)
+        messageHandler.setAsync(true)
+        messageHandler.setDefaultQos(1)
+        return messageHandler
+    }
 }
