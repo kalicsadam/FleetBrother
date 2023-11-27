@@ -20,7 +20,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>alerts </th>
         <td mat-cell *matCellDef="let element">
             <div *ngIf="element.alerts != null && element.alerts != ''">
-                <button mat-icon-button color="warn" [matTooltip]="getAlertsText(element.alerts)" matTooltipClass="mat-tooltip">
+                <button mat-icon-button color="warn" [matTooltip]="getAlertsText(element.alerts)" matTooltipClass="mat-tooltip" #tooltip="matTooltip" (click)="tooltip.show()">
                     <mat-icon>notifications</mat-icon>
                 </button>
             </div>
