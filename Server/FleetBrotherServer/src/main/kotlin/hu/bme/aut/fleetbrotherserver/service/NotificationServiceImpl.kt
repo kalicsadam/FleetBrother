@@ -50,8 +50,8 @@ class NotificationServiceImpl(
         try {
             val message = MimeMessage(session)
 
-            message.setFrom("testfrom@test.com")
-            message.setRecipient(JakartaMessage.RecipientType.TO, InternetAddress("testto@test.com"))
+            message.setFrom(mailParameters.from)
+            message.setRecipient(JakartaMessage.RecipientType.TO, InternetAddress(mailParameters.to))
             message.subject = composeTitle()
             message.setText(composeMessage(alertHistory))
 

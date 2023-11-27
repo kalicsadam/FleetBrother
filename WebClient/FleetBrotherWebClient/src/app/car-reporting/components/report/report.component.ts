@@ -20,7 +20,7 @@ export class ReportComponent implements OnChanges, AfterViewInit {
 
   measurements : Measurement[] = []
   rawData : any[] = []
-  displayedColumns: string[] = ["timestamp", "data", "alerts"];
+  displayedColumns: string[] = ["timestamp", "alerts"];
   dataSource : MatTableDataSource<any> = new MatTableDataSource();
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -34,8 +34,8 @@ export class ReportComponent implements OnChanges, AfterViewInit {
   ngOnChanges(changes: SimpleChanges): void {
     if(this.car != null && this.schema != null){
       this.fetchData()
-      const index = this.displayedColumns.indexOf("data")
-      this.displayedColumns.splice(index, 1, ...(this.schema.fields.map(schema => schema.key)))
+      const index = this.displayedColumns.indexOf("timestamp")
+      this.displayedColumns.splice(index + 1, 0, ...(this.schema.fields.map(schema => schema.key)))
     }
   }
 
@@ -65,7 +65,11 @@ export class ReportComponent implements OnChanges, AfterViewInit {
     return alerts.join("\n")
   }
 
-  copy(data : any){
-    return JSON.parse(JSON.stringify(data));
+  copy(data : any[]){
+    var copy : any[] =  JSON.parse(JSON.stringify(data));
+    copy.forEach(data => {
+      data.timestamp = new Date(data.timestamp)
+    })
+    return copy;
   }
 }

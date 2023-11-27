@@ -46,7 +46,7 @@ class MeasurementzHandlerServiceImpl(
 
         val data = messageRoot["data"].toPrettyString().trimIndent()
 
-        val measurementSave = Measurement(-1, Timestamp.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)), data, schemaCar.schema, car)
+        val measurementSave = Measurement(-1, Timestamp.from(LocalDateTime.now(ZoneOffset.UTC).toInstant(ZoneOffset.UTC)), data, schemaCar.schema, car)
         val measurement = measurementRepo.save(measurementSave)
         logger.info("Measurementz: new measurement received from: $carId")
 

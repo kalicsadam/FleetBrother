@@ -42,7 +42,7 @@ class Client(
                     "obu-config" -> {
                         var msg = Json.decodeFromString<ObuConfig>(message?.payload?.decodeToString()!!)
                         if (uuid == msg.uuid) {
-                            carId = msg.id
+                            carId = msg.id.toString()
                             startHeartbeat()
                         }
                     }
@@ -66,7 +66,7 @@ class Client(
                         put("method", "register")
                         put("uuid", uuid)
                         put("name", name)
-                        put("lincense_plate", licensePlate)
+                        put("license_plate", licensePlate)
                         put("vin", vin)
                     }
                     msg.payload = connReq.toString().toByteArray()
@@ -110,5 +110,5 @@ class Client(
 @Serializable
 data class ObuConfig(
     var uuid: String,
-    var id: String
+    var id: Int
 )
