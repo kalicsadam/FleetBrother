@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.crypto.password.NoOpPasswordEncoder
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
@@ -29,7 +29,7 @@ class SecurityConfig(
     private val jwtAuthorizationFilter: JwtAuthorizationFilter
 ) : GlobalMethodSecurityConfiguration() {
     @Bean
-    fun authenticationManager(http: HttpSecurity, noOpPasswordEncoder: NoOpPasswordEncoder?): AuthenticationManager {
+    fun authenticationManager(http: HttpSecurity, noOpPasswordEncoder: BCryptPasswordEncoder?): AuthenticationManager {
         val authenticationManagerBuilder =
             http.getSharedObject(AuthenticationManagerBuilder::class.java)
 
@@ -53,14 +53,15 @@ class SecurityConfig(
         return http.build()
     }
 
+//    @Bean
+//    @Suppress("deprecation")
+//    fun passwordEncoder(): NoOpPasswordEncoder {
+//        return NoOpPasswordEncoder.getInstance() as NoOpPasswordEncoder
+//    }
+
     @Bean
     @Suppress("deprecation")
-    fun passwordEncoder(): NoOpPasswordEncoder {
-        return NoOpPasswordEncoder.getInstance() as NoOpPasswordEncoder
+    fun passwordEncoder(): BCryptPasswordEncoder {
+        return BCryptPasswordEncoder()
     }
-
-//    @Bean
-//    fun grantedAuthorityDefaults(): GrantedAuthorityDefaults? {
-//        return GrantedAuthorityDefaults("") // Remove the ROLE_ prefix
-//    }
 }

@@ -19,7 +19,7 @@ class UserServiceImpl(
 
     override fun createUser(userDto: UserDto) {
         val user = userDto.convertBackFromDto()
-        userRepository.save(user)
+        userRepository.saveUserWithHashing(user)
     }
 
     override fun deleteUser(userId: Int) {
