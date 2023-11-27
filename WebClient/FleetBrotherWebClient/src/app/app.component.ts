@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
     })
   }
 
-  title = 'FleetBrotherWebClient';
+  title = 'Fleet Brother';
   sideBarOpened: boolean = false;
   isLoading : boolean = false;
 }

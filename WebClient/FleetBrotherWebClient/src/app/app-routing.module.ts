@@ -10,12 +10,13 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { LoginPageComponent } from './login/pages/login-page/login-page.component';
 import { AppComponent } from './app.component';
 import { AdminGuard } from './shared/guards/admin.guard';
+import { WelcomePageComponent } from './welcome/pages/welcome-page/welcome-page.component';
 
 const routes: Routes = 
 [
   { 
     path: '',
-    component: AppComponent,
+    component: WelcomePageComponent,
     canActivate: [AuthGuard]
   },
   { 
