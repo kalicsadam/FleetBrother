@@ -1,7 +1,7 @@
 <mat-card *ngIf="user != null">
     <mat-card-content class="user-details">
         <div>
-            <mat-card-title>{{user.username}}</mat-card-title>
+            <mat-card-title>{{user.email}}</mat-card-title>
             <mat-card-subtitle>Is Admin: {{user.isAdmin}}</mat-card-subtitle>
         </div>
         <button mat-icon-button (click)="onDelete.emit(user)">

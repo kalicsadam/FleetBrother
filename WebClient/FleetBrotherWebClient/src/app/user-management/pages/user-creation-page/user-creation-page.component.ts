@@ -41,7 +41,7 @@ export class UserCreationPageComponent implements OnInit {
   }
 
   onDelete(user : User){
-    const ref = this.dialogService.openChooseDialog("Delete user", `Are you sure you want to delete user: ${user.username}${user.isAdmin ? " (Admin)" : ""}?`);
+    const ref = this.dialogService.openChooseDialog("Delete user", `Are you sure you want to delete user: ${user.email}${user.isAdmin ? " (Admin)" : ""}?`);
     ref.afterClosed().subscribe(decision => {
       if(decision){
         this.userService.deleteUser(user.id).subscribe(result => {

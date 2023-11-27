@@ -9,6 +9,7 @@ import { UserCreationPageComponent } from './user-management/pages/user-creation
 import { AuthGuard } from './shared/guards/auth.guard';
 import { LoginPageComponent } from './login/pages/login-page/login-page.component';
 import { AppComponent } from './app.component';
+import { AdminGuard } from './shared/guards/admin.guard';
 
 const routes: Routes = 
 [
@@ -45,7 +46,7 @@ const routes: Routes =
   { 
     path: 'users', 
     component: UserCreationPageComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AdminGuard]
   },
   { 
     path: 'login', 

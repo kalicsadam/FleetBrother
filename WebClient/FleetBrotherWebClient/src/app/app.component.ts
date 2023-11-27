@@ -15,6 +15,7 @@ import { LoginService } from './shared/services/login.service';
 export class AppComponent implements OnInit {
 
   constructor(
+    public loginService : LoginService,
     public firabaseService : FirebaseService,
     private loadingService : LoadingService,
     private ref: ChangeDetectorRef

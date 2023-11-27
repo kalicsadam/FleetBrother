@@ -34,12 +34,12 @@ class MeasurementzHandlerServiceImpl(
         }
         val car = carOpt.get()
 
-        val schemaId = messageRoot["schema"].asInt()
+        val schemaName = messageRoot["schema"].asText()
         val schemaCar = car.schemaCars.find {
-            it.schema.id == schemaId
+            it.schema.name == schemaName
         }
         if(schemaCar == null) {
-            logger.error("Invalid schema identifier received: $schemaId")
+            logger.error("Invalid schema identifier received: $schemaName")
             return
         }
 

@@ -17,8 +17,8 @@ export class LoginService {
     return this._token
   }
 
-  get user(): User | undefined {
-    return this._user
+  get user(): Observable<User> {
+    return this._user != null ? new BehaviorSubject(this._user) : this.fetchUserData()
   }
 
   login() {
@@ -44,7 +44,6 @@ export class LoginService {
         if (login.isSuccess) {
           this._token = login.token
           this.saveToken(login.token)
-          this.fetchUserData()
         }
       }
     )).pipe(map(login => login.isSuccess))
@@ -72,11 +71,11 @@ export class LoginService {
   }
 
   private fetchUserData() {
-    this._user = {
+    return new BehaviorSubject({
       id: 0,
-      username: "Placeholder",
+      email: "Placeholder",
       isAdmin: true
-    }
+    }).pipe(tap(user => {this._user = user}))
   }
 
   private clearToken() {

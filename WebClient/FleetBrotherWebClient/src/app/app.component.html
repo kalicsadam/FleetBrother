@@ -4,7 +4,7 @@
 
 <mat-sidenav-container class="app-container">
   <mat-sidenav mode="over" [(opened)]="sideBarOpened">
-  <app-sidebar></app-sidebar>
+  <app-sidebar [showAdmin]="(this.loginService.user | async)?.isAdmin ?? false"></app-sidebar>
   </mat-sidenav>
   <mat-sidenav-content class="main-content">
     <div class="toolbar">

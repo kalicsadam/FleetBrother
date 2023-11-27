@@ -7,21 +7,21 @@ import { UserCreationRequestBody } from 'src/app/data/requestbody/user-creation.
   styleUrls: ['./user-create.component.scss']
 })
 export class UserCreateComponent {
-  inputUsername : string = ""
+  inputEmail : string = ""
   inputPassword : string = ""
   inputIsAdmin : boolean = false
 
   @Output() onCreate : EventEmitter<UserCreationRequestBody> = new EventEmitter()
 
   OnSubmit(){
-    if(this.inputUsername != "" && this.inputPassword != ""){
+    if(this.inputEmail != "" && this.inputPassword != ""){
       this.onCreate.emit({
-        username: this.inputUsername,
+        email: this.inputEmail,
         password: this.inputPassword,
         isAdmin: this.inputIsAdmin
       })
 
-      this.inputUsername = ""
+      this.inputEmail = ""
       this.inputPassword = ""
       this.inputIsAdmin = false
     }

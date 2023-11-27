@@ -13,12 +13,12 @@ export class UserManagementService {
   placeholderUsers : User[] = [
     {
       id: 1,
-      username: "test",
+      email: "test",
       isAdmin: true
     },
     {
       id: 2,
-      username: "test2",
+      email: "test2",
       isAdmin: false
     }
   ]
@@ -30,7 +30,7 @@ export class UserManagementService {
   createUser(user : UserCreationRequestBody) {
     this.placeholderUsers.push({
       id: Math.floor(Math.random() * 999),
-      username: user.username,
+      email: user.email,
       isAdmin: user.isAdmin
     })
     return new BehaviorSubject(true)

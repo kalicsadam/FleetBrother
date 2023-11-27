@@ -1,5 +1,5 @@
 export interface UserCreationRequestBody {
-    username : string,
+    email : string,
     password : string,
     isAdmin : boolean
 }
