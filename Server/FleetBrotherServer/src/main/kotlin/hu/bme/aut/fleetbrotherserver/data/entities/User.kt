@@ -7,6 +7,7 @@ import jakarta.persistence.*
 data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "sequenceGenerator",  sequenceName = "user_id_seq")
     var id: Int,
     var email: String,
     var passwordHash: String,

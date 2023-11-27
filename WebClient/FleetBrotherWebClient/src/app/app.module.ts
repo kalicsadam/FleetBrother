@@ -35,6 +35,7 @@ import { UserCreateComponent } from './user-management/components/user-create/us
 import { LoginPageComponent } from './login/pages/login-page/login-page.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
+import { WelcomePageComponent } from './welcome/pages/welcome-page/welcome-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +63,7 @@ import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
     UserOverviewComponent,
     UserCreateComponent,
     LoginPageComponent,
+    WelcomePageComponent,
   ],
   imports: [
     BrowserModule,
