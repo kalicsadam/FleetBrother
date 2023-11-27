@@ -8,8 +8,8 @@ import { map, switchMap, tap } from 'rxjs';
 })
 export class AdminGuard implements CanActivate {
     canActivate() {
-        return this.loginService.login().pipe(switchMap(()=>this.loginService.user)).pipe(tap(user => {
-            if (user == null || !user.isAdmin) {
+        return this.loginService.login().pipe(tap(login => {
+            if (!login|| this.loginService.user == undefined || !this.loginService.user.isAdmin) {
                 this.router.navigate(['login']);
             }
         })).pipe(map(user=> user != null))

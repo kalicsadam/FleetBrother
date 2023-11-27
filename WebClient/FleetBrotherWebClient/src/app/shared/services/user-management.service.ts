@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { User } from 'src/app/data/dto/user.dto';
 import { UserCreationRequestBody } from 'src/app/data/requestbody/user-creation.dto';
 
@@ -8,36 +9,17 @@ import { UserCreationRequestBody } from 'src/app/data/requestbody/user-creation.
 })
 export class UserManagementService {
 
-  constructor() { }
-
-  placeholderUsers : User[] = [
-    {
-      id: 1,
-      email: "test",
-      isAdmin: true
-    },
-    {
-      id: 2,
-      email: "test2",
-      isAdmin: false
-    }
-  ]
+  constructor(private http : HttpClient) { }
 
   getUsers() {
-    return new BehaviorSubject(this.placeholderUsers)
+    return this.http.get<User[]>("/api/user")
   }
 
   createUser(user : UserCreationRequestBody) {
-    this.placeholderUsers.push({
-      id: Math.floor(Math.random() * 999),
-      email: user.email,
-      isAdmin: user.isAdmin
-    })
-    return new BehaviorSubject(true)
+    return this.http.put("/api/user", user, { observe: 'response' }).pipe(map(response => response.ok))
   }
 
   deleteUser(userId : number) {
-    this.placeholderUsers = this.placeholderUsers.filter(user => user.id != userId)
-    return new BehaviorSubject(true)
+    return this.http.delete("/api/user/" + userId, { observe: 'response' }).pipe(map(response => response.ok))
   }
 }
