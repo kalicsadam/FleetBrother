@@ -50,6 +50,6 @@ class AuthController(
 
     @PostMapping("/checkToken")
     fun checkToken() : ResponseEntity<String> {
-        return ResponseEntity.ok().body("OK")
+        return ResponseEntity.ok().body("")
     }
 }
