@@ -58,19 +58,21 @@ class Client(
     fun acquireCarId() {
         GlobalScope.launch {
             while (carId.isNullOrEmpty()) {
-                val msg = MqttMessage()
-                msg.qos = 0
-                msg.isRetained = true
-                val connReq = buildJsonObject {
-                    put("method", "register")
-                    put("uuid", uuid)
-                    put("name", name)
-                    put("lincense_plate", licensePlate)
-                    put("vin", vin)
+                if(mqttClient.isConnected){
+                    val msg = MqttMessage()
+                    msg.qos = 0
+                    msg.isRetained = true
+                    val connReq = buildJsonObject {
+                        put("method", "register")
+                        put("uuid", uuid)
+                        put("name", name)
+                        put("lincense_plate", licensePlate)
+                        put("vin", vin)
+                    }
+                    msg.payload = connReq.toString().toByteArray()
+                    mqttClient.publish("livez", msg)
+                    delay(10000L)
                 }
-                msg.payload = connReq.toString().toByteArray()
-                mqttClient.publish("livez", msg)
-                delay(10000L)
             }
         }
     }
