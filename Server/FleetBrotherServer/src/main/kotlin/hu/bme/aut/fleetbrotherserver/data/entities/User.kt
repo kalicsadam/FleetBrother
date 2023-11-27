@@ -10,4 +10,6 @@ data class User(
     var id: Int,
     var email: String,
     var passwordHash: String,
+
+    var role: String
 )

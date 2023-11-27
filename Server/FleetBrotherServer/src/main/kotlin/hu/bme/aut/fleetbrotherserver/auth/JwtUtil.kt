@@ -21,6 +21,7 @@ class JwtUtil {
 
     fun createToken(user: User): String {
         val claims = Jwts.claims().setSubject(user.email)
+        claims["role"] = user.role
 
         val tokenCreateTime = Date()
         val tokenValidity = Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(accessTokenValidity))

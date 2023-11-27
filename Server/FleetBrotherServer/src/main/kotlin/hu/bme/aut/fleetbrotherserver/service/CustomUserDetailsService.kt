@@ -11,12 +11,10 @@ class CustomUserDetailsService(
 ) : UserDetailsService {
     override fun loadUserByUsername(email: String): UserDetails {
         val user = userRepository.findUserByEmail(email)
-        val roles = mutableListOf<String>()
-        roles.add("USER")
         val userDetails = org.springframework.security.core.userdetails.User.builder()
             .username(user.email)
             .password(user.passwordHash)
-            .roles(roles[0])
+            .roles(user.role)
             .build()
 
         return userDetails

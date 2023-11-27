@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
@@ -40,10 +41,13 @@ class JwtAuthorizationFilter(
 
             if (claims != null && jwtUtil.validateClaims(claims)) {
                 val email = claims.subject
+                val roleStr = claims["role"].toString()
+
+                val role = SimpleGrantedAuthority("ROLE_$roleStr")
 
                 println("email : $email")
 
-                val authentication: Authentication = UsernamePasswordAuthenticationToken(email, "", ArrayList())
+                val authentication: Authentication = UsernamePasswordAuthenticationToken(email, "", listOf(role))
                 SecurityContextHolder.getContext().authentication = authentication
             }
 
