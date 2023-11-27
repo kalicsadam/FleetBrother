@@ -1,0 +1,655 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>fleet-brother-web-client documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">fleet-brother-web-client documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  CarOverviewComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/car-management/components/car-overview/car-overview.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-car-overview</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./car-overview.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./car-overview.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#modetype" >modetype</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#car" >car</a>
+                            </li>
+                            <li>
+                                <a href="#disabled" >disabled</a>
+                            </li>
+                            <li>
+                                <a href="#mode" >mode</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#onAccept" >onAccept</a>
+                            </li>
+                            <li>
+                                <a href="#onAlerts" >onAlerts</a>
+                            </li>
+                            <li>
+                                <a href="#onDecline" >onDecline</a>
+                            </li>
+                            <li>
+                                <a href="#onDelete" >onDelete</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="car"></a>
+                        <b>car</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Car.html" target="_self" >Car | undefined</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/car-management/components/car-overview/car-overview.component.ts:20</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="disabled"></a>
+                        <b>disabled</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/car-management/components/car-overview/car-overview.component.ts:21</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="mode"></a>
+                        <b>mode</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/enumerations.html#CarOverviewMode" target="_self" >CarOverviewMode</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>CarOverviewMode.ACCEPT_DECLINE</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/car-management/components/car-overview/car-overview.component.ts:18</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="onAccept"></a>
+                        <b>onAccept</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Car.html" target="_self" >EventEmitter&lt;Car&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/car-management/components/car-overview/car-overview.component.ts:22</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="onAlerts"></a>
+                        <b>onAlerts</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Car.html" target="_self" >EventEmitter&lt;Car&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/car-management/components/car-overview/car-overview.component.ts:25</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="onDecline"></a>
+                        <b>onDecline</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Car.html" target="_self" >EventEmitter&lt;Car&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/car-management/components/car-overview/car-overview.component.ts:23</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="onDelete"></a>
+                        <b>onDelete</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Car.html" target="_self" >EventEmitter&lt;Car&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/car-management/components/car-overview/car-overview.component.ts:24</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="modetype"></a>
+                    <span class="name">
+                        <span ><b>modetype</b></span>
+                        <a href="#modetype"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>CarOverviewMode</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/car-management/components/car-overview/car-overview.component.ts:17</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, Output } from &#x27;@angular/core&#x27;;
+import { Car } from &#x27;src/app/data/dto/car.dto&#x27;;
+
+export enum CarOverviewMode {
+  ACCEPT_DECLINE,
+  MANAGE,
+  REPORT,
+  DISPLAY
+}
+
+@Component({
+  selector: &#x27;app-car-overview&#x27;,
+  templateUrl: &#x27;./car-overview.component.html&#x27;,
+  styleUrls: [&#x27;./car-overview.component.scss&#x27;]
+})
+export class CarOverviewComponent {
+  modetype &#x3D; CarOverviewMode;
+  @Input() mode : CarOverviewMode &#x3D; CarOverviewMode.ACCEPT_DECLINE;
+
+  @Input() car : Car | undefined;
+  @Input() disabled : boolean &#x3D; false;
+  @Output() onAccept : EventEmitter&lt;Car&gt; &#x3D; new EventEmitter();
+  @Output() onDecline : EventEmitter&lt;Car&gt; &#x3D; new EventEmitter();
+  @Output() onDelete : EventEmitter&lt;Car&gt; &#x3D; new EventEmitter();
+  @Output() onAlerts : EventEmitter&lt;Car&gt; &#x3D; new EventEmitter();
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;mat-card *ngIf&#x3D;&quot;car !&#x3D; null&quot; class&#x3D;&quot;car-overview&quot;&gt;
+    &lt;mat-card-header&gt;
+        &lt;mat-card-title&gt;
+            &lt;p&gt;#{{car.id}}: {{car.name}}&lt;/p&gt;
+        &lt;/mat-card-title&gt;
+        &lt;mat-card-subtitle&gt;
+            &lt;p&gt;License plate: {{car.licensePlate}}&lt;/p&gt;
+            &lt;p&gt;VIN: {{car.vin}}&lt;/p&gt;
+        &lt;/mat-card-subtitle&gt;
+    &lt;/mat-card-header&gt;
+    &lt;mat-card-content class&#x3D;&quot;car-overview-content&quot;&gt;
+        &lt;div class&#x3D;&quot;car-overview-tools&quot;&gt;
+            &lt;div *ngIf&#x3D;&quot;mode &#x3D;&#x3D; modetype.ACCEPT_DECLINE&quot; class&#x3D;&quot;tools-accept-decline&quot;&gt;
+                &lt;button mat-fab color&#x3D;&quot;accent&quot; (click)&#x3D;&quot;onAccept.emit(car)&quot; [disabled]&#x3D;&quot;disabled&quot;&gt;
+                    &lt;mat-icon&gt;done&lt;/mat-icon&gt;
+                  &lt;/button&gt;
+                &lt;button mat-fab color&#x3D;&quot;warn&quot; (click)&#x3D;&quot;onDecline.emit(car)&quot; [disabled]&#x3D;&quot;disabled&quot;&gt;
+                    &lt;mat-icon&gt;close&lt;/mat-icon&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div *ngIf&#x3D;&quot;mode &#x3D;&#x3D; modetype.MANAGE&quot; class&#x3D;&quot;tools-report&quot;&gt;
+                &lt;button mat-fab color&#x3D;&quot;primary&quot; [routerLink]&#x3D;&quot;[&#x27;/report&#x27;, car.id]&quot; [disabled]&#x3D;&quot;disabled&quot;&gt;
+                    &lt;mat-icon&gt;summarize&lt;/mat-icon&gt;
+                &lt;/button&gt;
+                &lt;button mat-fab color&#x3D;&quot;warn&quot; (click)&#x3D;&quot;onDelete.emit(car)&quot; [disabled]&#x3D;&quot;disabled&quot;&gt;
+                    &lt;mat-icon&gt;delete&lt;/mat-icon&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div *ngIf&#x3D;&quot;mode &#x3D;&#x3D; modetype.REPORT&quot;&gt;
+                &lt;button mat-fab color&#x3D;&quot;warn&quot; (click)&#x3D;&quot;onAlerts.emit(car)&quot; [disabled]&#x3D;&quot;disabled&quot;&gt;
+                    &lt;mat-icon&gt;notifications_active&lt;/mat-icon&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/mat-card-content&gt;
+&lt;/mat-card&gt;
+  </code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./car-overview.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.car-overview{
+    .car-overview-content{
+        .car-overview-tools {
+            .tools-accept-decline {
+                &amp; &gt; * {
+                    margin-right: 12px;
+                }
+            }
+            .tools-report {
+                &amp; &gt; * {
+                    margin-right: 12px;
+                }
+            }
+        }
+    }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><mat-card *ngIf="car != null" class="car-overview">    <mat-card-header>        <mat-card-title>            <p>#{{car.id}}: {{car.name}}</p>        </mat-card-title>        <mat-card-subtitle>            <p>License plate: {{car.licensePlate}}</p>            <p>VIN: {{car.vin}}</p>        </mat-card-subtitle>    </mat-card-header>    <mat-card-content class="car-overview-content">        <div class="car-overview-tools">            <div *ngIf="mode == modetype.ACCEPT_DECLINE" class="tools-accept-decline">                <button mat-fab color="accent" (click)="onAccept.emit(car)" [disabled]="disabled">                    <mat-icon>done</mat-icon>                  </button>                <button mat-fab color="warn" (click)="onDecline.emit(car)" [disabled]="disabled">                    <mat-icon>close</mat-icon>                </button>            </div>            <div *ngIf="mode == modetype.MANAGE" class="tools-report">                <button mat-fab color="primary" [routerLink]="[\'/report\', car.id]" [disabled]="disabled">                    <mat-icon>summarize</mat-icon>                </button>                <button mat-fab color="warn" (click)="onDelete.emit(car)" [disabled]="disabled">                    <mat-icon>delete</mat-icon>                </button>            </div>            <div *ngIf="mode == modetype.REPORT">                <button mat-fab color="warn" (click)="onAlerts.emit(car)" [disabled]="disabled">                    <mat-icon>notifications_active</mat-icon>                </button>            </div>        </div>    </mat-card-content></mat-card>  </div>'
+    var COMPONENTS = [{'name': 'AlertCreationComponent', 'selector': 'app-alert-creation'},{'name': 'AlertOverviewComponent', 'selector': 'app-alert-overview'},{'name': 'AlertsManagerComponent', 'selector': 'app-alerts-manager'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CarAssigmentPageComponent', 'selector': 'app-car-assigment-page'},{'name': 'CarFleetAssigmentComponent', 'selector': 'app-car-fleet-assigment'},{'name': 'CarOverviewComponent', 'selector': 'app-car-overview'},{'name': 'CarReportingPageComponent', 'selector': 'app-car-reporting-page'},{'name': 'FieldCreationComponent', 'selector': 'app-field-creation'},{'name': 'FieldOverviewComponent', 'selector': 'app-field-overview'},{'name': 'FleetManagementCreateComponent', 'selector': 'app-fleet-management-create'},{'name': 'FleetManagementPageComponent', 'selector': 'app-fleet-management-page'},{'name': 'FleetOverviewComponent', 'selector': 'app-fleet-overview'},{'name': 'FleetViewPageComponent', 'selector': 'app-fleet-view-page'},{'name': 'LoginPageComponent', 'selector': 'app-login-page'},{'name': 'MessageDialogComponent', 'selector': 'app-message-dialog'},{'name': 'ReportComponent', 'selector': 'app-report'},{'name': 'SchemaCarAssigmentComponent', 'selector': 'app-schema-car-assigment'},{'name': 'SchemaCreateComponent', 'selector': 'app-schema-create'},{'name': 'SchemaManagementPageComponent', 'selector': 'app-schema-management-page'},{'name': 'SchemaOverviewComponent', 'selector': 'app-schema-overview'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'UserCreateComponent', 'selector': 'app-user-create'},{'name': 'UserCreationPageComponent', 'selector': 'app-user-creation-page'},{'name': 'UserOverviewComponent', 'selector': 'app-user-overview'},{'name': 'WelcomePageComponent', 'selector': 'app-welcome-page'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'CarOverviewComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'CarOverviewComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
