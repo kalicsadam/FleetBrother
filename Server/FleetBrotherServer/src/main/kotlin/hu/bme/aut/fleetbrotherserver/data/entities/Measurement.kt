@@ -8,6 +8,8 @@ data class Measurement(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int,
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     var timestamp: Timestamp,
     var data: String,
 

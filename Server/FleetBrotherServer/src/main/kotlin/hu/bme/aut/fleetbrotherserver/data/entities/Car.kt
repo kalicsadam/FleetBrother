@@ -12,6 +12,8 @@ data class Car(
     var name: String,
     var licensePlate: String,
     var vin: String,
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     var lastLive: Timestamp,
 
     @OneToMany(mappedBy = "car")
