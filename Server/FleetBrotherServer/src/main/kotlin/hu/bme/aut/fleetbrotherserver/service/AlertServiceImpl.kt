@@ -37,7 +37,7 @@ class AlertServiceImpl(
     }
 
     override fun deleteAlert(alertId: Int) {
-        alertRepository.deleteById(alertId)
+        alertRepository.setAlertDeleted(alertId)
     }
 
     override fun checkAlerts(car: Car, measurement: Measurement) {
