@@ -1,4 +1,4 @@
-package hu.bme.aut.fleetbrotherserver.data.repositories.interfaces
+package hu.bme.aut.fleetbrotherserver.data.repositories
 
 import hu.bme.aut.fleetbrotherserver.data.entities.User
 import jakarta.persistence.EntityManager

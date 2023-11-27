@@ -1,7 +1,7 @@
 package hu.bme.aut.fleetbrotherserver.controller
 
 import hu.bme.aut.fleetbrotherserver.auth.JwtUtil
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.UserRepository
+import hu.bme.aut.fleetbrotherserver.data.repositories.UserRepository
 import hu.bme.aut.fleetbrotherserver.dtos.security.ErrorRes
 import hu.bme.aut.fleetbrotherserver.dtos.security.LoginReq
 import hu.bme.aut.fleetbrotherserver.dtos.security.LoginRes

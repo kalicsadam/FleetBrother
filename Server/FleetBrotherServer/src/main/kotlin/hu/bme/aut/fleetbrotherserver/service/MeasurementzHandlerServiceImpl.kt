@@ -2,7 +2,8 @@ package hu.bme.aut.fleetbrotherserver.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import hu.bme.aut.fleetbrotherserver.data.entities.Measurement
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.*
+import hu.bme.aut.fleetbrotherserver.data.repositories.CarRepository
+import hu.bme.aut.fleetbrotherserver.data.repositories.MeasurementRepository
 import hu.bme.aut.fleetbrotherserver.service.interfaces.AlertService
 import hu.bme.aut.fleetbrotherserver.service.interfaces.MeasurementzHandlerService
 import jakarta.transaction.Transactional
@@ -15,9 +16,9 @@ import java.time.ZoneOffset
 
 @Service
 class MeasurementzHandlerServiceImpl(
-        private val measurementRepo: MeasurementRepository,
-        private val carRepo: CarRepository,
-        private val alertService: AlertService,
+    private val measurementRepo: MeasurementRepository,
+    private val carRepo: CarRepository,
+    private val alertService: AlertService,
 ) : MeasurementzHandlerService {
     private val logger = LoggerFactory.getLogger(MeasurementzHandlerServiceImpl::class.java)!!
 

@@ -1,6 +1,6 @@
 package hu.bme.aut.fleetbrotherserver.service
 
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.FleetRepository
+import hu.bme.aut.fleetbrotherserver.data.repositories.FleetRepository
 import hu.bme.aut.fleetbrotherserver.dtos.FleetDto
 import hu.bme.aut.fleetbrotherserver.dtos.mapper.convertBackFromDto
 import hu.bme.aut.fleetbrotherserver.dtos.mapper.convertToDto

@@ -1,6 +1,6 @@
 package hu.bme.aut.fleetbrotherserver.service
 
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.MeasurementRepository
+import hu.bme.aut.fleetbrotherserver.data.repositories.MeasurementRepository
 import hu.bme.aut.fleetbrotherserver.dtos.MeasurementDto
 import hu.bme.aut.fleetbrotherserver.dtos.mapper.convertToDto
 import hu.bme.aut.fleetbrotherserver.service.interfaces.MeasurementService

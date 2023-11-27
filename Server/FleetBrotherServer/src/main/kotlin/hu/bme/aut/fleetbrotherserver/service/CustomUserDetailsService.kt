@@ -1,6 +1,6 @@
 package hu.bme.aut.fleetbrotherserver.service
 
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.UserRepository
+import hu.bme.aut.fleetbrotherserver.data.repositories.UserRepository
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service

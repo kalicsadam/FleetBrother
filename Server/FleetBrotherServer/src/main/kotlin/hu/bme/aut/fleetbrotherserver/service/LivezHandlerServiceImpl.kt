@@ -3,7 +3,7 @@ package hu.bme.aut.fleetbrotherserver.service
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import hu.bme.aut.fleetbrotherserver.data.entities.Car
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.CarRepository
+import hu.bme.aut.fleetbrotherserver.data.repositories.CarRepository
 import hu.bme.aut.fleetbrotherserver.mqtt.MqttGateway
 import hu.bme.aut.fleetbrotherserver.service.interfaces.LivezHandlerService
 import org.slf4j.LoggerFactory

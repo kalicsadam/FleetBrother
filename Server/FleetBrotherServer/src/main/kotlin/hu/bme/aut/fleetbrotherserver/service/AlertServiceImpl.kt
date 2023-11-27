@@ -3,9 +3,9 @@ package hu.bme.aut.fleetbrotherserver.service
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import hu.bme.aut.fleetbrotherserver.data.entities.*
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.AlertHistoryRepository
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.AlertRepository
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.CarRepository
+import hu.bme.aut.fleetbrotherserver.data.repositories.AlertHistoryRepository
+import hu.bme.aut.fleetbrotherserver.data.repositories.AlertRepository
+import hu.bme.aut.fleetbrotherserver.data.repositories.CarRepository
 import hu.bme.aut.fleetbrotherserver.dtos.AlertDto
 import hu.bme.aut.fleetbrotherserver.dtos.mapper.convertBackFromDto
 import hu.bme.aut.fleetbrotherserver.dtos.mapper.convertToDto
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service
 
 @Service
 class AlertServiceImpl(
-        private val alertHistoryRepository: AlertHistoryRepository,
-        private val notificationService: NotificationService,
-        private val alertRepository: AlertRepository,
-        private val carRepository: CarRepository
+    private val alertHistoryRepository: AlertHistoryRepository,
+    private val notificationService: NotificationService,
+    private val alertRepository: AlertRepository,
+    private val carRepository: CarRepository
 ) : AlertService {
     private val logger = LoggerFactory.getLogger(AlertServiceImpl::class.java)!!
 

@@ -1,7 +1,7 @@
 package hu.bme.aut.fleetbrotherserver.service
 
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.FieldRepository
-import hu.bme.aut.fleetbrotherserver.data.repositories.interfaces.SchemaRepository
+import hu.bme.aut.fleetbrotherserver.data.repositories.FieldRepository
+import hu.bme.aut.fleetbrotherserver.data.repositories.SchemaRepository
 import hu.bme.aut.fleetbrotherserver.dtos.FieldDto
 import hu.bme.aut.fleetbrotherserver.dtos.SchemaCarAssignDto
 import hu.bme.aut.fleetbrotherserver.dtos.SchemaDto
