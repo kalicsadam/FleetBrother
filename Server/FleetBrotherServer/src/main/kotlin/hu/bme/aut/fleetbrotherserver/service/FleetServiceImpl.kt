@@ -31,6 +31,6 @@ class FleetServiceImpl (
     }
 
     override fun deleteFleet(fleetId: Int) {
-        fleetRepository.deleteById(fleetId)
+        fleetRepository.deleteFleetSafely(fleetId)
     }
 }

@@ -13,6 +13,8 @@ interface CustomFleetRepository {
     fun addCar(fleet: Fleet, car: Car)
     fun removeCar(fleetId: Int, carId: Int)
     fun removeCar(fleet: Fleet, car: Car)
+
+    fun deleteFleetSafely(fleetId: Int)
 }
 
 open class CustomFleetRepositoryImpl(
@@ -43,5 +45,12 @@ open class CustomFleetRepositoryImpl(
     override fun removeCar(fleet: Fleet, car: Car) {
         car.fleet = null
         fleet.cars.remove(car)
+    }
+
+    @Transactional
+    override fun deleteFleetSafely(fleetId: Int) {
+        val fleet = entityManager.find(Fleet::class.java, fleetId)
+        fleet.cars.forEach{removeCar(fleet, it)}
+        entityManager.remove(fleet)
     }
 }

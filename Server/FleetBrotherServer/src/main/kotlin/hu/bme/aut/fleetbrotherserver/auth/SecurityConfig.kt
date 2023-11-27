@@ -44,7 +44,7 @@ class SecurityConfig(
             .authorizeRequests()
             .requestMatchers(AntPathRequestMatcher("/api/auth/checkToken")).authenticated()
             .requestMatchers(AntPathRequestMatcher("/api/auth/**")).permitAll()
-            .requestMatchers(AntPathRequestMatcher("/api/user/**")).hasRole("ADMIN")
+            .requestMatchers(AntPathRequestMatcher("/api/user/**")).hasRole(UserRole.ADMIN)
             .anyRequest().authenticated()
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
