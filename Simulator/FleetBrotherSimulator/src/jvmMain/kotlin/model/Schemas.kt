@@ -4,6 +4,11 @@ import jdk.jfr.Percentage
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@Serializable
+data class ObuConfig(
+    var uuid: String,
+    var id: String
+)
 /*@Serializable
 data class IntermediateSchema(
     var schema: String,
@@ -34,8 +39,10 @@ data class OperatorAction(
 
 enum class Action{NONE,IMMOBILIZE,MOBILIZE,LOCK_DOOR,UNLOCK_DOOR}
 */
+/*
 @Serializable
 data class temperature(
+    var engine: Double,
     var internal: Double,
     var external: Double,
     var unit: TempUnit
@@ -63,9 +70,7 @@ data class fuelLevel(
 )
 @Serializable
 data class engineStatus(
-    var state: EngineState,
-    var temp: Double,
-    var temp_unit: TempUnit
+    var state: EngineState
 )
 enum class EngineState{
     @SerialName("running")
@@ -128,4 +133,4 @@ data class oil(
 @Serializable
 data class windshieldCleaner(
     var level: FluidLevel
-)
+)*/

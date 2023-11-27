@@ -1,8 +1,8 @@
 package view
 
 import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -11,67 +11,19 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import kotlinx.serialization.json.*
+import org.eclipse.paho.client.mqttv3.MqttMessage
+import org.json.JSONObject
 import viewmodel.ClientDetailsViewModel
+import java.lang.Exception
 
-
-/*@Composable
-fun alertBox(clientDetailsViewModel: ClientDetailsViewModel) {
-    Card(
-        backgroundColor =
-        when (clientDetailsViewModel.client?.latestAlert?.alertPriority) {
-            AlertPriority.INFO -> Color( 173, 216, 230)
-            AlertPriority.WARNING -> Color(255,165,0)
-            AlertPriority.IMMEDIATE_ACTION -> Color.Red
-            else -> Color.Unspecified
-        },
-        contentColor = Color.White,
-        elevation = 10.dp,
-        shape = RoundedCornerShape(10)
-    ) {
-        when (clientDetailsViewModel.client?.latestAlert?.alertPriority) {
-            AlertPriority.INFO -> {
-                Column() {
-                    Text(
-                        modifier = Modifier.padding(20.dp),
-                        text = "Information from the operator",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(modifier = Modifier.padding(start = 20.dp, bottom = 20.dp), text = clientDetailsViewModel.client?.latestAlert!!.description)
-                }
-            }
-
-            AlertPriority.WARNING -> {
-                Column {
-                    Text(modifier = Modifier.padding(20.dp),
-                        text = "Warning!", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                    Text(modifier = Modifier.padding(start = 20.dp, bottom = 20.dp), text = clientDetailsViewModel.client?.latestAlert!!.description)
-                }
-            }
-
-            AlertPriority.IMMEDIATE_ACTION -> {
-                Column {
-                    Text(
-                        modifier = Modifier.padding(20.dp),
-                        text = "Immediate action required!",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(modifier = Modifier.padding(start = 20.dp, bottom = 20.dp), text = clientDetailsViewModel.client?.latestAlert!!.description)
-                }
-            }
-
-            else -> {}
-        }
-
-    }
-}*/
+/*var coord_regex =
+    "^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)\$\n".toRegex()
+val double_regex = """^[-+]?(\d*\.\d+|\d+(\.\d*)?)$""".toRegex()*/
 
 @Composable
 fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
@@ -81,7 +33,10 @@ fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
         elevation = 20.dp
     ) {
         var livez by remember { mutableStateOf(clientDetailsViewModel.client?.livezPeriod.toString()) }
-        var param by remember { mutableStateOf( clientDetailsViewModel.client?.paramPeriod.toString()) }
+        var schema by remember { mutableStateOf("") }
+        var data by remember { mutableStateOf("") }
+        var errorMessage by remember { mutableStateOf<String?>(null) }
+
         Column(
             modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(20.dp).verticalScroll(state = ScrollState(0))
         ) {
@@ -91,15 +46,36 @@ fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
             ) { Icon(imageVector = Icons.Default.Close, contentDescription = null) }
 
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(modifier = Modifier.weight(1.0f)){
-                    Text(modifier = Modifier.padding(20.dp), fontSize = 30.sp, text = clientDetailsViewModel.client!!.name)
-                    Text(modifier = Modifier.padding(20.dp), fontSize = 15.sp, text = clientDetailsViewModel.client!!.id)
+                Column(modifier = Modifier.weight(1.0f)) {
+                    Text(
+                        modifier = Modifier.padding(start=20.dp, bottom = 20.dp),
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold,
+                        text = clientDetailsViewModel.client!!.name
+                    )
+                    Text(
+                        modifier = Modifier.padding(start=20.dp, bottom = 20.dp),
+                        fontSize = 15.sp,
+                        text = "License plate: ${clientDetailsViewModel.client!!.licensePlate}"
+                    )
+                    Text(
+                        modifier = Modifier.padding(start=20.dp, bottom = 20.dp),
+                        fontSize = 15.sp,
+                        text = "VIN: ${clientDetailsViewModel.client!!.vin}"
+                    )
+                    Text(
+                        modifier = Modifier.padding(start=20.dp, bottom = 20.dp),
+                        fontSize = 15.sp,
+                        text = "uuid: ${clientDetailsViewModel.client!!.uuid}"
+                    )
                 }
                 Column {
                     Text("Livez period:")
-                    Row{
+                    Row {
                         TextField(
                             modifier = Modifier.width(100.dp),
                             value = livez,
@@ -108,88 +84,143 @@ fun detailsView(clientDetailsViewModel: ClientDetailsViewModel) {
                             }
                         )
                         Button(
-                            modifier = Modifier.padding(start = 15.dp,end=15.dp),
+                            modifier = Modifier.padding(start = 15.dp, end = 15.dp),
                             onClick = {
                                 clientDetailsViewModel.client?.livezPeriod = livez.toLong()
                             },
                             enabled = ((livez.isNotEmpty() && livez.matches("^[0-9]*\$".toRegex())))
-                        ){ Text("Set") }
+                        ) { Text("Set") }
                     }
                 }
 
-                Column {
-                    Text("Measurementz period:")
-                    Row{
-                        TextField(
-                            modifier = Modifier.width(100.dp),
-                            value = param,
-                            onValueChange = { txt ->
-                                param = txt
-                            }
-                        )
-                        Button(
-                            modifier = Modifier.padding(start = 15.dp,end=15.dp),
-                            onClick = {
-                                clientDetailsViewModel.client?.paramPeriod = param.toLong()
-                            },
-                            enabled = ((param.isNotEmpty() && param.matches("^[0-9]*\$".toRegex())))
-                        ){ Text("Set") }
-                    }
-                }
-
-                //alertBox(/*alert*/clientDetailsViewModel)
             }
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.SpaceAround
-            ){
-                Column (
-                    modifier = Modifier.padding(16.dp).weight(1.0f),
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    Row(modifier = Modifier.padding(16.dp)){ Text("Status:"); Text(clientDetailsViewModel.client?.engineStatus!!.state.name) }
-                    Row(modifier = Modifier.padding(16.dp)){ Text("Curr. speed:"); Text(clientDetailsViewModel.client?.currentSpeed!!.value.toString()); Text(clientDetailsViewModel.client?.currentSpeed!!.unit.name) }
-                    Row(modifier = Modifier.padding(16.dp)){
-                        Text("Curr. location:")
-                        Column (modifier = Modifier.padding(16.dp)){
-                            Row(modifier = Modifier.padding(16.dp)){ Text("long.: ${clientDetailsViewModel.client?.currentlocation?.longitude}°,") }
-                            Row(modifier = Modifier.padding(16.dp)){ Text("lat.: ${clientDetailsViewModel.client?.currentlocation?.latitude}°") }
-                        }
-                    }
-                    Row(modifier = Modifier.padding(16.dp)){
-                        Text("Temperature:")
-                        Column (modifier = Modifier.padding(16.dp)){
-                            Row(modifier = Modifier.padding(16.dp)){ Text("int.: ${clientDetailsViewModel.client?.temperature?.internal} ${clientDetailsViewModel.client?.tempUnit},") }
-                            Row(modifier = Modifier.padding(16.dp)){ Text("ext.: ${clientDetailsViewModel.client?.temperature?.external} ${clientDetailsViewModel.client?.tempUnit}") }
-                        }
-                    }
-                    Row(modifier = Modifier.padding(16.dp)){
-                        Text("Tire pressure (in ${clientDetailsViewModel.client?.pressureUnit}):")
-                        Column (modifier = Modifier.padding(16.dp)){
-                            Row(modifier = Modifier.padding(16.dp)){
-                                Text(clientDetailsViewModel.client?.tirePressure?.front_left.toString())
-                                Text(modifier = Modifier.padding(start = 15.dp),text=clientDetailsViewModel.client?.tirePressure?.front_right.toString().format("#.##"))
-                            }
-                            Row(modifier = Modifier.padding(16.dp)){
-                                Text(clientDetailsViewModel.client?.tirePressure?.back_left.toString())
-                                Text(modifier = Modifier.padding(start = 15.dp),text=clientDetailsViewModel.client?.tirePressure?.back_right.toString().format("#.##"))
+            Text("Schema ID")
+            TextField(
+                value = schema,
+                onValueChange = { txt ->
+                    schema = txt
+                }
+            )
+            Text("Data")
+            TextField(
+                modifier = Modifier.height(300.dp),
+                value = data,
+                onValueChange = { txt ->
+                    data = txt
+                }
+            )
+            Button(
+                onClick = {
+                    //var datajson: JsonObject? = null
+                    try{
+                        val datajson = Json.parseToJsonElement(data) as JsonObject
+                        val json = buildJsonObject {
+                            put("id",clientDetailsViewModel.client?.carId)
+                            put("schema",schema)
+                            putJsonObject("data") {
+                                datajson?.forEach { (key, value) ->
+                                    put(key, value)
+                                }
                             }
                         }
+                        val msg = MqttMessage()
+                        msg.qos = 0
+                        msg.isRetained = true
+                        msg.payload = json.toString().toByteArray()
+                        clientDetailsViewModel.client?.mqttClient?.publish("measurementz",msg)
+                    } catch (e: Exception){
+                        errorMessage = "An error occurred: ${e.message}"
                     }
-                }
-                Column (
-                    modifier = Modifier.padding(16.dp).weight(1.0f),
-                    horizontalAlignment = Alignment.Start
-                ){
-                    Row(modifier = Modifier.padding(16.dp)){ Text("Odometer:"); Text(" ${clientDetailsViewModel.client?.odometer?.value} ${clientDetailsViewModel.client?.distanceUnit}") }
-                    Row(modifier = Modifier.padding(16.dp)){ Text("Fuel level:"); Text(" ${clientDetailsViewModel.client?.fuel?.percentage}%") }
-                    Row(modifier = Modifier.padding(16.dp)){ Text("Engine oil level:"); Text(" ${clientDetailsViewModel.client?.oil?.level}") }
-                    Row(modifier = Modifier.padding(16.dp)){ Text("Windshield cleaner level:"); Text(" ${clientDetailsViewModel.client?.windshieldCleaner?.level}") }
-                    Row(modifier = Modifier.padding(16.dp)){ Text("Battery charge:"); Text(" ${clientDetailsViewModel.client?.batteryStatus?.percentage}%") }
-
-                }
-
+                },
+                enabled = !(clientDetailsViewModel.client?.carId.isNullOrEmpty()) && (data.isNotEmpty())
+            ){ Text("Send") }
+            errorMessage?.let { message ->
+                ErrorDialog(message = message, onClose = { errorMessage = null })
             }
         }
+    }
+}
+
+@Composable
+fun ErrorDialog(message: String, onClose: () -> Unit) {
+    Dialog(onCloseRequest = onClose) {
+        // Dialog content
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("Error")
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(message)
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(onClick = onClose) {
+                Text("OK")
+            }
+        }
+    }
+}
+@Composable
+fun autoreportingview(clientDetailsViewModel: ClientDetailsViewModel) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.SpaceAround
+    ) {
+        /*Column(
+            modifier = Modifier.padding(16.dp).weight(1.0f),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Row(modifier = Modifier.padding(16.dp)) { Text("Status:"); Text(clientDetailsViewModel.client?.engineStatus?.state.toString()) }
+            Row(modifier = Modifier.padding(16.dp)) {
+                Text("Curr. speed:"); Text(clientDetailsViewModel.client?.currentSpeed!!.value.toString()); Text(
+                clientDetailsViewModel.client?.currentSpeed!!.unit.name
+            )
+            }
+            Row(modifier = Modifier.padding(16.dp)) {
+                Text("Curr. location:")
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(modifier = Modifier.padding(16.dp)) { Text("long.: ${clientDetailsViewModel.client?.currentlocation?.longitude}°,") }
+                    Row(modifier = Modifier.padding(16.dp)) { Text("lat.: ${clientDetailsViewModel.client?.currentlocation?.latitude}°") }
+                }
+            }
+            Row(modifier = Modifier.padding(16.dp)) {
+                Text("Temperature:")
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(modifier = Modifier.padding(16.dp)) { Text("engine: ${clientDetailsViewModel.client?.temperature?.engine} ${clientDetailsViewModel.client?.tempUnit},") }
+                    Row(modifier = Modifier.padding(16.dp)) { Text("int.: ${clientDetailsViewModel.client?.temperature?.internal} ${clientDetailsViewModel.client?.tempUnit},") }
+                    Row(modifier = Modifier.padding(16.dp)) { Text("ext.: ${clientDetailsViewModel.client?.temperature?.external} ${clientDetailsViewModel.client?.tempUnit}") }
+                }
+            }
+            Row(modifier = Modifier.padding(16.dp)) {
+                Text("Tire pressure (in ${clientDetailsViewModel.client?.pressureUnit}):")
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(modifier = Modifier.padding(16.dp)) {
+                        Text(clientDetailsViewModel.client?.tirePressure?.front_left.toString())
+                        Text(
+                            modifier = Modifier.padding(start = 15.dp),
+                            text = clientDetailsViewModel.client?.tirePressure?.front_right.toString()
+                        )
+                    }
+                    Row(modifier = Modifier.padding(16.dp)) {
+                        Text(clientDetailsViewModel.client?.tirePressure?.back_left.toString())
+                        Text(
+                            modifier = Modifier.padding(start = 15.dp),
+                            text = clientDetailsViewModel.client?.tirePressure?.back_right.toString()
+                        )
+                    }
+                }
+            }
+        }
+        Column(
+            modifier = Modifier.padding(16.dp).weight(1.0f),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Row(modifier = Modifier.padding(16.dp)) { Text("Odometer:"); Text(" ${clientDetailsViewModel.client?.odometer?.value} ${clientDetailsViewModel.client?.distanceUnit}") }
+            Row(modifier = Modifier.padding(16.dp)) { Text("Fuel level:"); Text(" ${clientDetailsViewModel.client?.fuel?.percentage}%") }
+            Row(modifier = Modifier.padding(16.dp)) { Text("Engine oil level:"); Text(" ${clientDetailsViewModel.client?.oil?.level}") }
+            Row(modifier = Modifier.padding(16.dp)) { Text("Windshield cleaner level:"); Text(" ${clientDetailsViewModel.client?.windshieldCleaner?.level}") }
+            Row(modifier = Modifier.padding(16.dp)) { Text("Battery charge:"); Text(" ${clientDetailsViewModel.client?.batteryStatus?.percentage}%") }
+
+        }*/
     }
 }
