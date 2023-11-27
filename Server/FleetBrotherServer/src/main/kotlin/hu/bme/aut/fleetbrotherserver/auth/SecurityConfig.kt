@@ -42,6 +42,7 @@ class SecurityConfig(
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf().disable()
             .authorizeRequests()
+            .requestMatchers(AntPathRequestMatcher("/api/auth/checkToken")).authenticated()
             .requestMatchers(AntPathRequestMatcher("/api/auth/**")).permitAll()
             .requestMatchers(AntPathRequestMatcher("/api/user/**")).hasRole("ADMIN")
             .anyRequest().authenticated()
