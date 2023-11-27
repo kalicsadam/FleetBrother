@@ -9,5 +9,6 @@ data class CarDto(
     val id: Int? = null,
     val name: String? = null,
     val licensePlate: String? = null,
-    val vin: String? = null
+    val vin: String? = null,
+    val canDelete : Boolean = true
 ) : Serializable

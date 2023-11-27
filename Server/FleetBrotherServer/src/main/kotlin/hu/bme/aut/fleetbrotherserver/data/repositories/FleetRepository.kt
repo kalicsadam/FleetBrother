@@ -50,7 +50,8 @@ open class CustomFleetRepositoryImpl(
     @Transactional
     override fun deleteFleetSafely(fleetId: Int) {
         val fleet = entityManager.find(Fleet::class.java, fleetId)
-        fleet.cars.forEach{removeCar(fleet, it)}
+        val list = fleet.cars.toList()
+        list.forEach{removeCar(fleet, it)}
         entityManager.remove(fleet)
     }
 }

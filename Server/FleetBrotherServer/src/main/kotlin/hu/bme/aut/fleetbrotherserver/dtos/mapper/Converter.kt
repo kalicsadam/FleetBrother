@@ -10,6 +10,7 @@ fun Car.convertToDto() : CarDto {
         name = this.name,
         licensePlate = this.licensePlate,
         vin = this.vin,
+        canDelete = this.measurements.isNotEmpty()
     )
 }
 
